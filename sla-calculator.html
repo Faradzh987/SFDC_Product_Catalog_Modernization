@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoreSite SLA Abatement Calculator</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080b12;font-family:-apple-system,BlinkMacSystemFont,'"'"'Segoe UI'"'"',sans-serif;color:#f0f2ff;min-height:100vh}
+ 
+/* HEADER */
+.header{background:#0f1117;border-bottom:1px solid #1e2130;padding:14px 24px;display:flex;align-items:center;gap:14px}
+.header-info{flex:1}
+.header-title{font-size:18px;font-weight:700;color:#f0f2ff}
+.header-sub{font-size:12px;color:#6b7280;margin-top:2px}
+.badge{font-size:11px;color:#4f8ef7;background:#0d2137;border:1px solid #1a4a7a;padding:3px 9px;border-radius:4px;white-space:nowrap}
+.theme-btn{font-size:11px;padding:4px 10px;border-radius:4px;border:1px solid #1a4a7a;background:#0d2137;color:#4f8ef7;cursor:pointer;font-family:inherit}
+ 
+/* TABS */
+.tabs{background:#0f1117;border-bottom:1px solid #1e2130;padding:0 24px;display:flex;gap:0}
+.tab{padding:12px 18px;font-size:12px;font-weight:600;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap}
+.tab.active{color:#4f8ef7;border-bottom-color:#4f8ef7}
+.tab:hover{color:#f0f2ff}
+.tab-content{display:none;padding:24px 32px;max-width:1200px;margin:0 auto}
+.tab-content.active{display:block}
+ 
+/* CARDS */
+.card{background:#1a1d2e;border:1px solid #1e2130;border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.card-title{font-size:11px;font-weight:700;color:#4f8ef7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.card-dot{width:6px;height:6px;border-radius:50%;background:#4f8ef7;flex-shrink:0}
+.card-dot.green{background:#1D9E75}
+.card-dot.amber{background:#f0a500}
+.card-dot.red{background:#e05252}
+ 
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+ 
+/* FIELDS */
+.field{margin-bottom:14px}
+.field-label{font-size:12px;color:#9ca3af;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.field-label span{color:#374151;font-size:11px}
+.field-label .req{color:#e05252;font-size:11px}
+.input-wrap{display:flex;align-items:stretch;border:1px solid #4f8ef740;border-radius:8px;background:#080b12;overflow:hidden}
+.input-wrap:focus-within{border-color:#4f8ef7;box-shadow:0 0 0 2px #4f8ef720}
+.input-wrap input,.input-wrap select,.input-wrap textarea{flex:1;padding:9px 12px;border:none;background:transparent;font-size:15px;color:#f0f2ff;outline:none;font-family:inherit}
+.input-wrap textarea{resize:vertical;min-height:60px;font-size:13px}
+.input-wrap select option{background:#1a1d2e}
+.field-unit{padding:0 12px;font-size:12px;color:#4f8ef7;background:#0a1a2e;border-left:1px solid #4f8ef730;display:flex;align-items:center;white-space:nowrap;flex-shrink:0}
+ 
+/* RADIO / CHECKBOX */
+.radio-group,.check-group{display:flex;gap:10px;flex-wrap:wrap}
+.radio-btn,.check-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:6px;border:1px solid #252840;background:#0a0d15;cursor:pointer;font-size:13px;color:#9ca3af;transition:all 0.15s;user-select:none}
+.radio-btn.active,.check-btn.active{border-color:#4f8ef7;background:#0d2137;color:#4f8ef7}
+.radio-btn.active.green,.check-btn.active.green{border-color:#1D9E75;background:#0d2e20;color:#1D9E75}
+.radio-btn.active.red,.check-btn.active.red{border-color:#e05252;background:#1a0a0a;color:#e05252}
+.radio-dot{width:8px;height:8px;border-radius:50%;border:2px solid currentColor;flex-shrink:0}
+.radio-btn.active .radio-dot{background:currentColor}
+.check-box{width:14px;height:14px;border-radius:3px;border:2px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px}
+.check-btn.active .check-box::after{content:'"'"'✓'"'"'}
+ 
+/* RESULTS */
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.result-item{background:#060e1a;border:1px solid #0d2137;border-radius:10px;padding:14px 16px}
+.result-item.highlight{border-color:#1D9E75;background:#0a1e14}
+.result-item.warn{border-color:#854F0B;background:#1a1000}
+.result-item.danger{border-color:#7a1a1a;background:#1a0a0a}
+.rv{font-size:22px;font-weight:700;color:#f0f2ff}
+.rv.green{color:#1D9E75}
+.rv.red{color:#e05252}
+.rv.amber{color:#f0a500}
+.rl{font-size:11px;color:#6b7280;margin-top:4px}
+ 
+/* BREAKDOWN TABLE */
+.breakdown{background:#080b12;border:1px solid #1e2130;border-radius:10px;overflow:hidden}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;border-bottom:1px solid #1e2130;font-size:12px}
+.brow:last-child{border-bottom:none}
+.brow.section{background:#0a1a2e;padding:6px 16px}
+.brow.section .blbl{color:#4f8ef7;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em}
+.brow.final{background:#0a1e14;font-weight:700;font-size:13px}
+.brow.excluded{background:#1a0a0a}
+.blbl{color:#9ca3af}
+.bval{color:#f0f2ff;font-family:monospace;font-size:12px}
+.bval.green{color:#1D9E75}
+.bval.red{color:#e05252}
+.bval.amber{color:#f0a500}
+.bval.muted{color:#374151}
+ 
+/* FINAL CREDIT BOX */
+.credit-box{border-radius:12px;padding:24px;text-align:center;margin-top:16px}
+.credit-box.eligible{background:linear-gradient(135deg,#0d2e20,#0a1a2e);border:1px solid #1D9E75}
+.credit-box.ineligible{background:linear-gradient(135deg,#1a0a0a,#0a0d15);border:1px solid #7a1a1a}
+.credit-amount{font-size:52px;font-weight:700;font-family:monospace}
+.credit-amount.green{color:#1D9E75}
+.credit-amount.red{color:#e05252}
+.credit-label{font-size:12px;color:#6b7280;margin-top:4px;text-transform:uppercase;letter-spacing:0.08em}
+.credit-sub{font-size:13px;color:#4f8ef7;margin-top:8px}
+.credit-reason{font-size:13px;color:#ef4444;margin-top:8px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.5}
+ 
+/* ELIGIBILITY BADGE */
+.elig-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;margin-bottom:16px}
+.elig-yes{background:#0d2e20;border:1px solid #0F6E56;color:#1D9E75}
+.elig-no{background:#1a0a0a;border:1px solid #7a1a1a;color:#ef4444}
+.elig-pending{background:#1a1d2e;border:1px solid #252840;color:#6b7280}
+ 
+/* RULES TABLE */
+.rules-table{width:100%;border-collapse:collapse;font-size:13px}
+.rules-table th{background:#0d2137;color:#4f8ef7;padding:10px 14px;text-align:left;border:1px solid #1e2130;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+.rules-table td{padding:10px 14px;border:1px solid #1e2130;color:#9ca3af;vertical-align:top}
+.rules-table tr:nth-child(even) td{background:#0a0d15}
+.rules-table td strong{color:#f0f2ff}
+.threshold-pill{display:inline-block;background:#0d2137;color:#4f8ef7;border:1px solid #1a4a7a;padding:2px 8px;border-radius:4px;font-size:11px;font-family:monospace}
+ 
+/* NOTES */
+.note-box{background:#1a1000;border:1px solid #854F0B;border-radius:8px;padding:12px 16px;font-size:12px;color:#EF9F27;line-height:1.6;margin-top:12px}
+.info-box{background:#0a1a2e;border:1px solid #1a3a6e;border-radius:8px;padding:12px 16px;font-size:12px;color:#6b7280;line-height:1.6;margin-top:12px}
+.info-box strong{color:#4f8ef7}
+ 
+/* BUTTONS */
+.btn-row{display:flex;gap:12px;margin-top:16px}
+.btn-primary{flex:1;padding:13px;background:#4f8ef7;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s}
+.btn-primary:hover{background:#3a7de0}
+.btn-secondary{padding:13px 20px;background:#1a1d2e;color:#9ca3af;border:1px solid #252840;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit}
+.btn-secondary:hover{color:#f0f2ff;background:#252840}
+ 
+/* ASSUMPTION ROWS */
+.assumption-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e2130;font-size:12px}
+.assumption-row:last-child{border-bottom:none}
+.a-key{color:#9ca3af}
+.a-val{color:#f0f2ff;font-family:monospace;text-align:right;max-width:60%}
+ 
+/* DIVIDER */
+.divider{height:1px;background:#1e2130;margin:20px 0}
+.section-label{font-size:10px;font-weight:700;color:#4f8ef7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;margin-top:4px}
+ 
+/* LIGHT MODE */
+body.light{background:#f3f4f8;color:#111}
+body.light .header,.light .tabs{background:#fff;border-color:#e5e7eb}
+body.light .header-title{color:#111}
+body.light .header-sub,.light .tab{color:#6b7280}
+body.light .tab.active{color:#2563eb;border-bottom-color:#2563eb}
+body.light .badge,.light .theme-btn{background:#eff6ff;color:#2563eb;border-color:#bfdbfe}
+body.light .card{background:#fff;border-color:#e5e7eb}
+body.light .card-title{color:#2563eb}
+body.light .card-dot{background:#2563eb}
+body.light .field-label{color:#374151}
+body.light .field-label span{color:#9ca3af}
+body.light .input-wrap{background:#f9fafb;border-color:#d1d5db}
+body.light .input-wrap input,body.light .input-wrap select,body.light .input-wrap textarea{color:#111}
+body.light .input-wrap select option{background:#fff}
+body.light .field-unit{background:#eff6ff;color:#2563eb;border-color:#bfdbfe}
+body.light .radio-btn,.light .check-btn{background:#f9fafb;border-color:#e5e7eb;color:#6b7280}
+body.light .radio-btn.active,.light .check-btn.active{background:#eff6ff;border-color:#2563eb;color:#2563eb}
+body.light .result-item{background:#fff;border-color:#e5e7eb}
+body.light .result-item.highlight{border-color:#1D9E75;background:#f0fdf4}
+body.light .rv{color:#111}
+body.light .breakdown{background:#f9fafb;border-color:#e5e7eb}
+body.light .brow{border-color:#e5e7eb}
+body.light .brow.section{background:#eff6ff}
+body.light .brow.final{background:#f0fdf4}
+body.light .brow.excluded{background:#fef2f2}
+body.light .blbl{color:#6b7280}
+body.light .bval{color:#111}
+body.light .rules-table th{background:#eff6ff;color:#2563eb;border-color:#e5e7eb}
+body.light .rules-table td{border-color:#e5e7eb;color:#374151}
+body.light .rules-table tr:nth-child(even) td{background:#f9fafb}
+body.light .divider{background:#e5e7eb}
+body.light .info-box{background:#eff6ff;border-color:#bfdbfe}
+body.light .credit-box.eligible{background:linear-gradient(135deg,#d1fae5,#eff6ff)}
+body.light .credit-box.ineligible{background:linear-gradient(135deg,#fee2e2,#fef2f2)}
+body.light .credit-label{color:#6b7280}
+body.light .btn-secondary{background:#f3f4f8;border-color:#e5e7eb;color:#6b7280}
+body.light .assumption-row{border-color:#e5e7eb}
+body.light .a-key{color:#6b7280}
+body.light .a-val{color:#111}
+</style>
+</head>
+<body>
+ 
+<div class="header">
+  <div class="header-info">
+    <div class="header-title">CoreSite SLA Abatement Calculator</div>
+    <div class="header-sub">MSA Exhibit A — Power Failure Credit Determination</div>
+  </div>
+  <span class="badge">Exhibit A v1</span>
+  <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">Light mode</button>
+</div>
+ 
+<div class="tabs">
+  <div class="tab active" onclick="showTab('"'"'inputs'"'"')">1 · Inputs</div>
+  <div class="tab" onclick="showTab('"'"'rules'"'"')">2 · SLA Rules</div>
+  <div class="tab" onclick="showTab('"'"'calc'"'"')">3 · Calculation</div>
+  <div class="tab" onclick="showTab('"'"'output'"'"')">4 · Summary</div>
+  <div class="tab" onclick="showTab('"'"'notes'"'"')">5 · Assumptions</div>
+</div>
+ 
+<!-- TAB 1: INPUTS -->
+<div class="tab-content active" id="tab-inputs">
+  <div class="split">
+    <div>
+      <!-- Contract Info -->
+      <div class="card">
+        <div class="card-title"><span class="card-dot"></span>Contract & Site Information</div>
+        <div class="grid2">
+          <div class="field">
+            <div class="field-label">Customer Name <span class="req">*</span></div>
+            <div class="input-wrap"><input type="text" id="customer-name" placeholder="e.g. Profuse Solutions Inc." oninput="runCalc()"></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Contract / Order Reference</div>
+            <div class="input-wrap"><input type="text" id="contract-ref" placeholder="e.g. Order #12345" oninput="runCalc()"></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Site / Data Center</div>
+            <div class="input-wrap"><input type="text" id="site" placeholder="e.g. CoreSite LA1" oninput="runCalc()"></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Individual Space / Cabinet</div>
+            <div class="input-wrap"><input type="text" id="space" placeholder="e.g. Cage A-101" oninput="runCalc()"></div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Date of Outage</div>
+          <div class="input-wrap"><input type="date" id="outage-date" oninput="runCalc()"></div>
+        </div>
+      </div>
+ 
+      <!-- Financial -->
+      <div class="card">
+        <div class="card-title"><span class="card-dot"></span>Financial Data</div>
+        <div class="info-box"><strong>Note:</strong> Monthly License Fee comes from the Order document — not from the MSA itself. The MSA only defines the credit formula.</div>
+        <div style="margin-top:14px" class="grid2">
+          <div class="field">
+            <div class="field-label">Monthly License Fee <span class="req">*</span></div>
+            <div class="input-wrap"><input type="number" id="monthly-fee" placeholder="0.00" oninput="runCalc()" step="0.01" min="0"><span class="field-unit">$</span></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Days in Month</div>
+            <div class="input-wrap"><input type="number" id="days" value="30" oninput="runCalc()" step="1" min="28" max="31"><span class="field-unit">days</span></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Credits paid this quarter</div>
+            <div class="input-wrap"><input type="number" id="prev-credits" value="0" oninput="runCalc()" step="0.01" min="0"><span class="field-unit">$</span></div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Exclusions -->
+      <div class="card">
+        <div class="card-title"><span class="card-dot red"></span>SLA Exclusion Check — Exhibit A Section IV.A</div>
+        <div class="note-box">If ANY of the below are Yes, NO abatement is owed regardless of outage duration.</div>
+        <div style="margin-top:14px">
+          <div class="field">
+            <div class="field-label">Was customer in default at time of outage?</div>
+            <div class="radio-group">
+              <div class="radio-btn" id="rb-default-no" onclick="setRadio('"'"'default'"'"','"'"'no'"'"')"><span class="radio-dot"></span>No</div>
+              <div class="radio-btn" id="rb-default-yes" onclick="setRadio('"'"'default'"'"','"'"'yes'"'"')"><span class="radio-dot"></span>Yes</div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Was outage caused by customer equipment or actions?</div>
+            <div class="radio-group">
+              <div class="radio-btn" id="rb-custfault-no" onclick="setRadio('"'"'custfault'"'"','"'"'no'"'"')"><span class="radio-dot"></span>No</div>
+              <div class="radio-btn" id="rb-custfault-yes" onclick="setRadio('"'"'custfault'"'"','"'"'yes'"'"')"><span class="radio-dot"></span>Yes</div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Was outage caused by Force Majeure?</div>
+            <div class="radio-group">
+              <div class="radio-btn" id="rb-fm-no" onclick="setRadio('"'"'fm'"'"','"'"'no'"'"')"><span class="radio-dot"></span>No</div>
+              <div class="radio-btn" id="rb-fm-yes" onclick="setRadio('"'"'fm'"'"','"'"'yes'"'"')"><span class="radio-dot"></span>Yes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div>
+      <!-- Circuit Info -->
+      <div class="card">
+        <div class="card-title"><span class="card-dot"></span>Circuit Configuration</div>
+        <div class="field">
+          <div class="field-label">Circuit Type <span class="req">*</span></div>
+          <div class="radio-group">
+            <div class="radio-btn" id="rb-circ-redundant" onclick="setRadio('"'"'circ'"'"','"'"'redundant'"'"')"><span class="radio-dot"></span>Redundant UPS (A+B)</div>
+            <div class="radio-btn" id="rb-circ-panel" onclick="setRadio('"'"'circ'"'"','"'"'panel'"'"')"><span class="radio-dot"></span>Panel Redundant</div>
+            <div class="radio-btn" id="rb-circ-single" onclick="setRadio('"'"'circ'"'"','"'"'single'"'"')"><span class="radio-dot"></span>Single Circuit</div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <div class="field-label">Total Power Circuits <span class="req">*</span> <span>serving this space</span></div>
+            <div class="input-wrap"><input type="number" id="total-circuits" placeholder="1" oninput="runCalc()" step="1" min="1"><span class="field-unit">#</span></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Affected Circuits</div>
+            <div class="input-wrap"><input type="number" id="affected-circuits" placeholder="1" oninput="runCalc()" step="1" min="1"><span class="field-unit">#</span></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Circuit A — Actual Draw <span>from ops report</span></div>
+            <div class="input-wrap"><input type="number" id="draw-a" placeholder="0.00" oninput="runCalc()" step="0.01" min="0"><span class="field-unit">A</span></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Circuit B — Actual Draw <span>from ops report</span></div>
+            <div class="input-wrap"><input type="number" id="draw-b" placeholder="0.00" oninput="runCalc()" step="0.01" min="0"><span class="field-unit">A</span></div>
+          </div>
+        </div>
+        <div class="info-box" style="margin-top:0;margin-bottom:8px">Actual draw values are for documentation only — sourced from operations data. They do not affect the SLA credit calculation but are recorded in the audit trail.</div>
+        <div class="field" id="ab-field">
+          <div class="field-label">Were both A and B circuits simultaneously unavailable?</div>
+          <div class="radio-group">
+            <div class="radio-btn" id="rb-ab-yes" onclick="setRadio('"'"'ab'"'"','"'"'yes'"'"')"><span class="radio-dot"></span>Yes — both A+B failed</div>
+            <div class="radio-btn" id="rb-ab-no" onclick="setRadio('"'"'ab'"'"','"'"'no'"'"')"><span class="radio-dot"></span>No — only one side</div>
+          </div>
+          <div class="info-box" style="margin-top:8px">Redundant UPS failures require <strong>simultaneous</strong> A+B unavailability per Exhibit A Section I.A(i).</div>
+        </div>
+      </div>
+ 
+      <!-- Outage Details -->
+      <div class="card">
+        <div class="card-title"><span class="card-dot"></span>Outage Details</div>
+        <div class="grid2">
+          <div class="field">
+            <div class="field-label">Outage Duration <span class="req">*</span></div>
+            <div class="input-wrap"><input type="number" id="duration" placeholder="0" oninput="runCalc()" step="1" min="0"><span class="field-unit">sec</span></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Duration (auto-converted)</div>
+            <div class="input-wrap" style="background:transparent;border-color:#252840"><input type="text" id="duration-display" readonly style="color:#6b7280;font-size:13px"></div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Is this outage cumulative for the month?</div>
+          <div class="radio-group">
+            <div class="radio-btn" id="rb-cum-no" onclick="setRadio('"'"'cum'"'"','"'"'no'"'"')"><span class="radio-dot"></span>No — single event</div>
+            <div class="radio-btn" id="rb-cum-yes" onclick="setRadio('"'"'cum'"'"','"'"'yes'"'"')"><span class="radio-dot"></span>Yes — cumulative total</div>
+          </div>
+          <div class="info-box" style="margin-top:8px">Level 2 thresholds (26s / 270s) are <strong>cumulative per calendar month</strong>. Enter total seconds for the month if cumulative.</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Notes / Incident Description</div>
+          <div class="input-wrap"><textarea id="incident-notes" placeholder="Describe the incident, affected equipment, CoreSite ticket number..." oninput="runCalc()"></textarea></div>
+        </div>
+      </div>
+ 
+      <div class="btn-row">
+        <button class="btn-primary" onclick="runCalc();showTab('"'"'output'"'"')">Calculate & View Summary →</button>
+        <button class="btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- TAB 2: RULES -->
+<div class="tab-content" id="tab-rules">
+  <div class="card">
+    <div class="card-title"><span class="card-dot"></span>Power Failure Definitions — Exhibit A, Section I.A</div>
+    <table class="rules-table">
+      <thead>
+        <tr>
+          <th>Failure Type</th>
+          <th>Circuit Type</th>
+          <th>Threshold</th>
+          <th>A+B Required?</th>
+          <th>Period</th>
+          <th>Remedy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Redundant UPS Level 1</strong></td>
+          <td>Redundant UPS (A+B pair)</td>
+          <td><span class="threshold-pill">&gt; 1 second</span></td>
+          <td>Yes — simultaneous</td>
+          <td>Single event</td>
+          <td>Daily Circuit Abatement</td>
+        </tr>
+        <tr>
+          <td><strong>Redundant UPS Level 2</strong></td>
+          <td>Redundant UPS (A+B pair)</td>
+          <td><span class="threshold-pill">&gt; 26 seconds</span></td>
+          <td>Yes — simultaneous</td>
+          <td>Cumulative / calendar month</td>
+          <td>Weekly Circuit Abatement</td>
+        </tr>
+        <tr>
+          <td><strong>Single/Panel Redundant Level 1</strong></td>
+          <td>Single Circuit or Panel Redundant</td>
+          <td><span class="threshold-pill">&gt; 26 seconds</span></td>
+          <td>N/A (single) / Yes (panel)</td>
+          <td>Cumulative / calendar month</td>
+          <td>Daily Circuit Abatement</td>
+        </tr>
+        <tr>
+          <td><strong>Single/Panel Redundant Level 2</strong></td>
+          <td>Single Circuit or Panel Redundant</td>
+          <td><span class="threshold-pill">&gt; 270 seconds</span></td>
+          <td>N/A (single) / Yes (panel)</td>
+          <td>Cumulative / calendar month</td>
+          <td>Weekly Circuit Abatement</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+ 
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><span class="card-dot green"></span>Abatement Formulas — Exhibit A, Section I.B</div>
+      <div class="breakdown">
+        <div class="brow section"><span class="blbl">Daily Circuit Abatement (Level 1)</span></div>
+        <div class="brow"><span class="blbl">Daily License Fee</span><span class="bval">Monthly Fee ÷ Days in Month</span></div>
+        <div class="brow"><span class="blbl">Circuit Fraction</span><span class="bval">1 ÷ Total Power Circuits</span></div>
+        <div class="brow final"><span class="blbl">Daily Circuit Abatement</span><span class="bval green">Daily Fee × Circuit Fraction</span></div>
+        <div class="brow section"><span class="blbl">Weekly Circuit Abatement (Level 2)</span></div>
+        <div class="brow"><span class="blbl">Weekly License Fee</span><span class="bval">Monthly Fee ÷ 4</span></div>
+        <div class="brow"><span class="blbl">Circuit Fraction</span><span class="bval">1 ÷ Total Power Circuits</span></div>
+        <div class="brow final"><span class="blbl">Weekly Circuit Abatement</span><span class="bval green">Weekly Fee × Circuit Fraction</span></div>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-title"><span class="card-dot amber"></span>Caps — Exhibit A, Sections I.B(v) & IV.C</div>
+      <div class="breakdown">
+        <div class="brow section"><span class="blbl">Per-Circuit Caps</span></div>
+        <div class="brow"><span class="blbl">Daily Circuit Cap</span><span class="bval">Daily Fee ÷ Total Circuits</span></div>
+        <div class="brow"><span class="blbl">Monthly Circuit Cap</span><span class="bval">Monthly Fee ÷ Total Circuits</span></div>
+        <div class="brow section"><span class="blbl">Overall Caps</span></div>
+        <div class="brow"><span class="blbl">Monthly Fee Cap</span><span class="bval">= Full Monthly License Fee</span></div>
+        <div class="brow"><span class="blbl">3-Month Aggregate Cap</span><span class="bval">= Monthly Fee × 3</span></div>
+        <div class="brow section"><span class="blbl">Anti-Stacking Rule — Section IV.B</span></div>
+        <div class="brow"><span class="blbl">Same event → multiple failures</span><span class="bval amber">Only 1 credit (highest)</span></div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="card">
+    <div class="card-title"><span class="card-dot red"></span>Exclusions — Exhibit A, Section IV.A</div>
+    <p style="font-size:13px;color:#9ca3af;line-height:1.7">No abatement is owed if: <strong style="color:#f0f2ff">(1)</strong> Customer is in breach or default at the time of the failure. <strong style="color:#f0f2ff">(2)</strong> The failure results from customer equipment, applications, acts or omissions of customer or customer parties. <strong style="color:#f0f2ff">(3)</strong> The failure results from a Force Majeure Event. The SLA abatement is also the <strong style="color:#f0f2ff">sole and exclusive remedy</strong> — customer waives all other claims.</p>
+  </div>
+</div>
+ 
+<!-- TAB 3: CALCULATION -->
+<div class="tab-content" id="tab-calc">
+  <div id="calc-empty" class="card" style="text-align:center;padding:40px;color:#374151">
+    Complete the inputs on Tab 1 and click Calculate to see the full calculation breakdown.
+  </div>
+  <div id="calc-content" style="display:none">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><span class="card-dot"></span>Step 1 — Exclusion Check</div>
+        <div id="excl-content" class="breakdown"></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="card-dot"></span>Step 2 — Failure Classification</div>
+        <div id="class-content" class="breakdown"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="card-dot green"></span>Step 3 — Abatement Calculation + Cap Waterfall</div>
+      <div id="math-content" class="breakdown"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- TAB 4: OUTPUT -->
+<div class="tab-content" id="tab-output">
+  <div id="output-empty" class="card" style="text-align:center;padding:40px;color:#374151">
+    Complete the inputs on Tab 1 and click Calculate to see results.
+  </div>
+  <div id="output-content" style="display:none">
+    <div class="card">
+      <div class="card-title"><span class="card-dot"></span>Summary — For Product / Sales / GM Review</div>
+      <div id="summary-header" style="margin-bottom:16px"></div>
+      <div id="output-grid" class="result-grid"></div>
+    </div>
+    <div id="final-credit-box"></div>
+  </div>
+</div>
+ 
+<!-- TAB 5: ASSUMPTIONS -->
+<div class="tab-content" id="tab-notes">
+  <div class="card">
+    <div class="card-title"><span class="card-dot"></span>Assumptions & Data Sources</div>
+    <div id="assumptions-content">
+      <p style="color:#374151;font-size:13px">Complete the inputs on Tab 1 to populate this section.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="card-dot amber"></span>What This Calculator Does NOT Do</div>
+    <div style="font-size:13px;color:#9ca3af;line-height:1.8">
+      <p>❌ Does not pull Monthly License Fees from the MSA — fees come from your Order document or Salesforce</p>
+      <p>❌ Does not apply flat credit percentages — all credits are pro-rata abatements</p>
+      <p>❌ Does not handle multiple simultaneous failures from different events — each incident needs separate calculation</p>
+      <p>❌ Does not calculate credits for Environmental Stability (Article II) or Connectivity (Article III) failures</p>
+      <p>❌ Does not verify whether customer was in default — user must confirm from billing records</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="card-dot"></span>Contract Reference</div>
+    <div style="font-size:13px;color:#9ca3af;line-height:1.8">
+      <p><strong style="color:#f0f2ff">MSA:</strong> CoreSite Master License and Service Agreement</p>
+      <p><strong style="color:#f0f2ff">SLA:</strong> Exhibit A — Service Level Agreement, Article I (Power Availability)</p>
+      <p><strong style="color:#f0f2ff">Thresholds:</strong> Section I.A(i)–(iv)</p>
+      <p><strong style="color:#f0f2ff">Formulas:</strong> Section I.B(i)–(iv)</p>
+      <p><strong style="color:#f0f2ff">Caps:</strong> Section I.B(v)</p>
+      <p><strong style="color:#f0f2ff">Exclusions:</strong> Section IV.A</p>
+      <p><strong style="color:#f0f2ff">Aggregate Cap:</strong> Section IV.C</p>
+    </div>
+  </div>
+</div>
+ 
+<script>
+// State
+var state = {
+  default: null, custfault: null, fm: null,
+  circ: null, ab: null, cum: null
+};
+ 
+function setRadio(group, val) {
+  state[group] = val;
+  // clear all in group
+  document.querySelectorAll('"'"'[id^="rb-'"'"'+group+'"'"'-"]'"'"').forEach(function(el){ el.className = '"'"'radio-btn'"'"'; });
+  var el = document.getElementById('"'"'rb-'"'"'+group+'"'"'-'"'"'+val);
+  if(el){
+    var cls = '"'"'radio-btn active'"'"';
+    if(group==='"'"'default'"'"'&&val==='"'"'yes'"'"') cls+='"'"' red'"'"';
+    if(group==='"'"'custfault'"'"'&&val==='"'"'yes'"'"') cls+='"'"' red'"'"';
+    if(group==='"'"'fm'"'"'&&val==='"'"'yes'"'"') cls+='"'"' red'"'"';
+    if(group==='"'"'default'"'"'&&val==='"'"'no'"'"') cls+='"'"' green'"'"';
+    if(group==='"'"'custfault'"'"'&&val==='"'"'no'"'"') cls+='"'"' green'"'"';
+    if(group==='"'"'fm'"'"'&&val==='"'"'no'"'"') cls+='"'"' green'"'"';
+    if(group==='"'"'circ'"'"') cls+='"'"' '"'"';
+    if(group==='"'"'ab'"'"'&&val==='"'"'yes'"'"') cls+='"'"' green'"'"';
+    if(group==='"'"'ab'"'"'&&val==='"'"'no'"'"') cls+='"'"' red'"'"';
+    if(group==='"'"'cum'"'"') cls+='"'"''"'"';
+    el.className = cls;
+  }
+  runCalc();
+}
+ 
+function fmt(n){ return n===null||isNaN(n)?'"'"'—'"'"':'"'"'$'"'"'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,'"'"','"'"'); }
+function fmtN(n){ return n===null||isNaN(n)?'"'"'—'"'"':n.toLocaleString(); }
+function fmtSec(s){
+  if(!s||isNaN(s)) return '"'"''"'"';
+  var m=Math.floor(s/60), sec=s%60;
+  if(m===0) return s+'"'"'s'"'"';
+  return m+'"'"'m '"'"'+sec+'"'"'s'"'"';
+}
+ 
+function brow(label, val, cls){
+  cls = cls||'"'"''"'"';
+  return '"'"'<div class="brow"><span class="blbl">'"'"'+label+'"'"'</span><span class="bval '"'"'+cls+'"'"'">'"'"'+val+'"'"'</span></div>'"'"';
+}
+function browSec(label){
+  return '"'"'<div class="brow section"><span class="blbl">'"'"'+label+'"'"'</span></div>'"'"';
+}
+function browFinal(label, val, cls){
+  return '"'"'<div class="brow final"><span class="blbl">'"'"'+label+'"'"'</span><span class="bval '"'"'+(cls||'"'"'green'"'"')+'"'"'">'"'"'+val+'"'"'</span></div>'"'"';
+}
+ 
+function runCalc(){
+  // update duration display
+  var dur = parseFloat(document.getElementById('"'"'duration'"'"').value);
+  document.getElementById('"'"'duration-display'"'"').value = fmtSec(dur);
+ 
+  var fee      = parseFloat(document.getElementById('"'"'monthly-fee'"'"').value);
+  var days     = parseFloat(document.getElementById('"'"'days'"'"').value)||30;
+  var totCirc  = parseFloat(document.getElementById('"'"'total-circuits'"'"').value);
+  var duration = dur;
+  var prevPaid = parseFloat(document.getElementById('"'"'prev-credits'"'"').value)||0;
+  var circType = state.circ;
+  var abBoth   = state.ab;
+  var isCum    = state.cum;
+ 
+  var hasMinInputs = fee && totCirc && !isNaN(duration) && circType;
+ 
+  if(!hasMinInputs){
+    document.getElementById('"'"'calc-empty'"'"').style.display='"'"'block'"'"';
+    document.getElementById('"'"'calc-content'"'"').style.display='"'"'none'"'"';
+    document.getElementById('"'"'output-empty'"'"').style.display='"'"'block'"'"';
+    document.getElementById('"'"'output-content'"'"').style.display='"'"'none'"'"';
+    return;
+  }
+ 
+  document.getElementById('"'"'calc-empty'"'"').style.display='"'"'none'"'"';
+  document.getElementById('"'"'calc-content'"'"').style.display='"'"'block'"'"';
+  document.getElementById('"'"'output-empty'"'"').style.display='"'"'none'"'"';
+  document.getElementById('"'"'output-content'"'"').style.display='"'"'block'"'"';
+ 
+  // ── EXCLUSIONS ──
+  var excluded = false;
+  var exclusionReason = '"'"''"'"';
+  var exclRows = browSec('"'"'Exclusion Checks — Section IV.A'"'"');
+ 
+  var defVal = state.default;
+  var cfVal  = state.custfault;
+  var fmVal  = state.fm;
+ 
+  exclRows += brow('"'"'Customer in default?'"'"', defVal==='"'"'yes'"'"'?'"'"'YES — EXCLUDED'"'"':defVal==='"'"'no'"'"'?'"'"'No'"'"':'"'"'Not answered'"'"', defVal==='"'"'yes'"'"'?'"'"'red'"'"':defVal==='"'"'no'"'"'?'"'"'green'"'"':'"'"'amber'"'"');
+  exclRows += brow('"'"'Customer fault/equipment?'"'"', cfVal==='"'"'yes'"'"'?'"'"'YES — EXCLUDED'"'"':cfVal==='"'"'no'"'"'?'"'"'No'"'"':'"'"'Not answered'"'"', cfVal==='"'"'yes'"'"'?'"'"'red'"'"':cfVal==='"'"'no'"'"'?'"'"'green'"'"':'"'"'amber'"'"');
+  exclRows += brow('"'"'Force Majeure?'"'"', fmVal==='"'"'yes'"'"'?'"'"'YES — EXCLUDED'"'"':fmVal==='"'"'no'"'"'?'"'"'No'"'"':'"'"'Not answered'"'"', fmVal==='"'"'yes'"'"'?'"'"'red'"'"':fmVal==='"'"'no'"'"'?'"'"'green'"'"':'"'"'amber'"'"');
+ 
+  if(defVal==='"'"'yes'"'"'){ excluded=true; exclusionReason='"'"'Customer was in default at time of failure (Section IV.A.1).'"'"'; }
+  else if(cfVal==='"'"'yes'"'"'){ excluded=true; exclusionReason='"'"'Failure caused by customer equipment or actions (Section IV.A.2).'"'"'; }
+  else if(fmVal==='"'"'yes'"'"'){ excluded=true; exclusionReason='"'"'Failure caused by Force Majeure Event (Section IV.A.2).'"'"'; }
+ 
+  exclRows += browFinal('"'"'SLA Eligible?'"'"', excluded?'"'"'NO — EXCLUDED'"'"':'"'"'YES — Eligible'"'"', excluded?'"'"'red'"'"':'"'"'green'"'"');
+  document.getElementById('"'"'excl-content'"'"').innerHTML = exclRows;
+ 
+  // ── CLASSIFICATION ──
+  var classRows = browSec('"'"'Circuit Type & Thresholds'"'"');
+  var isRedundant = circType==='"'"'redundant'"'"';
+  var isPanel     = circType==='"'"'panel'"'"';
+  var isSingle    = circType==='"'"'single'"'"';
+  var isRedOrPanel= isRedundant||isPanel;
+ 
+  classRows += brow('"'"'Circuit type'"'"', isRedundant?'"'"'Redundant UPS (A+B)'"'"':isPanel?'"'"'Panel Redundant'"'"':'"'"'Single Circuit'"'"');
+ 
+  var failureType = null;
+  var creditType  = null;
+  var threshold   = null;
+  var triggered   = false;
+ 
+  if(isRedundant){
+    // need both A+B
+    var abOk = abBoth==='"'"'yes'"'"';
+    classRows += brow('"'"'Both A+B simultaneously failed?'"'"', abBoth==='"'"'yes'"'"'?'"'"'Yes'"'"':abBoth==='"'"'no'"'"'?'"'"'No — SLA requires both'"'"':'"'"'Not specified'"'"', abBoth==='"'"'yes'"'"'?'"'"'green'"'"':'"'"'red'"'"');
+    if(!abOk && abBoth!==null){
+      classRows += brow('"'"'Result'"'"', '"'"'No SLA failure — A+B must both fail simultaneously'"'"', '"'"'red'"'"');
+    } else if(abOk){
+      if(duration > 1){
+        failureType = '"'"'Redundant UPS Level 2'"'"';
+        creditType  = '"'"'Weekly'"'"';
+        threshold   = 26;
+        if(duration > 26){ failureType='"'"'Redundant UPS Level 2'"'"'; creditType='"'"'Weekly'"'"'; threshold=26; }
+        // Level 1 also triggered — pick highest (L2 = weekly = bigger)
+        classRows += brow('"'"'Redundant UPS L1 threshold (>1s)'"'"', duration>1?'"'"'TRIGGERED ('"'"'+duration+'"'"'s > 1s)'"'"':'"'"'Not triggered'"'"', duration>1?'"'"'green'"'"':'"'"'muted'"'"');
+        classRows += brow('"'"'Redundant UPS L2 threshold (>26s cumulative)'"'"', duration>26?'"'"'TRIGGERED ('"'"'+duration+'"'"'s > 26s)'"'"':'"'"'Not triggered'"'"', duration>26?'"'"'green'"'"':'"'"'muted'"'"');
+        if(duration>26){ failureType='"'"'Redundant UPS Level 2'"'"'; creditType='"'"'Weekly'"'"'; threshold=26; triggered=true; }
+        else if(duration>1){ failureType='"'"'Redundant UPS Level 1'"'"'; creditType='"'"'Daily'"'"'; threshold=1; triggered=true; }
+      }
+    }
+  } else {
+    // Single or Panel Redundant
+    classRows += brow('"'"'Circuit type detail'"'"', isPanel?'"'"'Panel Redundant — A+B pair at panel level'"'"':'"'"'Single Circuit — A feed only'"'"');
+    if(isPanel){
+      classRows += brow('"'"'Both A+B simultaneously failed?'"'"', abBoth==='"'"'yes'"'"'?'"'"'Yes'"'"':abBoth==='"'"'no'"'"'?'"'"'No — required for panel redundant'"'"':'"'"'Not specified'"'"', abBoth==='"'"'yes'"'"'?'"'"'green'"'"':'"'"'red'"'"');
+    }
+    var panelOk = isPanel ? abBoth==='"'"'yes'"'"' : true;
+    if(panelOk || isSingle){
+      classRows += brow('"'"'Single/Panel L1 threshold (>26s cumulative)'"'"', duration>26?'"'"'TRIGGERED ('"'"'+duration+'"'"'s > 26s)'"'"':'"'"'Not triggered ('"'"'+duration+'"'"'s ≤ 26s)'"'"', duration>26?'"'"'green'"'"':'"'"'muted'"'"');
+      classRows += brow('"'"'Single/Panel L2 threshold (>270s cumulative)'"'"', duration>270?'"'"'TRIGGERED ('"'"'+duration+'"'"'s > 270s)'"'"':'"'"'Not triggered'"'"', duration>270?'"'"'green'"'"':'"'"'muted'"'"');
+      if(duration>270){ failureType='"'"'Single/Panel Redundant Level 2'"'"'; creditType='"'"'Weekly'"'"'; threshold=270; triggered=true; }
+      else if(duration>26){ failureType='"'"'Single/Panel Redundant Level 1'"'"'; creditType='"'"'Daily'"'"'; threshold=26; triggered=true; }
+    }
+  }
+ 
+  if(triggered){
+    classRows += browFinal('"'"'Failure Classification'"'"', failureType, '"'"'green'"'"');
+    classRows += brow('"'"'Remedy basis'"'"', creditType+'"'"' Circuit Abatement'"'"', '"'"'green'"'"');
+  } else if(!excluded){
+    classRows += browFinal('"'"'Result'"'"', '"'"'No SLA failure — threshold not exceeded'"'"', '"'"'red'"'"');
+  }
+  document.getElementById('"'"'class-content'"'"').innerHTML = classRows;
+ 
+  // ── MATH ──
+  var dailyFee     = fee / days;
+  var weeklyFee    = fee / 4;
+  var circFraction = 1 / totCirc;
+  var dailyCirc    = dailyFee * circFraction;
+  var weeklyCirc   = weeklyFee * circFraction;
+  var rawCredit    = 0;
+ 
+  if(!excluded && triggered){
+    rawCredit = creditType==='"'"'Daily'"'"' ? dailyCirc : weeklyCirc;
+  }
+ 
+  // caps
+  var dailyCircCap   = dailyFee / totCirc;
+  var monthlyCircCap = fee / totCirc;
+  var monthlyFeeCap  = fee;
+  var threeMonthCap  = fee * 3;
+  var remainingCap   = Math.max(0, threeMonthCap - prevPaid);
+  var afterDailyCap  = Math.min(rawCredit, dailyCircCap);
+  var afterMonthCap  = Math.min(afterDailyCap, monthlyCircCap);
+  var afterFeeCap    = Math.min(afterMonthCap, monthlyFeeCap);
+  var finalCredit    = Math.min(afterFeeCap, remainingCap);
+ 
+  var mathRows = browSec('"'"'Base Values'"'"');
+  mathRows += brow('"'"'Monthly License Fee'"'"', fmt(fee));
+  mathRows += brow('"'"'Days in Month'"'"', days+'"'"' days'"'"');
+  mathRows += brow('"'"'Total Power Circuits'"'"', fmtN(totCirc));
+  mathRows += brow('"'"'Circuit Fraction (1 / Total Circuits)'"'"', '"'"'1 / '"'"'+totCirc+'"'"' = '"'"'+(circFraction*100).toFixed(4)+'"'"'%'"'"');
+  mathRows += brow('"'"'Daily License Fee (Monthly ÷ Days)'"'"', fmt(dailyFee));
+  mathRows += brow('"'"'Weekly License Fee (Monthly ÷ 4)'"'"', fmt(weeklyFee));
+  mathRows += brow('"'"'Daily Circuit Abatement'"'"', fmt(dailyCirc));
+  mathRows += brow('"'"'Weekly Circuit Abatement'"'"', fmt(weeklyCirc));
+ 
+  if(excluded){
+    mathRows += browSec('"'"'Abatement Excluded'"'"');
+    mathRows += brow('"'"'Reason'"'"', exclusionReason, '"'"'red'"'"');
+    mathRows += browFinal('"'"'Raw Credit'"'"', '"'"'$0.00'"'"', '"'"'red'"'"');
+  } else if(!triggered){
+    mathRows += browSec('"'"'No Failure Triggered'"'"');
+    mathRows += brow('"'"'Threshold not exceeded'"'"', '"'"'Duration '"'"'+duration+'"'"'s below threshold'"'"', '"'"'muted'"'"');
+    mathRows += browFinal('"'"'Raw Credit'"'"', '"'"'$0.00'"'"', '"'"'red'"'"');
+  } else {
+    mathRows += browSec('"'"'Abatement Calculation'"'"');
+    mathRows += brow('"'"'Failure type'"'"', failureType);
+    mathRows += brow('"'"'Credit basis'"'"', creditType+'"'"' Abatement'"'"');
+    mathRows += brow('"'"'Raw Credit ('"'"'+(creditType==='"'"'Daily'"'"'?'"'"'Daily'"'"':'"'"'Weekly'"'"')+'"'"' × Circuit Fraction)'"'"', fmt(rawCredit));
+    mathRows += browSec('"'"'Cap Waterfall — Section I.B(v) & IV.C'"'"');
+    mathRows += brow('"'"'① Daily Circuit Cap'"'"', fmt(dailyCircCap), rawCredit>dailyCircCap?'"'"'red'"'"':'"'"'green'"'"');
+    mathRows += brow('"'"'After Daily Circuit Cap'"'"', fmt(afterDailyCap));
+    mathRows += brow('"'"'② Monthly Circuit Cap'"'"', fmt(monthlyCircCap), afterDailyCap>monthlyCircCap?'"'"'red'"'"':'"'"'green'"'"');
+    mathRows += brow('"'"'After Monthly Circuit Cap'"'"', fmt(afterMonthCap));
+    mathRows += brow('"'"'③ Monthly Fee Cap'"'"', fmt(monthlyFeeCap));
+    mathRows += brow('"'"'After Monthly Fee Cap'"'"', fmt(afterFeeCap));
+    mathRows += brow('"'"'④ 3-Month Aggregate Cap (Monthly × 3)'"'"', fmt(threeMonthCap));
+    mathRows += brow('"'"'Credits already paid this quarter'"'"', fmt(prevPaid));
+    mathRows += brow('"'"'Remaining 3-Month Cap'"'"', fmt(remainingCap), remainingCap===0?'"'"'red'"'"':remainingCap<threeMonthCap*0.25?'"'"'amber'"'"':'"'"'green'"'"');
+    mathRows += browFinal('"'"'FINAL CREDIT (after all caps)'"'"', fmt(finalCredit), finalCredit>0?'"'"'green'"'"':'"'"'red'"'"');
+  }
+  document.getElementById('"'"'math-content'"'"').innerHTML = mathRows;
+ 
+  // ── OUTPUT ──
+  var customerName = document.getElementById('"'"'customer-name'"'"').value||'"'"'—'"'"';
+  var site         = document.getElementById('"'"'site'"'"').value||'"'"'—'"'"';
+  var space        = document.getElementById('"'"'space'"'"').value||'"'"'—'"'"';
+  var outageDate   = document.getElementById('"'"'outage-date'"'"').value||'"'"'—'"'"';
+  var circTypeLabel= isRedundant?'"'"'Redundant UPS'"'"':isPanel?'"'"'Panel Redundant'"'"':'"'"'Single Circuit'"'"';
+ 
+  document.getElementById('"'"'summary-header'"'"').innerHTML =
+    '"'"'<div style="font-size:13px;color:#9ca3af;line-height:1.8">'"'"'+
+    '"'"'<strong style="color:#f0f2ff">Customer:</strong> '"'"'+customerName+
+    '"'"' &nbsp;|&nbsp; <strong style="color:#f0f2ff">Site:</strong> '"'"'+site+
+    '"'"' &nbsp;|&nbsp; <strong style="color:#f0f2ff">Space:</strong> '"'"'+space+
+    '"'"' &nbsp;|&nbsp; <strong style="color:#f0f2ff">Date:</strong> '"'"'+outageDate+
+    '"'"'</div>'"'"';
+ 
+  var isElig = !excluded && triggered && finalCredit > 0;
+  var eligBadge = excluded?'"'"'<div class="elig-badge elig-no">❌ NOT ELIGIBLE — Exclusion Applies</div>'"'"':
+    triggered?'"'"'<div class="elig-badge elig-yes">✅ SLA ELIGIBLE — Credit Applicable</div>'"'"':
+    '"'"'<div class="elig-badge elig-no">❌ NOT ELIGIBLE — Threshold Not Exceeded</div>'"'"';
+  document.getElementById('"'"'summary-header'"'"').innerHTML += eligBadge;
+ 
+  var gridHTML =
+    '"'"'<div class="result-item"><div class="rv '"'"'+(isElig?'"'"'green'"'"':'"'"'red'"'"')+'"'"'">'"'"'+(isElig?'"'"'Yes'"'"':'"'"'No'"'"')+'"'"'</div><div class="rl">SLA Eligible</div></div>'"'"'+
+    '"'"'<div class="result-item"><div class="rv" style="font-size:14px">'"'"'+(failureType||'"'"'N/A'"'"')+'"'"'</div><div class="rl">Failure Classification</div></div>'"'"'+
+    '"'"'<div class="result-item"><div class="rv">'"'"'+(triggered?'"'"'Yes'"'"':'"'"'No'"'"')+'"'"'</div><div class="rl">Threshold Exceeded</div></div>'"'"'+
+    '"'"'<div class="result-item"><div class="rv">'"'"'+(creditType||'"'"'N/A'"'"')+'"'"'</div><div class="rl">Abatement Basis</div></div>'"'"'+
+    '"'"'<div class="result-item"><div class="rv">'"'"'+fmtN(totCirc||0)+'"'"'</div><div class="rl">Total Power Circuits</div></div>'"'"'+
+    '"'"'<div class="result-item"><div class="rv">'"'"'+(totCirc?'"'"'1 / '"'"'+totCirc:'"'"'—'"'"')+'"'"'</div><div class="rl">Circuit Fraction Applied</div></div>'"'"'+
+    '"'"'<div class="result-item '"'"'+(isElig?'"'"'highlight'"'"':'"'"''"'"')+'"'"'"><div class="rv '"'"'+(isElig?'"'"'green'"'"':'"'"''"'"')+'"'"'">'"'"'+fmt(fee)+'"'"'</div><div class="rl">Monthly License Fee Used</div></div>'"'"'+
+    '"'"'<div class="result-item '"'"'+(isElig?'"'"'highlight'"'"':'"'"''"'"')+'"'"'"><div class="rv '"'"'+(isElig?'"'"'green'"'"':'"'"'red'"'"')+'"'"'">'"'"'+fmt(finalCredit)+'"'"'</div><div class="rl">Calculated SLA Credit</div></div>'"'"'+
+    '"'"'<div class="result-item"><div class="rv" style="font-size:14px">'"'"'+(isElig?fmt(threeMonthCap - prevPaid - finalCredit)+'"'"' remaining'"'"':'"'"'N/A'"'"')+'"'"'</div><div class="rl">3-Month Cap Remaining</div></div>'"'"';
+  document.getElementById('"'"'output-grid'"'"').innerHTML = gridHTML;
+ 
+  var creditBoxHTML = '"'"''"'"';
+  if(isElig){
+    creditBoxHTML = '"'"'<div class="credit-box eligible">'"'"'+
+      '"'"'<div class="credit-amount green">'"'"'+fmt(finalCredit)+'"'"'</div>'"'"'+
+      '"'"'<div class="credit-label">SLA Abatement Credit</div>'"'"'+
+      '"'"'<div class="credit-sub">'"'"'+failureType+'"'"' — '"'"'+creditType+'"'"' Circuit Abatement — '"'"'+fmtN(totCirc)+'"'"' circuits</div>'"'"'+
+      (finalCredit<rawCredit?'"'"'<div class="credit-sub" style="color:#f0a500">Credit reduced from '"'"'+fmt(rawCredit)+'"'"' due to cap</div>'"'"':'"'"''"'"')+
+      '"'"'</div>'"'"';
+  } else {
+    var reason = excluded?exclusionReason:!triggered?'"'"'Outage duration ('"'"'+fmtN(duration)+'"'"'s) did not exceed the applicable SLA threshold.'"'"':'"'"'No credit applicable.'"'"';
+    creditBoxHTML = '"'"'<div class="credit-box ineligible">'"'"'+
+      '"'"'<div class="credit-amount red">$0.00</div>'"'"'+
+      '"'"'<div class="credit-label">No SLA Abatement Owed</div>'"'"'+
+      '"'"'<div class="credit-reason">'"'"'+reason+'"'"'</div>'"'"'+
+      '"'"'</div>'"'"';
+  }
+  document.getElementById('"'"'final-credit-box'"'"').innerHTML = creditBoxHTML;
+ 
+  // ── ASSUMPTIONS ──
+  var contract = document.getElementById('"'"'contract-ref'"'"').value||'"'"'Not specified'"'"';
+  var notes    = document.getElementById('"'"'incident-notes'"'"').value||'"'"'None'"'"';
+  var aHTML =
+    '"'"'<div class="assumption-row"><span class="a-key">Customer</span><span class="a-val">'"'"'+customerName+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Contract / Order Ref</span><span class="a-val">'"'"'+contract+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Site</span><span class="a-val">'"'"'+site+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Individual Space</span><span class="a-val">'"'"'+space+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Date of Outage</span><span class="a-val">'"'"'+outageDate+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Monthly License Fee Source</span><span class="a-val">User-entered — from Order document</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Monthly License Fee Used</span><span class="a-val">'"'"'+fmt(fee)+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Circuit Type</span><span class="a-val">'"'"'+circTypeLabel+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Total Power Circuits</span><span class="a-val">'"'"'+fmtN(totCirc)+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Circuit A — Actual Draw</span><span class="a-val">'"'"'+(parseFloat(document.getElementById('"'"'draw-a'"'"').value)||0).toFixed(2)+'"'"' A (from ops report)</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Circuit B — Actual Draw</span><span class="a-val">'"'"'+(parseFloat(document.getElementById('"'"'draw-b'"'"').value)||0).toFixed(2)+'"'"' A (from ops report)</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Outage Duration</span><span class="a-val">'"'"'+fmtN(duration)+'"'"'s ('"'"'+fmtSec(duration)+'"'"')</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Cumulative for month?</span><span class="a-val">'"'"'+(isCum==='"'"'yes'"'"'?'"'"'Yes'"'"':'"'"'No'"'"')+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Customer in default?</span><span class="a-val">'"'"'+(state.default==='"'"'yes'"'"'?'"'"'YES'"'"':'"'"'No'"'"')+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Customer fault?</span><span class="a-val">'"'"'+(state.custfault==='"'"'yes'"'"'?'"'"'YES'"'"':'"'"'No'"'"')+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Force Majeure?</span><span class="a-val">'"'"'+(state.fm==='"'"'yes'"'"'?'"'"'YES'"'"':'"'"'No'"'"')+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">SLA Eligible</span><span class="a-val">'"'"'+(isElig?'"'"'Yes — credit owed'"'"':'"'"'No — see reason'"'"')+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Final Credit</span><span class="a-val">'"'"'+fmt(finalCredit)+'"'"'</span></div>'"'"'+
+    '"'"'<div class="assumption-row"><span class="a-key">Incident Notes</span><span class="a-val" style="font-size:11px">'"'"'+notes+'"'"'</span></div>'"'"';
+  document.getElementById('"'"'assumptions-content'"'"').innerHTML = aHTML;
+}
+ 
+function showTab(name){
+  document.querySelectorAll('"'"'.tab-content'"'"').forEach(function(el){ el.className='"'"'tab-content'"'"'; });
+  document.querySelectorAll('"'"'.tab'"'"').forEach(function(el){ el.className='"'"'tab'"'"'; });
+  document.getElementById('"'"'tab-'"'"'+name).className='"'"'tab-content active'"'"';
+  var tabs=['"'"'inputs'"'"','"'"'rules'"'"','"'"'calc'"'"','"'"'output'"'"','"'"'notes'"'"'];
+  var idx=tabs.indexOf(name);
+  document.querySelectorAll('"'"'.tab'"'"')[idx].className='"'"'tab active'"'"';
+}
+ 
+function clearAll(){
+  document.querySelectorAll('"'"'input[type="text"],input[type="number"],input[type="date"],textarea'"'"').forEach(function(el){
+    if(el.id==='"'"'days'"'"') el.value='"'"'30'"'"';
+    else if(el.id==='"'"'prev-credits'"'"') el.value='"'"'0'"'"';
+    else el.value='"'"''"'"';
+  });
+  ['"'"'default'"'"','"'"'custfault'"'"','"'"'fm'"'"','"'"'circ'"'"','"'"'ab'"'"','"'"'cum'"'"'].forEach(function(g){ state[g]=null; });
+  document.querySelectorAll('"'"'.radio-btn'"'"').forEach(function(el){ el.className='"'"'radio-btn'"'"'; });
+  document.getElementById('"'"'calc-empty'"'"').style.display='"'"'block'"'"';
+  document.getElementById('"'"'calc-content'"'"').style.display='"'"'none'"'"';
+  document.getElementById('"'"'output-empty'"'"').style.display='"'"'block'"'"';
+  document.getElementById('"'"'output-content'"'"').style.display='"'"'none'"'"';
+  document.getElementById('"'"'assumptions-content'"'"').innerHTML='"'"'<p style="color:#374151;font-size:13px">Complete the inputs on Tab 1 to populate this section.</p>'"'"';
+}
+ 
+function toggleTheme(){
+  var body=document.body, btn=document.getElementById('"'"'theme-btn'"'"');
+  if(body.classList.contains('"'"'light'"'"')){ body.classList.remove('"'"'light'"'"'); btn.textContent='"'"'Light mode'"'"'; }
+  else{ body.classList.add('"'"'light'"'"'); btn.textContent='"'"'Dark mode'"'"'; }
+}
+ 
+// init defaults
+setRadio('"'"'default'"'"','"'"'no'"'"');
+setRadio('"'"'custfault'"'"','"'"'no'"'"');
+setRadio('"'"'fm'"'"','"'"'no'"'"');
+setRadio('"'"'cum'"'"','"'"'no'"'"');
+</script>
+</body>
+</html>
+ 

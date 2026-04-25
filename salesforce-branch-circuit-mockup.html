@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salesforce Product Catalog — Modernization Mockup</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'"'"'Segoe UI'"'"',sans-serif;background:#f3f3f3;padding:24px;color:#16325c}
+h1{font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px}
+.subtitle{font-size:12px;color:#706e6b;margin-bottom:16px}
+.toggle-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.toggle-lbl{font-size:13px;font-weight:500;color:#444}
+.toggle-track{position:relative;width:44px;height:24px;border-radius:12px;cursor:pointer;transition:background 0.2s;display:inline-block}
+.toggle-track input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;z-index:1}
+.toggle-knob{position:absolute;top:4px;left:4px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform 0.2s;pointer-events:none}
+.callout{padding:8px 12px;border-radius:4px;font-size:12px;margin-bottom:10px;border-left:3px solid}
+.callout-red{background:#fde8e8;border-color:#c23934;color:#c23934}
+.callout-green{background:#e3f5e3;border-color:#2e7d32;color:#2e7d32}
+/* SF chrome */
+.sf-wrap{border-radius:8px;overflow:hidden;border:1px solid #dddbda;margin-bottom:16px}
+.sf-topbar{background:#0070d2;padding:7px 14px;display:flex;align-items:center;gap:10px}
+.sf-topbar-title{color:#fff;font-size:13px;font-weight:500}
+.sf-topbar-pill{background:rgba(255,255,255,0.25);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px}
+.sf-subbar{background:#f3f3f3;border-bottom:1px solid #dddbda;padding:8px 14px;display:flex;align-items:center;justify-content:space-between}
+.sf-subbar-title{font-size:15px;font-weight:600;color:#16325c}
+.sf-meta{font-size:11px;color:#706e6b;padding:5px 14px;background:#fff;border-bottom:1px solid #f0f0f0}
+.sf-table-wrap{overflow-x:auto;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:#f3f3f3;border-bottom:1px solid #dddbda}
+th{padding:7px 10px;text-align:left;font-size:11px;font-weight:600;color:#706e6b;white-space:nowrap;border-right:0.5px solid #e0e0e0}
+td{padding:6px 10px;border-bottom:0.5px solid #f0f0f0;color:#16325c;white-space:nowrap}
+tr:hover td{background:#f8f8ff}
+.link{color:#0070d2;cursor:pointer;text-decoration:underline}
+.badge{display:inline-block;font-size:10px;padding:1px 7px;border-radius:3px;font-weight:500}
+.b-green{background:#e3f5e3;color:#2e7d32}
+.b-blue{background:#e0f0ff;color:#0070d2}
+.b-red{background:#fde8e8;color:#c23934}
+.b-purple{background:#f3e8ff;color:#6b21a8}
+.b-orange{background:#fff3e0;color:#e65100}
+.b-gray{background:#f3f3f3;color:#706e6b}
+.b-teal{background:#e0f7f4;color:#006d5b}
+/* Step labels */
+.step-wrap{margin-bottom:20px}
+.step-label{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.step-num{background:#0070d2;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:3px;white-space:nowrap}
+.step-title{font-size:13px;font-weight:600;color:#16325c}
+.step-sub{font-size:11px;color:#706e6b;margin-left:4px}
+/* Step 1 form */
+.step1-card{background:#fff;border:1px solid #dddbda;border-radius:6px;padding:16px;margin-bottom:8px}
+.step1-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.sf-field{margin-bottom:12px}
+.sf-field label{display:block;font-size:10px;font-weight:600;color:#706e6b;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
+.sf-field select,.sf-field input{width:100%;padding:6px 9px;border:1px solid #dddbda;border-radius:4px;font-size:12px;color:#16325c;background:#fff}
+.sf-field-span{grid-column:1/-1}
+.required{color:#c23934}
+.hint{font-size:11px;color:#706e6b;margin-top:3px}
+.info-btn{font-size:10px;color:#0070d2;cursor:pointer;text-decoration:underline;font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px}
+/* Category tabs */
+.cat-tabs{display:flex;gap:0;background:#f3f3f3;border-bottom:2px solid #0070d2;margin:0}
+.ctab{padding:10px 20px;font-size:12px;font-weight:600;cursor:pointer;color:#706e6b;border:1px solid #dddbda;border-bottom:none;background:#f3f3f3;margin-right:4px;border-radius:4px 4px 0 0}
+.ctab.active{background:#0070d2;color:#fff;border-color:#0070d2}
+.ctab:hover:not(.active){background:#e8f0fe;color:#0070d2}
+/* Product tabs */
+.product-tabs{display:flex;gap:4px;padding:8px 14px 0;background:#fff;border-bottom:1px solid #dddbda;flex-wrap:wrap}
+.ptab{padding:7px 12px;font-size:11px;font-weight:600;cursor:pointer;border-radius:4px 4px 0 0;border:1px solid transparent;border-bottom:none;color:#706e6b;background:#f3f3f3;margin-bottom:-1px}
+.ptab.active{background:#fff;border-color:#dddbda;color:#0070d2;border-bottom-color:#fff}
+.ptab:hover:not(.active){background:#e8f0fe;color:#0070d2}
+/* Forms */
+.sf-form-card{background:#fff;border:1px solid #dddbda;border-top:none;border-radius:0 0 6px 6px;padding:16px;margin-bottom:16px}
+.sf-form-title{font-size:13px;font-weight:600;color:#16325c;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
+.sf-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.sf-col-title{font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.06em;padding:6px 0;border-bottom:1px solid #f0f0f0;margin-bottom:10px}
+.sf-btn-row{display:flex;gap:8px;margin-top:14px}
+.sf-btn-p{padding:6px 16px;background:#0070d2;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer}
+.sf-btn-s{padding:6px 14px;background:#fff;color:#0070d2;border:1px solid #0070d2;border-radius:4px;font-size:12px;cursor:pointer}
+.topo-hint{margin-top:6px;font-size:11px;padding:8px 10px;border-radius:4px;display:none;line-height:1.5}
+.warn-flag{margin-top:4px;font-size:11px;padding:5px 8px;border-radius:4px;background:#fde8e8;border-left:3px solid #c23934;color:#c23934;display:none}
+.market-pill{display:inline-flex;align-items:center;gap:4px;background:#e8f4ff;border:1px solid #0070d2;border-radius:3px;font-size:10px;color:#0070d2;padding:1px 6px;margin-left:6px;font-weight:500}
+/* Pane visibility */
+.product-pane{display:none}
+.product-pane.active{display:block}
+.cat-pane{display:none}
+.cat-pane.active{display:block}
+/* Impact */
+.impact{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.impact-card{background:#f9f9f9;border-radius:6px;padding:10px 12px;border:1px solid #e0e0e0}
+.impact-num{font-size:20px;font-weight:500}
+.impact-lbl{font-size:11px;color:#706e6b;margin-top:2px}
+</style>
+</head>
+<body>
+<h1>Salesforce Product Catalog — Modernization</h1>
+<p class="subtitle">CoreSite SFDC Product Modernization · Current State vs Future State · Toggle to compare</p>
+ 
+<div class="toggle-row">
+  <span class="toggle-lbl">Current state</span>
+  <label class="toggle-track" id="tt" style="background:#c23934">
+    <input type="checkbox" id="tog" onchange="sw(this.checked)">
+    <span class="toggle-knob" id="tk"></span>
+  </label>
+  <span class="toggle-lbl">Future state</span>
+</div>
+ 
+<!-- CURRENT STATE -->
+<div id="cur">
+  <div class="callout callout-red">50+ product codes — every amperage, voltage, delivery type, and cabinet size is a separate product. No structured workflow. Sales reps build quotes without a guided process.</div>
+  <div class="sf-wrap">
+    <div class="sf-topbar">
+      <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+      <span class="sf-topbar-title">Sales — Product Catalog</span>
+      <span class="sf-topbar-pill">Current state</span>
+    </div>
+    <div class="sf-subbar">
+      <span class="sf-subbar-title">Product Catalog</span>
+      <span class="badge b-red">Current state — 50+ codes · No guided workflow</span>
+    </div>
+    <div class="sf-meta">Every variation = a separate product code · No step-by-step process · No dynamic filtering</div>
+    <div class="sf-table-wrap">
+      <table>
+        <thead><tr><th>Product name</th><th>Product code</th><th>Status</th><th>Type</th><th>Delivery</th><th>Amps</th><th>Voltage</th></tr></thead>
+        <tbody>
+          <tr style="background:#fff8e1"><td><span class="link">DC Power 10A A/B Circuits</span></td><td>PW-DC-10</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary & Redundant</td><td>10A</td><td>-48V DC</td></tr>
+          <tr style="background:#fff8e1"><td><span class="link">Primary 120V 20A Circuit</span></td><td>PW-ACP-120-20</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>20A</td><td>120V</td></tr>
+          <tr style="background:#fff8e1"><td><span class="link">Redundant 208V 30A Circuit</span></td><td>PW-ACR-208-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>30A</td><td>208V</td></tr>
+          <tr style="background:#e8f5e8"><td><span class="link">Standard Density Cabinet 2.4kW</span></td><td>SP-CAB-SD-2.4</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr style="background:#e8f5e8"><td><span class="link">High Density Cabinet 10kW</span></td><td>SP-CAB-HD-10</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr style="background:#f3e8ff"><td><span class="link">Private Cage 10x10</span></td><td>SP-CAGE-10x10</td><td><span class="badge b-green">Active</span></td><td>Cage</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td colspan="7" style="text-align:center;padding:10px;color:#706e6b;font-size:11px;background:#fafafa">+ 40 more products — Roof, Office, Storage, Raceway, IX types also fragmented...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+<!-- FUTURE STATE -->
+<div id="fut" style="display:none">
+  <div class="callout callout-green">3-step guided workflow · 3 structured categories · 7 space types · All attributes as picklists · Dynamic market filtering from opportunity</div>
+ 
+  <!-- STEP 1 -->
+  <div class="step-wrap">
+    <div class="step-label">
+      <span class="step-num">Step 1</span>
+      <span class="step-title">Opportunity Setup</span>
+      <span class="step-sub">— Sales adds market(s), total kW, contract structure, $/kW, and PF at the opportunity level</span>
+    </div>
+    <div class="step1-card">
+      <div class="step1-grid">
+        <div class="sf-field">
+          <label>Market(s) <span class="required">*</span></label>
+          <select>
+            <option>Los Angeles (LA1)</option>
+            <option>Chicago (CH1)</option>
+            <option>Denver (DE1)</option>
+            <option>New York (NY2)</option>
+            <option>Santa Clara (SV9)</option>
+          </select>
+          <div class="hint">Drives available markets in Step 2</div>
+        </div>
+        <div class="sf-field">
+          <label>Total kW <span class="required">*</span></label>
+          <input type="number" placeholder="e.g. 500" min="0">
+          <div class="hint">Total power for this opportunity</div>
+        </div>
+        <div class="sf-field">
+          <label>Contract Structure <span class="required">*</span></label>
+          <select>
+            <option>Standard MRC</option>
+            <option>Tiered</option>
+            <option>Custom</option>
+            <option>Enterprise Agreement</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>$/kW <span class="required">*</span> <span style="font-size:10px;color:#706e6b;font-weight:400">(Site Pricing Matrix)</span></label>
+          <input type="number" placeholder="e.g. 120" min="0">
+          <div class="hint">From site pricing matrix</div>
+        </div>
+        <div class="sf-field">
+          <label>Power Factor (PF) <span class="required">*</span></label>
+          <select>
+            <option>0.8 — Standard data center</option>
+            <option>0.9 — High efficiency</option>
+            <option>1.0 — Unity</option>
+            <option>Custom</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0">
+        <button class="sf-btn-s">Save & continue to Step 2</button>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- STEP 2-A -->
+  <div class="step-wrap">
+    <div class="step-label">
+      <span class="step-num">Step 2-A</span>
+      <span class="step-title">Add Space Types</span>
+      <span class="step-sub">— Cage, CoreSite Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod</span>
+    </div>
+    <div class="sf-wrap">
+      <div class="sf-topbar">
+        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
+        <span class="sf-topbar-pill">Step 2-A · Space Types</span>
+      </div>
+      <div class="sf-meta" style="padding:8px 14px">Select a space type to configure · Markets auto-filter from Step 1</div>
+      <div class="product-tabs">
+        <div class="ptab active" id="tab-cage" onclick="switchTab('"'"'cage'"'"')">🔲 Cage</div>
+        <div class="ptab" id="tab-cabinet" onclick="switchTab('"'"'cabinet'"'"')">🗄 CoreSite Cabinet</div>
+        <div class="ptab" id="tab-roof" onclick="switchTab('"'"'roof'"'"')">🏢 Roof</div>
+        <div class="ptab" id="tab-office" onclick="switchTab('"'"'office'"'"')">💼 Office</div>
+        <div class="ptab" id="tab-storage" onclick="switchTab('"'"'storage'"'"')">📦 Storage</div>
+        <div class="ptab" id="tab-raceway" onclick="switchTab('"'"'raceway'"'"')">🔌 Raceway</div>
+        <div class="ptab" id="tab-ix" onclick="switchTab('"'"'ix'"'"')">🌐 IX</div>
+        <div class="ptab" id="tab-lcpod" onclick="switchTab('"'"'lcpod'"'"')">❄️ LC-Ready Pod</div>
+      </div>
+ 
+      <!-- CAGE -->
+      <div class="product-pane active sf-form-card" id="pane-cage">
+        <div class="sf-form-title"><span>🔲 Cage / Private Suite — configure</span><span class="badge b-purple">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field">
+              <label>Cage type <span class="required">*</span></label>
+              <select><option>Private Cage</option><option>Private Suite</option><option>Custom Build Out</option></select>
+            </div>
+            <div class="sf-field">
+              <label>Square footage (sq ft) <span class="required">*</span></label>
+              <input type="number" placeholder="e.g. 400" min="1">
+              <div class="hint">Used to calculate W/sq ft and room requirements</div>
+            </div>
+            <div class="sf-field">
+              <label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label>
+              <select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option></select>
+              <div class="hint">Only markets entered in Step 1 are available</div>
+            </div>
+          </div>
+          <div>
+            <div class="sf-col-title">Cooling</div>
+            <div class="sf-field">
+              <label>Cooling type</label>
+              <select>
+                <option selected>Air — standard CRAC/CRAH</option>
+                <option>ColoCool (in-row liquid assisted)</option>
+                <option>Rear-door heat exchanger</option>
+                <option>Direct chip liquid cooling</option>
+              </select>
+              <div class="hint">ColoCool = attribute of this space, not a separate space type</div>
+            </div>
+            <div class="sf-field">
+              <label>ColoCool provisioned</label>
+              <select>
+                <option selected>No</option>
+                <option>Yes — EDPM hose with mobile header</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+ 
+      <!-- CORESITE CABINET -->
+      <div class="product-pane sf-form-card" id="pane-cabinet">
+        <div class="sf-form-title"><span>🗄 CoreSite Cabinet — configure</span><span class="badge b-green">Space type · Pre-deployed CoreSite asset</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Physical dimensions</div>
+            <div class="sf-field"><label>Rack units (U) <span class="required">*</span></label><select><option>42U</option><option>45U</option><option selected>48U</option><option>52U</option><option>54U</option></select></div>
+            <div class="sf-field"><label>Width <span class="required">*</span></label><select><option selected>600mm (23.6")</option><option>700mm (27.6")</option><option>750mm (29.5")</option><option>800mm (31.5")</option></select></div>
+            <div class="sf-field"><label>Depth <span class="required">*</span></label><select><option>900mm</option><option selected>1000mm</option><option>1070mm</option><option>1200mm</option><option>1370mm</option><option>1500mm</option></select></div>
+            <div class="sf-field">
+              <label>Weight of equipment (lbs) <span class="required">*</span></label>
+              <input type="number" id="cab-weight" placeholder="e.g. 1200" min="0" oninput="checkWeight()">
+              <div class="warn-flag" id="weight-warn">⚠ Weight may exceed max floor load for selected market — verify with facilities</div>
+            </div>
+          </div>
+          <div>
+            <div class="sf-col-title">Cooling & location</div>
+            <div class="sf-field">
+              <label>Cooling type</label>
+              <select>
+                <option selected>Air — standard CRAC/CRAH</option>
+                <option>ColoCool (in-row liquid assisted)</option>
+                <option>Rear-door heat exchanger</option>
+                <option>Direct chip liquid cooling</option>
+              </select>
+              <div class="hint">ColoCool = attribute of this cabinet, not a separate space type</div>
+            </div>
+            <div class="sf-field">
+              <label>ColoCool provisioned</label>
+              <select><option selected>No</option><option>Yes — EDPM hose with mobile header</option></select>
+            </div>
+            <div class="sf-field">
+              <label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label>
+              <select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option></select>
+            </div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+ 
+      <!-- ROOF -->
+      <div class="product-pane sf-form-card" id="pane-roof">
+        <div class="sf-form-title"><span>🏢 Roof Space — configure</span><span class="badge b-orange">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field"><label>Square footage (sq ft) <span class="required">*</span></label><input type="number" placeholder="e.g. 200" min="1"></div>
+            <div class="sf-field"><label>Dunnage (sq ft)</label><input type="number" placeholder="e.g. 50" min="0"><div class="hint">Raised platform area on roof</div></div>
+            <div class="sf-field"><label>Max equipment weight (lbs)</label><input type="number" placeholder="e.g. 500" min="0"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+ 
+      <!-- OFFICE -->
+      <div class="product-pane sf-form-card" id="pane-office">
+        <div class="sf-form-title"><span>💼 Office Space — configure</span><span class="badge b-gray">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field"><label>Square footage (sq ft) <span class="required">*</span></label><input type="number" placeholder="e.g. 150" min="1"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+ 
+      <!-- STORAGE -->
+      <div class="product-pane sf-form-card" id="pane-storage">
+        <div class="sf-form-title"><span>📦 Storage Space — configure</span><span class="badge b-gray">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field"><label>Square footage (sq ft) <span class="required">*</span></label><input type="number" placeholder="e.g. 100" min="1"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+ 
+      <!-- RACEWAY -->
+      <div class="product-pane sf-form-card" id="pane-raceway">
+        <div class="sf-form-title"><span>🔌 Raceway — configure</span><span class="badge b-gray">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Physical details</div>
+            <div class="sf-field"><label>Diameter <span class="required">*</span></label><select><option>1"</option><option>2"</option><option selected>4"</option><option>6"</option></select></div>
+            <div class="sf-field"><label>Type <span class="required">*</span></label><select><option selected>Internal</option><option>External</option></select></div>
+            <div class="sf-field"><label>Conduit type</label><select><option selected>Innerduct</option><option>Conduit</option></select></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+ 
+      <!-- IX — Interconnection -->
+      <div class="product-pane sf-form-card" id="pane-ix">
+        <div class="sf-form-title"><span>🌐 IX / Interconnection — configure</span><span class="badge b-teal">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Connection details</div>
+            <div class="sf-field"><label>Connection type <span class="required">*</span></label><select><option>Cross Connect — Fiber</option><option>Cross Connect — Copper</option><option>Cross Connect — Coax</option><option>Campus Cross Connect</option><option>Any2 Exchange</option><option>Blended IP</option></select></div>
+            <div class="sf-field"><label>Bandwidth / Speed</label><select><option>1 GbE</option><option>10 GbE</option><option>100 GbE</option><option>Custom</option></select></div>
+            <div class="sf-field"><label>Connector type</label><select><option selected>LC Duplex (SMF)</option><option>LC Duplex (MMF)</option><option>SC Duplex</option><option>RJ-45</option><option>BNC</option></select></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location & routing</div>
+            <div class="sf-field"><label>A-side location <span class="required">*</span></label><input type="text" placeholder="e.g. LA1-08-0805-CORE-AC17"></div>
+            <div class="sf-field"><label>Z-side location</label><input type="text" placeholder="e.g. Carrier cage or meet-me room"></div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+ 
+      <!-- LC-READY POD -->
+      <div class="product-pane sf-form-card" id="pane-lcpod">
+        <div class="sf-form-title"><span>❄️ LC-Ready Pod — configure</span><span class="badge b-blue">Space type · Liquid cooling infrastructure</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Pod details</div>
+            <div class="sf-field">
+              <label>Pod type <span class="required">*</span></label>
+              <select><option>Standard LC-Ready Pod</option><option>High-density LC Pod</option><option>Custom build</option></select>
+              <div class="hint">LC-Ready Pods are a separate space type — ColoCool is an attribute of existing cages/cabinets</div>
+            </div>
+            <div class="sf-field"><label>Power capacity (kW) <span class="required">*</span></label><input type="number" placeholder="e.g. 100" min="1"></div>
+            <div class="sf-field"><label>Cooling capacity (tons)</label><input type="number" placeholder="e.g. 30" min="1"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+            <div class="sf-field"><label>Notes</label><input type="text" placeholder="e.g. Confirm availability with Alec/Andy"></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- STEP 2-B -->
+  <div class="step-wrap">
+    <div class="step-label">
+      <span class="step-num">Step 2-B</span>
+      <span class="step-title">Add Branch Circuits</span>
+      <span class="step-sub">— Power attaches to a space selected in Step 2-A</span>
+    </div>
+    <div class="sf-wrap">
+      <div class="sf-topbar">
+        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
+        <span class="sf-topbar-pill">Step 2-B · Power</span>
+      </div>
+      <div class="sf-meta" style="padding:8px 14px">Branch Circuit — power product that attaches to a space</div>
+      <div class="sf-form-card">
+        <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span><span class="badge b-blue">Power product</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Circuit specifications</div>
+            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>10A</option><option>15A</option><option>20A</option><option selected>30A</option><option>60A</option><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>250A</option></select></div>
+            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select id="volt-sel"><option>208V</option><option>415V</option><option>800V DC</option></select></div>
+            <div class="sf-field">
+              <label>Termination type</label>
+              <select id="term-sel" onchange="updateTermDetail(this.value)">
+                <option value="">— Select —</option>
+                <option value="straight">Straight Blade (NEMA)</option>
+                <option value="twistlock">Twist-Lock (NEMA L-series)</option>
+                <option value="iec">IEC (C13 / C19)</option>
+                <option value="pinsleeve">Pin & Sleeve (IEC 60309)</option>
+                <option value="hardwired">Hardwired / Bare</option>
+              </select>
+            </div>
+            <div class="sf-field" id="term-detail-field" style="display:none">
+              <label>NEMA Configuration</label>
+              <select id="term-detail-sel"></select>
+            </div>
+            <div class="sf-field">
+              <label>UPS Topology <span class="required">*</span><span class="info-btn" onclick="toggleTopoInfo()">[what is this?]</span></label>
+              <select id="topo-sel" onchange="showTopoHint()">
+                <option value="">— Select topology —</option>
+                <option value="2n">2N — Two independent UPS systems</option>
+                <option value="4m3">4-to-make-3 — Four modules, any three carry load</option>
+                <option value="5m4">5-to-make-4 — Five modules, any four carry load</option>
+                <option value="other">Other</option>
+                <option value="nups">Non-UPS (utility / generator direct)</option>
+              </select>
+              <div id="topo-hint" class="topo-hint"></div>
+            </div>
+          </div>
+          <div>
+            <div class="sf-col-title">Configuration</div>
+            <div class="sf-field"><label>Poles <span class="required">*</span></label><select id="poles-sel" onchange="updateVoltage(this.value)"><option value="1">1-pole</option><option value="2" selected>2-pole</option><option value="3">3-pole</option></select><div class="hint">Updates available voltage options</div></div>
+            <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select><div class="hint">Required for some PDU configurations</div></div>
+            <div class="sf-field"><label>Delivery type <span class="required">*</span></label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
+            <div class="sf-field"><label>Attach to space</label><select><option>— Select space from Step 2-A —</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Private Cage)</option></select><div class="hint">Links circuit to space added in Step 2-A</div></div>
+            <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- STEP 2-C -->
+  <div class="step-wrap">
+    <div class="step-label">
+      <span class="step-num">Step 2-C</span>
+      <span class="step-title">Add Supplementals</span>
+      <span class="step-sub">— Contractor items and E-Catalog items from outside vendors</span>
+    </div>
+    <div class="sf-wrap">
+      <div class="sf-topbar">
+        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
+        <span class="sf-topbar-pill">Step 2-C · Supplementals</span>
+      </div>
+      <div class="sf-form-card">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:14px">
+            <div style="font-size:12px;font-weight:700;color:#16325c;margin-bottom:4px">🔧 Contractor Items</div>
+            <div style="font-size:11px;color:#706e6b;margin-bottom:12px">Scope uploaded here is sent to vendors for bidding via Salesforce CPQ integration</div>
+            <div class="sf-field">
+              <label>Item type <span class="required">*</span></label>
+              <select>
+                <option>Caging / cage panels</option>
+                <option>Ladder rack</option>
+                <option>Cable containment</option>
+                <option>Overhead conveyance</option>
+                <option>Grounding</option>
+                <option>Seismic bracing</option>
+                <option>Custom contractor work</option>
+              </select>
+            </div>
+            <div class="sf-field"><label>Description</label><input type="text" placeholder="e.g. Install ladder rack in cage LA1-01"></div>
+            <div class="sf-field">
+              <label>Upload scope / drawings</label>
+              <div style="border:2px dashed #dddbda;border-radius:4px;padding:12px;text-align:center;background:#fff;cursor:pointer" onclick="document.getElementById('"'"'scope-upload'"'"').click()">
+                <div style="font-size:12px;color:#706e6b">📎 Click to attach scope of work or drawings</div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:4px">PDF, DWG, DXF, PNG — sent to vendors for bidding</div>
+                <input type="file" id="scope-upload" style="display:none" accept=".pdf,.dwg,.dxf,.png,.jpg">
+              </div>
+            </div>
+            <button class="sf-btn-p" style="margin-top:4px;width:100%">Add contractor item</button>
+          </div>
+          <div style="background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:14px">
+            <div style="font-size:12px;font-weight:700;color:#16325c;margin-bottom:4px">🛒 E-Catalog Items</div>
+            <div style="font-size:11px;color:#706e6b;margin-bottom:12px">Outside vendor products via eCatalog / BOM integration — PDUs, patch panels, KVM, cable management</div>
+            <div class="sf-field"><label>Category <span class="required">*</span></label><select><option>PDU</option><option>Patch panel</option><option>KVM switch</option><option>Cable management</option><option>Cooling unit</option><option>Structured cabling</option><option>Other e-catalog item</option></select></div>
+            <div class="sf-field"><label>Vendor / Part number</label><input type="text" placeholder="e.g. Vertiv GEIST-30A-208V"></div>
+            <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
+            <button class="sf-btn-p" style="margin-top:4px;width:100%">Add e-catalog item</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- IMPACT -->
+<div class="impact">
+  <div class="impact-card"><div class="impact-num" id="i1" style="color:#c23934">50+</div><div class="impact-lbl" id="l1">Product codes</div></div>
+  <div class="impact-card"><div class="impact-num" id="i2" style="color:#c23934">0</div><div class="impact-lbl" id="l2">Guided workflow steps</div></div>
+  <div class="impact-card"><div class="impact-num" id="i3" style="color:#c23934">0</div><div class="impact-lbl" id="l3">Dynamic market filtering</div></div>
+</div>
+ 
+<script>
+function sw(on){
+  document.getElementById('"'"'cur'"'"').style.display=on?'"'"'none'"'"':'"'"'block'"'"';
+  document.getElementById('"'"'fut'"'"').style.display=on?'"'"'block'"'"':'"'"'none'"'"';
+  document.getElementById('"'"'tt'"'"').style.background=on?'"'"'#2e7d32'"'"':'"'"'#c23934'"'"';
+  document.getElementById('"'"'tk'"'"').style.transform=on?'"'"'translateX(20px)'"'"':'"'"'translateX(0)'"'"';
+  if(on){
+    document.getElementById('"'"'i1'"'"').textContent='"'"'3'"'"';document.getElementById('"'"'i1'"'"').style.color='"'"'#2e7d32'"'"';
+    document.getElementById('"'"'l1'"'"').textContent='"'"'Core product categories'"'"';
+    document.getElementById('"'"'i2'"'"').textContent='"'"'3'"'"';document.getElementById('"'"'i2'"'"').style.color='"'"'#2e7d32'"'"';
+    document.getElementById('"'"'l2'"'"').textContent='"'"'Guided workflow steps'"'"';
+    document.getElementById('"'"'i3'"'"').textContent='"'"'✓'"'"';document.getElementById('"'"'i3'"'"').style.color='"'"'#2e7d32'"'"';
+    document.getElementById('"'"'l3'"'"').textContent='"'"'Dynamic market filtering'"'"';
+  } else {
+    document.getElementById('"'"'i1'"'"').textContent='"'"'50+'"'"';document.getElementById('"'"'i1'"'"').style.color='"'"'#c23934'"'"';
+    document.getElementById('"'"'l1'"'"').textContent='"'"'Product codes'"'"';
+    document.getElementById('"'"'i2'"'"').textContent='"'"'0'"'"';document.getElementById('"'"'i2'"'"').style.color='"'"'#c23934'"'"';
+    document.getElementById('"'"'l2'"'"').textContent='"'"'Guided workflow steps'"'"';
+    document.getElementById('"'"'i3'"'"').textContent='"'"'0'"'"';document.getElementById('"'"'i3'"'"').style.color='"'"'#c23934'"'"';
+    document.getElementById('"'"'l3'"'"').textContent='"'"'Dynamic market filtering'"'"';
+  }
+}
+function switchTab(tab){
+  ['"'"'cage'"'"','"'"'cabinet'"'"','"'"'roof'"'"','"'"'office'"'"','"'"'storage'"'"','"'"'raceway'"'"','"'"'ix'"'"','"'"'lcpod'"'"'].forEach(function(t){
+    var el=document.getElementById('"'"'tab-'"'"'+t);
+    var pe=document.getElementById('"'"'pane-'"'"'+t);
+    if(el)el.classList.toggle('"'"'active'"'"',t===tab);
+    if(pe)pe.classList.toggle('"'"'active'"'"',t===tab);
+  });
+}
+function updateVoltage(poles){
+  var sel=document.getElementById('"'"'volt-sel'"'"');
+  sel.innerHTML='"'"''"'"';
+  if(poles==='"'"'1'"'"'){['"'"'-48V DC'"'"','"'"'120V'"'"'].forEach(function(v){var o=document.createElement('"'"'option'"'"');o.text=v;sel.add(o);});}
+  else if(poles==='"'"'2'"'"'){['"'"'208V'"'"','"'"'415V'"'"','"'"'800V DC'"'"'].forEach(function(v){var o=document.createElement('"'"'option'"'"');o.text=v;sel.add(o);});}
+  else{['"'"'208V (3-phase)'"'"','"'"'415V (3-phase)'"'"'].forEach(function(v){var o=document.createElement('"'"'option'"'"');o.text=v;sel.add(o);});}
+}
+function updateTermDetail(val){
+  var detailField=document.getElementById('"'"'term-detail-field'"'"');
+  var detailSel=document.getElementById('"'"'term-detail-sel'"'"');
+  detailSel.innerHTML='"'"''"'"';
+  var configs={
+    straight:['"'"'NEMA 5-15 (125V 15A)'"'"','"'"'NEMA 5-20 (125V 20A)'"'"','"'"'NEMA 6-20 (250V 20A)'"'"','"'"'NEMA 6-30 (250V 30A)'"'"','"'"'NEMA 6-50 (250V 50A)'"'"','"'"'NEMA 14-30 (125/250V 30A)'"'"','"'"'NEMA 14-50 (125/250V 50A)'"'"'],
+    twistlock:['"'"'NEMA L5-20 (125V 20A)'"'"','"'"'NEMA L5-30 (125V 30A)'"'"','"'"'NEMA L6-20 (250V 20A)'"'"','"'"'NEMA L6-30 (250V 30A)'"'"','"'"'NEMA L6-50 (250V 50A)'"'"','"'"'NEMA L21-20 (3ph 120/208V 20A)'"'"','"'"'NEMA L21-30 (3ph 120/208V 30A)'"'"'],
+    iec:['"'"'IEC C13 (250V 15A)'"'"','"'"'IEC C19 (250V 20A)'"'"'],
+    pinsleeve:['"'"'IEC 60309 2P+E 16A 230V'"'"','"'"'IEC 60309 2P+E 32A 230V'"'"','"'"'IEC 60309 3P+E 16A 400V'"'"','"'"'IEC 60309 3P+E 32A 400V'"'"'],
+    hardwired:['"'"'Bare conductors — field terminated'"'"']
+  };
+  if(val&&configs[val]){configs[val].forEach(function(c){var o=document.createElement('"'"'option'"'"');o.text=c;detailSel.add(o);});detailField.style.display='"'"'block'"'"';}
+  else{detailField.style.display='"'"'none'"'"';}
+}
+function showTopoHint(){
+  var val=document.getElementById('"'"'topo-sel'"'"').value;
+  var hint=document.getElementById('"'"'topo-hint'"'"');
+  var hints={
+    '"'"'2n'"'"':'"'"'Two fully independent UPS systems. If one fails, the other carries 100% of load. Most common in Tier III/IV.'"'"',
+    '"'"'4m3'"'"':'"'"'Four UPS modules where any three can carry full load. More efficient than 2N. Common in modern hyperscale.'"'"',
+    '"'"'5m4'"'"':'"'"'Five UPS modules where any four can carry full load. Confirmed per Andy — recommended for high-density.'"'"',
+    '"'"'other'"'"':'"'"'Custom or non-standard topology. Document in notes.'"'"',
+    '"'"'nups'"'"':'"'"'No UPS — direct utility/generator feed. For non-critical use: laptops, power tools, facility maintenance.'"'"'
+  };
+  var colors={'"'"'2n'"'"':'"'"'#e3f5e3'"'"','"'"'4m3'"'"':'"'"'#e8f4ff'"'"','"'"'5m4'"'"':'"'"'#e8f4ff'"'"','"'"'other'"'"':'"'"'#fff8e1'"'"','"'"'nups'"'"':'"'"'#fde8e8'"'"'};
+  var borders={'"'"'2n'"'"':'"'"'#2e7d32'"'"','"'"'4m3'"'"':'"'"'#0070d2'"'"','"'"'5m4'"'"':'"'"'#0070d2'"'"','"'"'other'"'"':'"'"'#f59e0b'"'"','"'"'nups'"'"':'"'"'#c23934'"'"'};
+  if(val&&hints[val]){hint.textContent=hints[val];hint.style.background=colors[val];hint.style.borderLeft='"'"'3px solid '"'"'+borders[val];hint.style.color='"'"'#16325c'"'"';hint.style.display='"'"'block'"'"';}
+  else{hint.style.display='"'"'none'"'"';}
+}
+function toggleTopoInfo(){
+  var hint=document.getElementById('"'"'topo-hint'"'"');
+  if(hint.style.display==='"'"'none'"'"'||!hint.textContent){
+    hint.textContent='"'"'UPS Topology defines power redundancy. 2N = two full independent systems. 4-to-make-3 = four modules, three needed. 5-to-make-4 = five modules, four needed. Non-UPS = direct feed for non-critical circuits.'"'"';
+    hint.style.background='"'"'#f0f4ff'"'"';hint.style.borderLeft='"'"'3px solid #0070d2'"'"';hint.style.color='"'"'#16325c'"'"';hint.style.display='"'"'block'"'"';
+  } else {hint.style.display='"'"'none'"'"';hint.textContent='"'"''"'"';}
+}
+function checkWeight(){
+  var w=parseFloat(document.getElementById('"'"'cab-weight'"'"').value)||0;
+  document.getElementById('"'"'weight-warn'"'"').style.display=w>2000?'"'"'block'"'"':'"'"'none'"'"';
+}
+</script>
+</body>
+</html>
+ 
