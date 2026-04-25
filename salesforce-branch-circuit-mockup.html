@@ -94,12 +94,12 @@ tr:hover td{background:#f8f8ff}
 <p class="subtitle">CoreSite SFDC Product Modernization · Current State vs Future State · Toggle to compare</p>
  
 <div class="toggle-row">
-  <span class="toggle-lbl">Current state</span>
+  <span id="lbl-cur" style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:4px;background:#c23934;color:#fff;cursor:pointer" onclick="document.getElementById('"'"'tog'"'"').checked=false;sw(false)">Current state</span>
   <label class="toggle-track" id="tt" style="background:#c23934">
     <input type="checkbox" id="tog" onchange="sw(this.checked)">
     <span class="toggle-knob" id="tk"></span>
   </label>
-  <span class="toggle-lbl">Future state</span>
+  <span id="lbl-fut" style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:4px;background:#f3f3f3;color:#706e6b;cursor:pointer" onclick="document.getElementById('"'"'tog'"'"').checked=true;sw(true)">Future state</span>
 </div>
  
 <!-- CURRENT STATE -->
@@ -546,6 +546,10 @@ function sw(on){
   document.getElementById('"'"'fut'"'"').style.display=on?'"'"'block'"'"':'"'"'none'"'"';
   document.getElementById('"'"'tt'"'"').style.background=on?'"'"'#2e7d32'"'"':'"'"'#c23934'"'"';
   document.getElementById('"'"'tk'"'"').style.transform=on?'"'"'translateX(20px)'"'"':'"'"'translateX(0)'"'"';
+  document.getElementById('"'"'lbl-cur'"'"').style.background=on?'"'"'#f3f3f3'"'"':'"'"'#c23934'"'"';
+  document.getElementById('"'"'lbl-cur'"'"').style.color=on?'"'"'#706e6b'"'"':'"'"'#fff'"'"';
+  document.getElementById('"'"'lbl-fut'"'"').style.background=on?'"'"'#2e7d32'"'"':'"'"'#f3f3f3'"'"';
+  document.getElementById('"'"'lbl-fut'"'"').style.color=on?'"'"'#fff'"'"':'"'"'#706e6b'"'"';
   if(on){
     document.getElementById('"'"'i1'"'"').textContent='"'"'3'"'"';document.getElementById('"'"'i1'"'"').style.color='"'"'#2e7d32'"'"';
     document.getElementById('"'"'l1'"'"').textContent='"'"'Core product categories'"'"';
