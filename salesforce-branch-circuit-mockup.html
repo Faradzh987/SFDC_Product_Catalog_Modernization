@@ -92,7 +92,7 @@ tr:hover td{background:#f8f8ff}
 <body>
 <h1>Salesforce Product Catalog — Modernization</h1>
 <p class="subtitle">CoreSite SFDC Product Modernization · Current State vs Future State · Toggle to compare</p>
- 
+
 <div class="toggle-row">
   <span id="lbl-cur" style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:4px;background:#c23934;color:#fff;cursor:pointer" onclick="document.getElementById('tog').checked=false;sw(false)">Current state</span>
   <label class="toggle-track" id="tt" style="background:#c23934">
@@ -101,7 +101,7 @@ tr:hover td{background:#f8f8ff}
   </label>
   <span id="lbl-fut" style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:4px;background:#f3f3f3;color:#706e6b;cursor:pointer" onclick="document.getElementById('tog').checked=true;sw(true)">Future state</span>
 </div>
- 
+
 <!-- CURRENT STATE -->
 <div id="cur">
   <div class="callout callout-red">50+ product codes — every amperage, voltage, delivery type, and cabinet size is a separate product. No structured workflow. Sales reps build quotes without a guided process.</div>
@@ -132,11 +132,11 @@ tr:hover td{background:#f8f8ff}
     </div>
   </div>
 </div>
- 
+
 <!-- FUTURE STATE -->
 <div id="fut" style="display:none">
   <div class="callout callout-green">3-step guided workflow · 3 structured categories · 7 space types · All attributes as picklists · Dynamic market filtering from opportunity</div>
- 
+
   <!-- STEP 1 -->
   <div class="step-wrap">
     <div class="step-label">
@@ -191,7 +191,7 @@ tr:hover td{background:#f8f8ff}
       </div>
     </div>
   </div>
- 
+
   <!-- STEP 2-A -->
   <div class="step-wrap">
     <div class="step-label">
@@ -216,7 +216,7 @@ tr:hover td{background:#f8f8ff}
         <div class="ptab" id="tab-ix" onclick="switchTab('ix')">🌐 IX</div>
         <div class="ptab" id="tab-lcpod" onclick="switchTab('lcpod')">❄️ LC-Ready Pod</div>
       </div>
- 
+
       <!-- CAGE -->
       <div class="product-pane active sf-form-card" id="pane-cage">
         <div class="sf-form-title"><span>🔲 Cage / Private Suite — configure</span><span class="badge b-purple">Space type</span></div>
@@ -261,7 +261,7 @@ tr:hover td{background:#f8f8ff}
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
- 
+
       <!-- CORESITE CABINET -->
       <div class="product-pane sf-form-card" id="pane-cabinet">
         <div class="sf-form-title"><span>🗄 CoreSite Cabinet — configure</span><span class="badge b-green">Space type · Pre-deployed CoreSite asset</span></div>
@@ -301,7 +301,7 @@ tr:hover td{background:#f8f8ff}
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
- 
+
       <!-- ROOF -->
       <div class="product-pane sf-form-card" id="pane-roof">
         <div class="sf-form-title"><span>🏢 Roof Space — configure</span><span class="badge b-orange">Space type</span></div>
@@ -319,7 +319,7 @@ tr:hover td{background:#f8f8ff}
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
- 
+
       <!-- OFFICE -->
       <div class="product-pane sf-form-card" id="pane-office">
         <div class="sf-form-title"><span>💼 Office Space — configure</span><span class="badge b-gray">Space type</span></div>
@@ -335,7 +335,7 @@ tr:hover td{background:#f8f8ff}
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
- 
+
       <!-- STORAGE -->
       <div class="product-pane sf-form-card" id="pane-storage">
         <div class="sf-form-title"><span>📦 Storage Space — configure</span><span class="badge b-gray">Space type</span></div>
@@ -351,7 +351,7 @@ tr:hover td{background:#f8f8ff}
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
- 
+
       <!-- RACEWAY -->
       <div class="product-pane sf-form-card" id="pane-raceway">
         <div class="sf-form-title"><span>🔌 Raceway — configure</span><span class="badge b-gray">Space type</span></div>
@@ -369,7 +369,7 @@ tr:hover td{background:#f8f8ff}
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
- 
+
       <!-- IX — Interconnection -->
       <div class="product-pane sf-form-card" id="pane-ix">
         <div class="sf-form-title"><span>🌐 IX / Interconnection — configure</span><span class="badge b-teal">Space type</span></div>
@@ -389,7 +389,7 @@ tr:hover td{background:#f8f8ff}
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
- 
+
       <!-- LC-READY POD -->
       <div class="product-pane sf-form-card" id="pane-lcpod">
         <div class="sf-form-title"><span>❄️ LC-Ready Pod — configure</span><span class="badge b-blue">Space type · Liquid cooling infrastructure</span></div>
@@ -414,7 +414,7 @@ tr:hover td{background:#f8f8ff}
       </div>
     </div>
   </div>
- 
+
   <!-- STEP 2-B -->
   <div class="step-wrap">
     <div class="step-label">
@@ -477,7 +477,7 @@ tr:hover td{background:#f8f8ff}
       </div>
     </div>
   </div>
- 
+
   <!-- STEP 2-C -->
   <div class="step-wrap">
     <div class="step-label">
@@ -532,14 +532,14 @@ tr:hover td{background:#f8f8ff}
     </div>
   </div>
 </div>
- 
+
 <!-- IMPACT -->
 <div class="impact">
   <div class="impact-card"><div class="impact-num" id="i1" style="color:#c23934">50+</div><div class="impact-lbl" id="l1">Product codes</div></div>
   <div class="impact-card"><div class="impact-num" id="i2" style="color:#c23934">0</div><div class="impact-lbl" id="l2">Guided workflow steps</div></div>
   <div class="impact-card"><div class="impact-num" id="i3" style="color:#c23934">0</div><div class="impact-lbl" id="l3">Dynamic market filtering</div></div>
 </div>
- 
+
 <script>
 function sw(on){
   document.getElementById('cur').style.display=on?'none':'block';
