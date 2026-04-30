@@ -94,17 +94,17 @@ tr:hover td{background:#f8f8ff}
 <p class="subtitle">CoreSite SFDC Product Modernization · Current State vs Future State · Toggle to compare</p>
 
 <div class="toggle-row">
-  <span id="lbl-cur" style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:4px;background:#c23934;color:#fff;cursor:pointer" onclick="document.getElementById('tog').checked=false;sw(false)">Current state</span>
+  <span class="toggle-lbl">Current state</span>
   <label class="toggle-track" id="tt" style="background:#c23934">
     <input type="checkbox" id="tog" onchange="sw(this.checked)">
     <span class="toggle-knob" id="tk"></span>
   </label>
-  <span id="lbl-fut" style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:4px;background:#f3f3f3;color:#706e6b;cursor:pointer" onclick="document.getElementById('tog').checked=true;sw(true)">Future state</span>
+  <span class="toggle-lbl">Future state</span>
 </div>
 
 <!-- CURRENT STATE -->
 <div id="cur">
-  <div class="callout callout-red">40+ product codes shown below — and this is before adding 415V, which would require 20+ more. Every voltage, amperage, and delivery type is a separate product. No guided workflow. Sales reps guess their way through the catalog.</div>
+  <div class="callout callout-red">50+ product codes — every amperage, voltage, delivery type, and cabinet size is a separate product. No structured workflow. Sales reps build quotes without a guided process.</div>
   <div class="sf-wrap">
     <div class="sf-topbar">
       <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
@@ -115,52 +115,18 @@ tr:hover td{background:#f8f8ff}
       <span class="sf-subbar-title">Product Catalog</span>
       <span class="badge b-red">Current state — 50+ codes · No guided workflow</span>
     </div>
-    <div class="sf-meta">40+ items shown · No attributes · No guided process · 415V would add 20 more codes</div>
+    <div class="sf-meta">Every variation = a separate product code · No step-by-step process · No dynamic filtering</div>
     <div class="sf-table-wrap">
       <table>
         <thead><tr><th>Product name</th><th>Product code</th><th>Status</th><th>Type</th><th>Delivery</th><th>Amps</th><th>Voltage</th></tr></thead>
         <tbody>
           <tr style="background:#fff8e1"><td><span class="link">DC Power 10A A/B Circuits</span></td><td>PW-DC-10</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary & Redundant</td><td>10A</td><td>-48V DC</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">DC Power 15A A/B Circuits</span></td><td>PW-DC-15</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary & Redundant</td><td>15A</td><td>-48V DC</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">DC Power 20A A/B Circuits</span></td><td>PW-DC-20</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary & Redundant</td><td>20A</td><td>-48V DC</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">DC Power 30A A/B Circuits</span></td><td>PW-DC-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary & Redundant</td><td>30A</td><td>-48V DC</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">DC Power 100A A/B Circuits</span></td><td>PW-DC-100</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary & Redundant</td><td>100A</td><td>-48V DC</td></tr>
           <tr style="background:#fff8e1"><td><span class="link">Primary 120V 20A Circuit</span></td><td>PW-ACP-120-20</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>20A</td><td>120V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Redundant 120V 20A Circuit</span></td><td>PW-ACR-120-20</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>20A</td><td>120V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Primary 120V 30A Circuit</span></td><td>PW-ACP-120-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>30A</td><td>120V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Redundant 120V 30A Circuit</span></td><td>PW-ACR-120-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>30A</td><td>120V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Primary 208V 20A Circuit</span></td><td>PW-ACP-208-20</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>20A</td><td>208V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Redundant 208V 20A Circuit</span></td><td>PW-ACR-208-20</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>20A</td><td>208V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Primary 208V 30A Circuit</span></td><td>PW-ACP-208-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>30A</td><td>208V</td></tr>
           <tr style="background:#fff8e1"><td><span class="link">Redundant 208V 30A Circuit</span></td><td>PW-ACR-208-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>30A</td><td>208V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Primary 208V 60A Circuit</span></td><td>PW-ACP-208-60</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>60A</td><td>208V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Redundant 208V 60A Circuit</span></td><td>PW-ACR-208-60</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>60A</td><td>208V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Primary 208V 100A Circuit</span></td><td>PW-ACP-208-100</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>100A</td><td>208V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Redundant 208V 100A Circuit</span></td><td>PW-ACR-208-100</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>100A</td><td>208V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Primary 480V 30A Circuit</span></td><td>PW-ACP-480-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>30A</td><td>480V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Redundant 480V 30A Circuit</span></td><td>PW-ACR-480-30</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Redundant</td><td>30A</td><td>480V</td></tr>
-          <tr style="background:#fff8e1"><td><span class="link">Primary 480V 60A Circuit</span></td><td>PW-ACP-480-60</td><td><span class="badge b-green">Active</span></td><td>Circuit</td><td>Primary only</td><td>60A</td><td>480V</td></tr>
           <tr style="background:#e8f5e8"><td><span class="link">Standard Density Cabinet 2.4kW</span></td><td>SP-CAB-SD-2.4</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#e8f5e8"><td><span class="link">Standard Density Cabinet 5kW</span></td><td>SP-CAB-SD-5</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#e8f5e8"><td><span class="link">Standard Density Cabinet 7.2kW</span></td><td>SP-CAB-SD-7.2</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
           <tr style="background:#e8f5e8"><td><span class="link">High Density Cabinet 10kW</span></td><td>SP-CAB-HD-10</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#e8f5e8"><td><span class="link">High Density Cabinet 15kW</span></td><td>SP-CAB-HD-15</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#e8f5e8"><td><span class="link">High Density Cabinet 20kW</span></td><td>SP-CAB-HD-20</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#e8f5e8"><td><span class="link">Low Density Cabinet 1.2kW</span></td><td>SP-CAB-LD-1.2</td><td><span class="badge b-green">Active</span></td><td>Cabinet</td><td>—</td><td>—</td><td>—</td></tr>
           <tr style="background:#f3e8ff"><td><span class="link">Private Cage 10x10</span></td><td>SP-CAGE-10x10</td><td><span class="badge b-green">Active</span></td><td>Cage</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3e8ff"><td><span class="link">Private Cage 10x20</span></td><td>SP-CAGE-10x20</td><td><span class="badge b-green">Active</span></td><td>Cage</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3e8ff"><td><span class="link">Private Cage 20x20</span></td><td>SP-CAGE-20x20</td><td><span class="badge b-green">Active</span></td><td>Cage</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3e8ff"><td><span class="link">Private Suite 400 SF</span></td><td>SP-SUITE-400</td><td><span class="badge b-green">Active</span></td><td>Cage</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3e8ff"><td><span class="link">Private Suite 600 SF</span></td><td>SP-SUITE-600</td><td><span class="badge b-green">Active</span></td><td>Cage</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#fff3e0"><td><span class="link">Roof Space 100 SF</span></td><td>SP-ROOF-100</td><td><span class="badge b-green">Active</span></td><td>Roof</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#fff3e0"><td><span class="link">Roof Space 200 SF</span></td><td>SP-ROOF-200</td><td><span class="badge b-green">Active</span></td><td>Roof</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#fff3e0"><td><span class="link">Office Space 150 SF</span></td><td>SP-OFF-150</td><td><span class="badge b-green">Active</span></td><td>Office</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#fff3e0"><td><span class="link">Storage Space 100 SF</span></td><td>SP-STO-100</td><td><span class="badge b-green">Active</span></td><td>Storage</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3f3f3"><td><span class="link">Cross Connect — Fiber SMF</span></td><td>IX-XC-FBR-SMF</td><td><span class="badge b-green">Active</span></td><td>IX</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3f3f3"><td><span class="link">Cross Connect — Fiber MMF</span></td><td>IX-XC-FBR-MMF</td><td><span class="badge b-green">Active</span></td><td>IX</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3f3f3"><td><span class="link">Cross Connect — Copper</span></td><td>IX-XC-CPR</td><td><span class="badge b-green">Active</span></td><td>IX</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr style="background:#f3f3f3"><td><span class="link">Any2 10GigE</span></td><td>IX-A2-10G</td><td><span class="badge b-green">Active</span></td><td>IX</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td colspan="7" style="text-align:center;padding:12px;background:#fde8e8;color:#c23934;font-size:11px;font-weight:600">⚠ 415V circuits not yet in catalog — would require 20+ additional product codes to add</td></tr>
+          <tr><td colspan="7" style="text-align:center;padding:10px;color:#706e6b;font-size:11px;background:#fafafa">+ 40 more products — Roof, Office, Storage, Raceway, IX types also fragmented...</td></tr>
         </tbody>
       </table>
     </div>
@@ -218,6 +184,55 @@ tr:hover td{background:#f8f8ff}
             <option>1.0 — Unity</option>
             <option>Custom</option>
           </select>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0">
+        <div style="font-size:11px;font-weight:700;color:#16325c;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em">&#128336; Delivery Timeline</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="sf-field">
+            <label>Contract Signed Date <span class="required">*</span></label>
+            <input type="date" value="2026-05-01">
+            <div class="hint">Customer signature date</div>
+          </div>
+          <div class="sf-field">
+            <label>Lead Time Trigger</label>
+            <select id="lt-trigger" onchange="calcDelivery()">
+              <option value="0">Customer Signature (current)</option>
+              <option value="5" selected>Operational Readiness (+5 BD)</option>
+            </select>
+            <div class="hint">When the clock actually starts</div>
+          </div>
+          <div class="sf-field">
+            <label>Complexity Tier</label>
+            <select id="lt-complexity" onchange="calcDelivery()">
+              <option value="0" selected>Standard (+0 BD)</option>
+              <option value="5">Non-standard (+5 BD)</option>
+              <option value="10">Custom build (+10 BD)</option>
+            </select>
+          </div>
+          <div class="sf-field">
+            <label>Market Adjustment</label>
+            <select id="lt-market" onchange="calcDelivery()">
+              <option value="0">LA1 / LA2 (+0 BD)</option>
+              <option value="1" selected>SV1 (+1 BD)</option>
+              <option value="2">SV2 (+2 BD)</option>
+              <option value="3">NY2 (+3 BD)</option>
+              <option value="0">CH1 (+0 BD)</option>
+            </select>
+          </div>
+        </div>
+        <div id="lt-result" style="margin-top:10px;background:#e8f4ff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;font-size:12px;color:#16325c;line-height:1.8">
+          <span style="font-weight:600;color:#0070d2">&#128337; Calculated Lead Time</span><br>
+          Base: 8 BD &nbsp;+&nbsp; Trigger offset: 5 BD &nbsp;+&nbsp; Complexity: 0 BD &nbsp;+&nbsp; Market: 1 BD = <strong>14 BD total</strong><br>
+          <span style="color:#706e6b">Expected delivery range: &nbsp;</span>
+          <span style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Min: 12 BD</span>
+          &nbsp;&#8594;&nbsp;
+          <span style="background:#e8f4ff;color:#0070d2;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Expected: 14 BD</span>
+          &nbsp;&#8594;&nbsp;
+          <span style="background:#fde8e8;color:#c23934;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Max: 18 BD</span>
+          <br>
+          <span style="color:#706e6b">Est. completion date: &nbsp;</span><strong id="lt-date" style="color:#0070d2">~May 21, 2026</strong>
+          <span style="font-size:10px;color:#706e6b;margin-left:8px">(business days from operational readiness)</span>
         </div>
       </div>
       <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0">
@@ -507,6 +522,39 @@ tr:hover td{background:#f8f8ff}
             <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
           </div>
         </div>
+        <div style="background:#f8fbff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">&#128337; Lead Time — This Circuit</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px">
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div style="font-size:18px;font-weight:700;color:#0070d2">8</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Base (BD)</div>
+            </div>
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div style="font-size:18px;font-weight:700;color:#e65100">+5</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Trigger offset</div>
+            </div>
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div style="font-size:18px;font-weight:700;color:#2e7d32">+0</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Complexity</div>
+            </div>
+            <div style="text-align:center;background:#e8f4ff;border:1px solid #0070d2;border-radius:4px;padding:8px">
+              <div style="font-size:18px;font-weight:700;color:#0070d2">14 BD</div>
+              <div style="font-size:10px;color:#0070d2;margin-top:2px">Expected</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:6px;align-items:center;font-size:11px">
+            <span style="color:#706e6b">Delivery range:</span>
+            <span style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600">Min: 12 BD</span>
+            <span style="color:#706e6b">&#8594;</span>
+            <span style="background:#e8f4ff;color:#0070d2;padding:1px 8px;border-radius:3px;font-weight:600">Exp: 14 BD</span>
+            <span style="color:#706e6b">&#8594;</span>
+            <span style="background:#fde8e8;color:#c23934;padding:1px 8px;border-radius:3px;font-weight:600">Max: 18 BD</span>
+            <span style="color:#706e6b;margin-left:4px">· Auto-populated from product + market + complexity</span>
+          </div>
+          <div style="margin-top:6px;font-size:11px;padding:5px 8px;background:#fff3e0;border-left:3px solid #e65100;border-radius:3px;color:#e65100">
+            &#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> — not customer signature date
+          </div>
+        </div>
         <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
     </div>
@@ -580,10 +628,6 @@ function sw(on){
   document.getElementById('fut').style.display=on?'block':'none';
   document.getElementById('tt').style.background=on?'#2e7d32':'#c23934';
   document.getElementById('tk').style.transform=on?'translateX(20px)':'translateX(0)';
-  document.getElementById('lbl-cur').style.background=on?'#f3f3f3':'#c23934';
-  document.getElementById('lbl-cur').style.color=on?'#706e6b':'#fff';
-  document.getElementById('lbl-fut').style.background=on?'#2e7d32':'#f3f3f3';
-  document.getElementById('lbl-fut').style.color=on?'#fff':'#706e6b';
   if(on){
     document.getElementById('i1').textContent='3';document.getElementById('i1').style.color='#2e7d32';
     document.getElementById('l1').textContent='Core product categories';
@@ -654,6 +698,37 @@ function toggleTopoInfo(){
 function checkWeight(){
   var w=parseFloat(document.getElementById('cab-weight').value)||0;
   document.getElementById('weight-warn').style.display=w>2000?'block':'none';
+}
+function calcDelivery(){
+  var trigger = parseInt(document.getElementById('lt-trigger').value)||0;
+  var complexity = parseInt(document.getElementById('lt-complexity').value)||0;
+  var market = parseInt(document.getElementById('lt-market').value)||0;
+  var base = 8;
+  var total = base + trigger + complexity + market;
+  var minDays = Math.max(base, total - 2);
+  var maxDays = total + 4;
+  // Calc date (rough business day estimate)
+  var d = new Date('2026-05-01');
+  var bd = 0;
+  while(bd < total + 5) {
+    d.setDate(d.getDate()+1);
+    if(d.getDay()!==0 && d.getDay()!==6) bd++;
+  }
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dateStr = months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+  var r = document.getElementById('lt-result');
+  if(r){
+    r.innerHTML = '<span style="font-weight:600;color:#0070d2">&#128337; Calculated Lead Time</span><br>'+
+      'Base: '+base+' BD &nbsp;+&nbsp; Trigger offset: '+trigger+' BD &nbsp;+&nbsp; Complexity: '+complexity+' BD &nbsp;+&nbsp; Market: '+market+' BD = <strong>'+total+' BD total</strong><br>'+
+      '<span style="color:#706e6b">Expected delivery range: &nbsp;</span>'+
+      '<span style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Min: '+minDays+' BD</span>'+
+      ' &nbsp;&#8594;&nbsp; '+
+      '<span style="background:#e8f4ff;color:#0070d2;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Expected: '+total+' BD</span>'+
+      ' &nbsp;&#8594;&nbsp; '+
+      '<span style="background:#fde8e8;color:#c23934;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Max: '+maxDays+' BD</span>'+
+      '<br><span style="color:#706e6b">Est. completion date: &nbsp;</span><strong style="color:#0070d2">~'+dateStr+'</strong>'+
+      '<span style="font-size:10px;color:#706e6b;margin-left:8px">(business days from operational readiness)</span>';
+  }
 }
 </script>
 </body>
