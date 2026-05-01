@@ -444,74 +444,64 @@ tr:hover td{background:#f8f8ff}
       </div>
 
       <!-- Section: Delivery Timeline (lead time) -->
-      <div style="font-size:10px;font-weight:700;color:#16325c;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">&#128336; Delivery Timeline</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-        <div class="sf-field">
-          <label>Lead Time Trigger</label>
-          <select id="lt-trigger" onchange="calcDelivery()">
-            <option value="0">Customer Signature</option>
-            <option value="5" selected>Operational Readiness (+5 BD)</option>
-          </select>
-          <div class="hint">When the delivery clock starts</div>
-        </div>
-        <div class="sf-field">
-          <label>Complexity Tier</label>
-          <select id="lt-complexity" onchange="calcDelivery()">
-            <option value="0" selected>Standard (+0 BD)</option>
-            <option value="5">Non-standard (+5 BD)</option>
-            <option value="vendor">Custom scope — vendor specifies</option>
-          </select>
-          <div class="hint">Custom scope triggers vendor portal</div>
-        </div>
-        <div class="sf-field">
-          <label>Market Adjustment</label>
-          <select id="lt-market" onchange="calcDelivery()">
-            <option value="0">LA1 / LA2 (+0 BD)</option>
-            <option value="1" selected>SV1 (+1 BD)</option>
-            <option value="2">SV2 (+2 BD)</option>
-            <option value="3">NY2 (+3 BD)</option>
-            <option value="0">CH1 (+0 BD)</option>
-          </select>
-        </div>
-        <div class="sf-field">
-          <label>Vendor Lead Time (if custom)</label>
-          <input type="number" id="lt-vendor" placeholder="Vendor specifies" min="0" oninput="calcDelivery()" disabled style="background:#f9f9f9;color:#706e6b">
-          <div class="hint">Auto-populated from vendor portal</div>
-        </div>
+      <div style="font-size:10px;font-weight:700;color:#16325c;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">&#128336; Delivery Timeline</div>
+
+      <!-- Mini toggle -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span id="lt-lbl-cur" onclick="swLt(false)" style="font-size:11px;font-weight:700;padding:3px 12px;border-radius:4px;background:#c23934;color:#fff;cursor:pointer">Current state</span>
+        <label style="position:relative;width:36px;height:20px;border-radius:10px;cursor:pointer;transition:background 0.2s;display:inline-block" id="lt-tt" style="background:#c23934">
+          <input type="checkbox" id="lt-tog" onchange="swLt(this.checked)" style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;z-index:1">
+          <span id="lt-tk" style="position:absolute;top:3px;left:3px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform 0.2s;pointer-events:none"></span>
+        </label>
+        <span id="lt-lbl-fut" onclick="document.getElementById('lt-tog').checked=true;swLt(true)" style="font-size:11px;font-weight:700;padding:3px 12px;border-radius:4px;background:#f3f3f3;color:#706e6b;cursor:pointer">Future state</span>
       </div>
-      <div id="lt-result" style="margin-top:10px;background:#e8f4ff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;font-size:12px;color:#16325c;line-height:1.8">
-        Loading...
-      </div>
-      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-        <button id="vendor-portal-btn" onclick="openVendorPortal()" style="display:none;padding:7px 18px;background:#2e7d32;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;display:none;align-items:center;gap:6px">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Open Vendor Portal
-        </button>
-        <span id="vendor-portal-hint" style="display:none;font-size:11px;color:#2e7d32">Select <strong>Custom scope — vendor specifies</strong> to activate the vendor portal</span>
-      </div>
-      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0">
-        <div style="font-size:11px;font-weight:700;color:#16325c;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em">&#128336; Delivery Timeline</div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-          <div class="sf-field">
-            <label>Contract Signed Date <span class="required">*</span></label>
-            <input type="date" value="2026-05-01">
-            <div class="hint">Customer signature date</div>
+
+      <!-- CURRENT STATE lead time -->
+      <div id="lt-cur-state">
+        <div style="background:#fde8e8;border:1px solid #f5c6c6;border-radius:6px;padding:12px 14px;margin-bottom:8px">
+          <div style="font-size:11px;font-weight:700;color:#c23934;margin-bottom:10px">&#9888; Current state — flat calendar day value, no logic</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <div class="sf-field">
+              <label>Lead Time</label>
+              <input type="number" value="11" style="background:#fff;border:1px solid #dddbda;border-radius:4px;padding:6px 9px;font-size:13px;width:100%;font-family:inherit">
+              <div class="hint" style="color:#c23934">Calendar days · same for every product · no trigger · no complexity · no market adjustment</div>
+            </div>
+            <div class="sf-field">
+              <label>Trigger Point</label>
+              <input type="text" value="Customer Signature" disabled style="background:#f9f9f9;color:#706e6b;border:1px solid #dddbda;border-radius:4px;padding:6px 9px;font-size:13px;width:100%;font-family:inherit">
+              <div class="hint" style="color:#c23934">Not configurable — always starts at signature</div>
+            </div>
+            <div class="sf-field">
+              <label>Complexity / Market Adj</label>
+              <input type="text" value="None" disabled style="background:#f9f9f9;color:#706e6b;border:1px solid #dddbda;border-radius:4px;padding:6px 9px;font-size:13px;width:100%;font-family:inherit">
+              <div class="hint" style="color:#c23934">No tiers · no market logic · no vendor integration</div>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- FUTURE STATE lead time -->
+      <div id="lt-fut-state" style="display:none">
+        <div style="background:#e3f5e3;border:1px solid #a5d6a7;border-radius:6px;padding:8px 14px;margin-bottom:10px;font-size:11px;color:#2e7d32;font-weight:600">
+          ✓ Business days · ✓ Trigger at operational readiness · ✓ Complexity tiers · ✓ Market adjustment · ✓ Vendor portal integration
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
           <div class="sf-field">
             <label>Lead Time Trigger</label>
             <select id="lt-trigger" onchange="calcDelivery()">
-              <option value="0">Customer Signature (current)</option>
+              <option value="0">Customer Signature</option>
               <option value="5" selected>Operational Readiness (+5 BD)</option>
             </select>
-            <div class="hint">When the clock actually starts</div>
+            <div class="hint">When the delivery clock starts</div>
           </div>
           <div class="sf-field">
             <label>Complexity Tier</label>
             <select id="lt-complexity" onchange="calcDelivery()">
               <option value="0" selected>Standard (+0 BD)</option>
               <option value="5">Non-standard (+5 BD)</option>
-              <option value="10">Custom build (+10 BD)</option>
+              <option value="vendor">Custom scope — vendor specifies</option>
             </select>
+            <div class="hint">Custom scope triggers vendor portal</div>
           </div>
           <div class="sf-field">
             <label>Market Adjustment</label>
@@ -523,23 +513,25 @@ tr:hover td{background:#f8f8ff}
               <option value="0">CH1 (+0 BD)</option>
             </select>
           </div>
+          <div class="sf-field">
+            <label>Vendor Lead Time (if custom)</label>
+            <input type="number" id="lt-vendor" placeholder="Vendor specifies" min="0" oninput="calcDelivery()" disabled style="background:#f9f9f9;color:#706e6b">
+            <div class="hint">Auto-populated from vendor portal</div>
+          </div>
         </div>
         <div id="lt-result" style="margin-top:10px;background:#e8f4ff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;font-size:12px;color:#16325c;line-height:1.8">
-          <span style="font-weight:600;color:#0070d2">&#128337; Calculated Lead Time</span><br>
-          Base: 8 BD &nbsp;+&nbsp; Trigger offset: 5 BD &nbsp;+&nbsp; Complexity: 0 BD &nbsp;+&nbsp; Market: 1 BD = <strong>14 BD total</strong><br>
-          <span style="color:#706e6b">Expected delivery range: &nbsp;</span>
-          <span style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Min: 12 BD</span>
-          &nbsp;&#8594;&nbsp;
-          <span style="background:#e8f4ff;color:#0070d2;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Expected: 14 BD</span>
-          &nbsp;&#8594;&nbsp;
-          <span style="background:#fde8e8;color:#c23934;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Max: 18 BD</span>
-          <br>
-          <span style="color:#706e6b">Est. completion date: &nbsp;</span><strong id="lt-date" style="color:#0070d2">~May 21, 2026</strong>
-          <span style="font-size:10px;color:#706e6b;margin-left:8px">(business days from operational readiness)</span>
+          Loading...
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+          <button id="vendor-portal-btn" onclick="openVendorPortal()" style="display:none;padding:7px 18px;background:#2e7d32;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;align-items:center;gap:6px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open Vendor Portal
+          </button>
         </div>
       </div>
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0">
-        <button class="sf-btn-s">Save & continue to Step 2</button>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;padding-top:8px;border-top:1px solid #f0f0f0">
+        <button class="sf-btn-s">Save &amp; continue to Step 2</button>
       </div>
     </div>
   </div>
@@ -1072,6 +1064,18 @@ function calcDelivery(){
 
 function openVendorPortal(){
   window.open('vendor-portal-mockup.html','_blank');
+}
+
+function swLt(on){
+  document.getElementById('lt-cur-state').style.display = on ? 'none' : 'block';
+  document.getElementById('lt-fut-state').style.display = on ? 'block' : 'none';
+  document.getElementById('lt-tt').style.background = on ? '#2e7d32' : '#c23934';
+  document.getElementById('lt-tk').style.transform = on ? 'translateX(16px)' : 'translateX(0)';
+  document.getElementById('lt-lbl-cur').style.background = on ? '#f3f3f3' : '#c23934';
+  document.getElementById('lt-lbl-cur').style.color = on ? '#706e6b' : '#fff';
+  document.getElementById('lt-lbl-fut').style.background = on ? '#2e7d32' : '#f3f3f3';
+  document.getElementById('lt-lbl-fut').style.color = on ? '#fff' : '#706e6b';
+  if(on) calcDelivery();
 }
 
 window.addEventListener('load', function(){ calcDelivery(); });
