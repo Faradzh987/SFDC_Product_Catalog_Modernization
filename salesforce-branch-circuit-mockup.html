@@ -482,6 +482,13 @@ tr:hover td{background:#f8f8ff}
       <div id="lt-result" style="margin-top:10px;background:#e8f4ff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;font-size:12px;color:#16325c;line-height:1.8">
         Loading...
       </div>
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+        <button id="vendor-portal-btn" onclick="openVendorPortal()" style="display:none;padding:7px 18px;background:#2e7d32;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;display:none;align-items:center;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open Vendor Portal
+        </button>
+        <span id="vendor-portal-hint" style="display:none;font-size:11px;color:#2e7d32">Select <strong>Custom scope — vendor specifies</strong> to activate the vendor portal</span>
+      </div>
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0">
         <div style="font-size:11px;font-weight:700;color:#16325c;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em">&#128336; Delivery Timeline</div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
@@ -1056,7 +1063,17 @@ function calcDelivery(){
     tLbl.style.borderLeftColor = isOpReady ? '#e65100' : '#c23934';
     tLbl.style.color = isOpReady ? '#e65100' : '#c23934';
   }
+  // Show vendor portal button only when custom scope selected
+  var vpBtn = document.getElementById('vendor-portal-btn');
+  if(vpBtn){
+    vpBtn.style.display = isVendor ? 'inline-flex' : 'none';
+  }
 }
+
+function openVendorPortal(){
+  window.open('vendor-portal-mockup.html','_blank');
+}
+
 window.addEventListener('load', function(){ calcDelivery(); });
 </script>
 </body>
