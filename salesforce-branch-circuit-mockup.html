@@ -802,9 +802,9 @@ tr:hover td{background:#f8f8ff}
                 <option value="2n">2N — Two independent UPS systems</option>
                 <option value="4m3">4-to-make-3 — Four modules, any three carry load</option>
                 <option value="5m4">5-to-make-4 — Five modules, any four carry load</option>
-                <option value="other">Other</option>
                 <option value="nups">Non-UPS (utility / generator direct)</option>
               </select>
+              <div style="font-size:10px;color:#706e6b;margin-top:3px">Only available CoreSite UPS topologies shown — per Andy feedback</div>
               <div id="topo-hint" class="topo-hint"></div>
             </div>
           </div>
@@ -897,12 +897,22 @@ tr:hover td{background:#f8f8ff}
             <button class="sf-btn-p" style="margin-top:4px;width:100%">Add contractor item</button>
           </div>
           <div style="background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:14px">
-            <div style="font-size:12px;font-weight:700;color:#16325c;margin-bottom:4px">🛒 E-Catalog Items</div>
-            <div style="font-size:11px;color:#706e6b;margin-bottom:12px">Outside vendor products via eCatalog / BOM integration — PDUs, patch panels, KVM, cable management</div>
-            <div class="sf-field"><label>Category <span class="required">*</span></label><select><option>PDU</option><option>Patch panel</option><option>KVM switch</option><option>Cable management</option><option>Cooling unit</option><option>Structured cabling</option><option>Other e-catalog item</option></select></div>
-            <div class="sf-field"><label>Vendor / Part number</label><input type="text" placeholder="e.g. Vertiv GEIST-30A-208V"></div>
-            <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
-            <button class="sf-btn-p" style="margin-top:4px;width:100%">Add e-catalog item</button>
+            <div style="font-size:12px;font-weight:700;color:#16325c;margin-bottom:4px">🛒 E-Catalog — CXML Integration</div>
+            <div style="font-size:11px;color:#706e6b;margin-bottom:10px">Real-time pricing from Wesco, Graybar, and local vendors via CXML protocol — prices auto-populate into quote</div>
+            <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+              <button onclick="openCXML('wesco')" style="padding:5px 12px;background:#0070d2;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">Wesco eCatalog →</button>
+              <button onclick="openCXML('graybar')" style="padding:5px 12px;background:#0070d2;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">Graybar eCatalog →</button>
+              <button onclick="openCXML('tkd')" style="padding:5px 12px;background:#706e6b;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">TKD (local) →</button>
+            </div>
+            <div id="cxml-status" style="font-size:11px;padding:6px 10px;background:#e8f4ff;border-left:3px solid #0070d2;border-radius:3px;color:#16325c;margin-bottom:8px">
+              ✓ Wesco connected via CXML · Last sync: today · 12,400 items available
+            </div>
+            <div class="sf-field"><label>Search catalog</label><input type="text" placeholder="e.g. PDU 30A 208V or part number"></div>
+            <div style="background:#fff;border:1px solid #dddbda;border-radius:4px;margin-top:6px;font-size:11px">
+              <div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center"><span>Vertiv GEIST 30A 208V PDU</span><span style="display:flex;gap:8px;align-items:center"><span style="color:#2e7d32;font-weight:600">$342 · 3 BD</span><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></span></div>
+              <div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center"><span>Raritan PX3 32A 208V PDU</span><span style="display:flex;gap:8px;align-items:center"><span style="color:#2e7d32;font-weight:600">$498 · 3 BD</span><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></span></div>
+              <div style="padding:6px 10px;display:flex;justify-content:space-between;align-items:center"><span>Panduit 48-port Patch Panel</span><span style="display:flex;gap:8px;align-items:center"><span style="color:#2e7d32;font-weight:600">$187 · 2 BD</span><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -975,7 +985,6 @@ function showTopoHint(){
     '2n':'Two fully independent UPS systems. If one fails, the other carries 100% of load. Most common in Tier III/IV.',
     '4m3':'Four UPS modules where any three can carry full load. More efficient than 2N. Common in modern hyperscale.',
     '5m4':'Five UPS modules where any four can carry full load. Confirmed per Andy — recommended for high-density.',
-    'other':'Custom or non-standard topology. Document in notes.',
     'nups':'No UPS — direct utility/generator feed. For non-critical use: laptops, power tools, facility maintenance.'
   };
   var colors={'2n':'#e3f5e3','4m3':'#e8f4ff','5m4':'#e8f4ff','other':'#fff8e1','nups':'#fde8e8'};
@@ -989,6 +998,9 @@ function toggleTopoInfo(){
     hint.textContent='UPS Topology defines power redundancy. 2N = two full independent systems. 4-to-make-3 = four modules, three needed. 5-to-make-4 = five modules, four needed. Non-UPS = direct feed for non-critical circuits.';
     hint.style.background='#f0f4ff';hint.style.borderLeft='3px solid #0070d2';hint.style.color='#16325c';hint.style.display='block';
   } else {hint.style.display='none';hint.textContent='';}
+}
+function openCXML(vendor){
+  window.open('cxml-auth.html?vendor='+vendor,'_blank','width=600,height=500');
 }
 function checkWeight(){
   var w=parseFloat(document.getElementById('cab-weight').value)||0;

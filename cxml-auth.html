@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eCatalog — CXML Vendor Authentication</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f3f3;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:#fff;border:1px solid #dddbda;border-radius:10px;width:100%;max-width:520px;overflow:hidden}
+.header{background:#0070d2;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.header-logo{width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.header-title{color:#fff;font-size:15px;font-weight:600}
+.header-sub{color:rgba(255,255,255,0.7);font-size:11px;margin-top:2px}
+.body{padding:20px}
+.vendor-tabs{display:flex;gap:4px;margin-bottom:16px;background:#f3f3f3;border-radius:6px;padding:4px}
+.vtab{flex:1;padding:7px;font-size:12px;font-weight:600;cursor:pointer;border-radius:4px;text-align:center;color:#706e6b;border:none;background:transparent;font-family:inherit}
+.vtab.active{background:#fff;color:#0070d2;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.section{margin-bottom:16px}
+.section-title{font-size:11px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:11px;font-weight:600;color:#706e6b;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em}
+.field input,.field select{width:100%;padding:7px 10px;border:1px solid #dddbda;border-radius:4px;font-size:13px;color:#16325c;background:#fff;font-family:inherit}
+.field input:focus,.field select:focus{outline:none;border-color:#0070d2}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.status-box{background:#e3f5e3;border:1px solid #a5d6a7;border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#2e7d32;display:flex;align-items:center;gap:8px}
+.status-box.warn{background:#fff3e0;border-color:#ffcc80;color:#e65100}
+.btn-p{width:100%;padding:10px;background:#0070d2;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-p:hover{background:#005fb2}
+.cxml-info{background:#f8f8f8;border:1px solid #e0e0e0;border-radius:6px;padding:10px 12px;margin-top:12px;font-size:11px;color:#706e6b;line-height:1.6}
+.cxml-info strong{color:#16325c}
+.badge{display:inline-block;font-size:10px;padding:1px 7px;border-radius:3px;font-weight:600}
+.b-green{background:#e3f5e3;color:#2e7d32}
+.b-gray{background:#f3f3f3;color:#706e6b}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="header-logo">🛒</div>
+    <div>
+      <div class="header-title">eCatalog — CXML Integration</div>
+      <div class="header-sub">Vendor authentication &amp; catalog access · CoreSite Salesforce</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="vendor-tabs">
+      <button class="vtab active" id="tab-wesco" onclick="switchVendor('wesco')">Wesco</button>
+      <button class="vtab" id="tab-graybar" onclick="switchVendor('graybar')">Graybar</button>
+      <button class="vtab" id="tab-tkd" onclick="switchVendor('tkd')">TKD (Local)</button>
+      <button class="vtab" id="tab-add" onclick="switchVendor('add')">+ Add Vendor</button>
+    </div>
+
+    <!-- WESCO -->
+    <div id="pane-wesco">
+      <div class="status-box">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Connected via CXML 1.2 · Last sync: today 9:14 AM · 12,400 items available
+      </div>
+      <div class="section">
+        <div class="section-title">Connection Details</div>
+        <div class="g2">
+          <div class="field"><label>Vendor ID</label><input type="text" value="WESCO-CORESITE-001" readonly style="background:#f9f9f9"></div>
+          <div class="field"><label>Protocol</label><select><option>CXML 1.2</option><option>CXML 1.1</option></select></div>
+          <div class="field"><label>PunchOut URL</label><input type="text" value="https://cxml.wesco.com/punchout" readonly style="background:#f9f9f9"></div>
+          <div class="field"><label>Auth Type</label><select><option>Shared Secret</option><option>OAuth 2.0</option></select></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Catalog Settings</div>
+        <div class="g2">
+          <div class="field"><label>Price List</label><select><option>CoreSite Contract Pricing</option><option>Standard List Price</option></select></div>
+          <div class="field"><label>Currency</label><select><option>USD</option></select></div>
+          <div class="field"><label>Lead Time Source</label><select><option>Real-time from Wesco</option><option>Static (quarterly update)</option></select></div>
+          <div class="field"><label>Auto-sync</label><select><option>Daily</option><option>Weekly</option><option>On demand</option></select></div>
+        </div>
+      </div>
+      <button class="btn-p" onclick="alert('Opening Wesco eCatalog in PunchOut session...')">Launch Wesco eCatalog →</button>
+      <div class="cxml-info">
+        <strong>How CXML works:</strong> When a SE clicks "Launch Wesco eCatalog", a PunchOut session opens in a new window. The SE selects items, adds to cart, and clicks "Return to CoreSite" — prices and lead times auto-populate into the Salesforce quote. No manual entry required.
+      </div>
+    </div>
+
+    <!-- GRAYBAR -->
+    <div id="pane-graybar" style="display:none">
+      <div class="status-box">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Connected via CXML 1.2 · Last sync: yesterday · 8,200 items available
+      </div>
+      <div class="section">
+        <div class="section-title">Connection Details</div>
+        <div class="g2">
+          <div class="field"><label>Vendor ID</label><input type="text" value="GRAYBAR-CORESITE-001" readonly style="background:#f9f9f9"></div>
+          <div class="field"><label>Protocol</label><select><option>CXML 1.2</option></select></div>
+          <div class="field"><label>PunchOut URL</label><input type="text" value="https://eprocure.graybar.com/punchout" readonly style="background:#f9f9f9"></div>
+          <div class="field"><label>Auth Type</label><select><option>Shared Secret</option></select></div>
+        </div>
+      </div>
+      <button class="btn-p" onclick="alert('Opening Graybar eCatalog in PunchOut session...')">Launch Graybar eCatalog →</button>
+    </div>
+
+    <!-- TKD -->
+    <div id="pane-tkd" style="display:none">
+      <div class="status-box warn">
+        ⚠ TKD not yet connected — requires CXML setup or manual onboarding
+      </div>
+      <div class="section">
+        <div class="section-title">Onboarding Options</div>
+        <div class="field"><label>Integration Type</label>
+          <select>
+            <option>CXML PunchOut (preferred)</option>
+            <option>Static price list upload (CSV)</option>
+            <option>Manual quote request</option>
+          </select>
+        </div>
+        <div class="field"><label>Vendor Contact Email</label><input type="text" placeholder="e.g. sales@tkd-vendor.com"></div>
+        <div class="field"><label>Notes</label><input type="text" placeholder="e.g. Local Chicago vendor — may need training"></div>
+      </div>
+      <button class="btn-p" style="background:#e65100" onclick="alert('Onboarding request sent to TKD...')">Send Onboarding Request to TKD →</button>
+    </div>
+
+    <!-- ADD VENDOR -->
+    <div id="pane-add" style="display:none">
+      <div class="section">
+        <div class="section-title">Add New Vendor</div>
+        <div class="g2">
+          <div class="field"><label>Vendor Name <span style="color:#c23934">*</span></label><input type="text" placeholder="e.g. London Electric"></div>
+          <div class="field"><label>Vendor Type</label><select><option>National distributor</option><option>Local / regional</option><option>Manufacturer direct</option></select></div>
+          <div class="field"><label>Integration Method</label><select><option>CXML PunchOut</option><option>Static CSV upload</option><option>Manual</option></select></div>
+          <div class="field"><label>Contract Pricing?</label><select><option>Yes — upload price list</option><option>No — use list price</option></select></div>
+        </div>
+        <div class="field"><label>PunchOut URL (if CXML)</label><input type="text" placeholder="https://vendor.com/punchout/coresite"></div>
+      </div>
+      <button class="btn-p" onclick="alert('Vendor added and onboarding initiated...')">Add Vendor &amp; Initiate Onboarding →</button>
+    </div>
+  </div>
+</div>
+<script>
+function switchVendor(v){
+  ['wesco','graybar','tkd','add'].forEach(function(id){
+    document.getElementById('tab-'+id).classList.toggle('active',id===v);
+    document.getElementById('pane-'+id).style.display=id===v?'block':'none';
+  });
+}
+// Read vendor from URL param
+var params = new URLSearchParams(window.location.search);
+var v = params.get('vendor');
+if(v) switchVendor(v);
+</script>
+</body>
+</html>
