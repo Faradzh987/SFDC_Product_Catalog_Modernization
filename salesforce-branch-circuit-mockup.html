@@ -296,49 +296,191 @@ tr:hover td{background:#f8f8ff}
     <div class="step-label">
       <span class="step-num">Step 1</span>
       <span class="step-title">Opportunity Setup</span>
-      <span class="step-sub">— Sales adds market(s), total kW, contract structure, $/kW, and PF at the opportunity level</span>
+      <span class="step-sub">— Mirrors the opportunity record in Salesforce</span>
     </div>
     <div class="step1-card">
-      <div class="step1-grid">
+
+      <!-- Section: Opportunity Information -->
+      <div style="font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">Opportunity Information</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+        <div class="sf-field">
+          <label>Opportunity Name <span class="required">*</span></label>
+          <input type="text" placeholder="e.g. Advocacy Digital Media@CH2">
+        </div>
+        <div class="sf-field">
+          <label>Account Name <span class="required">*</span></label>
+          <input type="text" placeholder="e.g. Advocacy Digital Media">
+        </div>
+        <div class="sf-field">
+          <label>Opportunity Owner <span class="required">*</span></label>
+          <input type="text" placeholder="e.g. Ron Rodi">
+        </div>
+        <div class="sf-field">
+          <label>Opportunity Record Type</label>
+          <select>
+            <option>New Logo</option>
+            <option>Expansion</option>
+            <option>Renewal</option>
+            <option>Solution Partner</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Stage <span class="required">*</span></label>
+          <select>
+            <option>Registered</option>
+            <option>Qualified</option>
+            <option>Proposal</option>
+            <option>Negotiation</option>
+            <option>Closed Won</option>
+            <option>Closed Lost</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Region <span class="required">*</span></label>
+          <select>
+            <option>Mid Atlantic</option>
+            <option>West</option>
+            <option>East</option>
+            <option>Central</option>
+            <option>International</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Deal Type</label>
+          <select>
+            <option>New</option>
+            <option>Expansion</option>
+            <option>Renewal</option>
+            <option>Bare Metal</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>New Logo?</label>
+          <select><option>Yes</option><option>No</option></select>
+        </div>
         <div class="sf-field">
           <label>Market(s) <span class="required">*</span></label>
           <select>
             <option>Los Angeles (LA1)</option>
+            <option>Los Angeles (LA2)</option>
             <option>Chicago (CH1)</option>
             <option>Denver (DE1)</option>
             <option>New York (NY2)</option>
+            <option>Santa Clara (SV1)</option>
             <option>Santa Clara (SV9)</option>
+            <option>Washington DC (VA1)</option>
+            <option>Boston (BO1)</option>
           </select>
           <div class="hint">Drives available markets in Step 2</div>
         </div>
+      </div>
+
+      <!-- Section: Team -->
+      <div style="font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">Team</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
         <div class="sf-field">
-          <label>Total kW <span class="required">*</span></label>
+          <label>Primary Sales Engineer</label>
+          <input type="text" placeholder="e.g. Erick Smith">
+        </div>
+        <div class="sf-field">
+          <label>Solution Architect</label>
+          <input type="text" placeholder="e.g. Jane Doe">
+        </div>
+        <div class="sf-field">
+          <label>Referring Sales Rep</label>
+          <input type="text" placeholder="e.g. Ron Rodi">
+        </div>
+        <div class="sf-field">
+          <label>Lead Generation Rep</label>
+          <input type="text" placeholder="e.g. Philip Kueber">
+        </div>
+        <div class="sf-field">
+          <label>Solution Partner</label>
+          <input type="text" placeholder="e.g. Villa-Tech">
+        </div>
+        <div class="sf-field">
+          <label>Originating Contact</label>
+          <input type="text" placeholder="e.g. Kevin Markey">
+        </div>
+      </div>
+
+      <!-- Section: Deal Metrics -->
+      <div style="font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">Deal Metrics</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+        <div class="sf-field">
+          <label>Start Date <span class="required">*</span></label>
+          <input type="date" value="2026-05-01">
+        </div>
+        <div class="sf-field">
+          <label>Customer Want Date <span class="required">*</span></label>
+          <input type="date" value="2026-06-15">
+          <div class="hint">When customer needs delivery — drives lead time calc</div>
+        </div>
+        <div class="sf-field">
+          <label>Term in Months</label>
+          <input type="number" placeholder="e.g. 36" min="1">
+        </div>
+        <div class="sf-field">
+          <label>MRR Amount</label>
+          <input type="number" placeholder="e.g. 25000" min="0">
+        </div>
+        <div class="sf-field">
+          <label>Total Contract Value</label>
+          <input type="number" placeholder="e.g. 900000" min="0">
+        </div>
+        <div class="sf-field">
+          <label>One-Time Payment</label>
+          <select><option>No</option><option>Yes</option></select>
+        </div>
+        <div class="sf-field">
+          <label>Primary Data Center Provider?</label>
+          <select><option>Yes</option><option>No</option></select>
+        </div>
+        <div class="sf-field">
+          <label>Colocation Opportunity New CkW</label>
           <input type="number" placeholder="e.g. 500" min="0">
-          <div class="hint">Total power for this opportunity</div>
+        </div>
+      </div>
+
+      <!-- Section: Delivery Timeline (lead time) -->
+      <div style="font-size:10px;font-weight:700;color:#16325c;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">&#128336; Delivery Timeline</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <div class="sf-field">
+          <label>Lead Time Trigger</label>
+          <select id="lt-trigger" onchange="calcDelivery()">
+            <option value="0">Customer Signature</option>
+            <option value="5" selected>Operational Readiness (+5 BD)</option>
+          </select>
+          <div class="hint">When the delivery clock starts</div>
         </div>
         <div class="sf-field">
-          <label>Contract Structure <span class="required">*</span></label>
-          <select>
-            <option>Standard MRC</option>
-            <option>Tiered</option>
-            <option>Custom</option>
-            <option>Enterprise Agreement</option>
+          <label>Complexity Tier</label>
+          <select id="lt-complexity" onchange="calcDelivery()">
+            <option value="0" selected>Standard (+0 BD)</option>
+            <option value="5">Non-standard (+5 BD)</option>
+            <option value="vendor">Custom scope — vendor specifies</option>
+          </select>
+          <div class="hint">Custom scope triggers vendor portal</div>
+        </div>
+        <div class="sf-field">
+          <label>Market Adjustment</label>
+          <select id="lt-market" onchange="calcDelivery()">
+            <option value="0">LA1 / LA2 (+0 BD)</option>
+            <option value="1" selected>SV1 (+1 BD)</option>
+            <option value="2">SV2 (+2 BD)</option>
+            <option value="3">NY2 (+3 BD)</option>
+            <option value="0">CH1 (+0 BD)</option>
           </select>
         </div>
         <div class="sf-field">
-          <label>$/kW <span class="required">*</span> <span style="font-size:10px;color:#706e6b;font-weight:400">(Site Pricing Matrix)</span></label>
-          <input type="number" placeholder="e.g. 120" min="0">
-          <div class="hint">From site pricing matrix</div>
+          <label>Vendor Lead Time (if custom)</label>
+          <input type="number" id="lt-vendor" placeholder="Vendor specifies" min="0" oninput="calcDelivery()" disabled style="background:#f9f9f9;color:#706e6b">
+          <div class="hint">Auto-populated from vendor portal</div>
         </div>
-        <div class="sf-field">
-          <label>Power Factor (PF) <span class="required">*</span></label>
-          <select>
-            <option>0.8 — Standard data center</option>
-            <option>0.9 — High efficiency</option>
-            <option>1.0 — Unity</option>
-            <option>Custom</option>
-          </select>
-        </div>
+      </div>
+      <div id="lt-result" style="margin-top:10px;background:#e8f4ff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;font-size:12px;color:#16325c;line-height:1.8">
+        Loading...
       </div>
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0">
         <div style="font-size:11px;font-weight:700;color:#16325c;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em">&#128336; Delivery Timeline</div>
@@ -858,7 +1000,14 @@ function calcDelivery(){
   var complexityEl = document.getElementById('lt-complexity');
   var marketEl = document.getElementById('lt-market');
   var trigger = triggerEl ? parseInt(triggerEl.value)||0 : 5;
-  var complexity = complexityEl ? parseInt(complexityEl.value)||0 : 0;
+  var complexityVal = complexityEl ? complexityEl.value : '0';
+  var isVendor = complexityVal === 'vendor';
+  var complexity = isVendor ? 0 : (parseInt(complexityVal)||0);
+  // Enable/disable vendor field
+  var vendorEl = document.getElementById('lt-vendor');
+  if(vendorEl){ vendorEl.disabled = !isVendor; vendorEl.style.background = isVendor?'#fff':'#f9f9f9'; vendorEl.style.color = isVendor?'#16325c':'#706e6b'; }
+  var vendorDays = isVendor ? (parseInt(document.getElementById('lt-vendor')&&document.getElementById('lt-vendor').value)||0) : 0;
+  if(isVendor) complexity = vendorDays;
   var market = marketEl ? parseInt(marketEl.value)||0 : 1;
   var base = 8;
   var total = base + trigger + complexity + market;
@@ -875,8 +1024,9 @@ function calcDelivery(){
   // Update Step 1 result box
   var r = document.getElementById('lt-result');
   if(r){
-    r.innerHTML = '<span style="font-weight:600;color:#0070d2">&#128337; Calculated Lead Time</span><br>'+
-      'Base: '+base+' BD &nbsp;+&nbsp; Trigger: '+trigger+' BD &nbsp;+&nbsp; Complexity: '+complexity+' BD &nbsp;+&nbsp; Market: '+market+' BD = <strong>'+total+' BD total</strong><br>'+
+    var complexityLabel = isVendor ? ('Vendor portal: '+complexity+' BD') : ('Complexity: '+complexity+' BD');
+    r.innerHTML = '<span style="font-weight:600;color:#0070d2">&#128337; Calculated Lead Time</span>'+(isVendor?'&nbsp;<span style="background:#fff3e0;color:#e65100;font-size:10px;padding:1px 8px;border-radius:3px;font-weight:600">Vendor portal active</span>':'')+'<br>'+
+      'Base: '+base+' BD &nbsp;+&nbsp; Trigger: '+trigger+' BD &nbsp;+&nbsp; '+complexityLabel+' &nbsp;+&nbsp; Market: '+market+' BD = <strong>'+total+' BD total</strong><br>'+
       '<span style="color:#706e6b">Expected delivery range: &nbsp;</span>'+
       '<span style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600;font-size:11px">Min: '+minDays+' BD</span>'+
       ' &nbsp;&#8594;&nbsp; '+
