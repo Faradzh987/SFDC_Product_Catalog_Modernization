@@ -104,7 +104,7 @@ tr:hover td{background:#f8f8ff}
 
 <!-- CURRENT STATE -->
 <div id="cur">
-  <div class="callout callout-red">50+ product codes — every amperage, voltage, delivery type, and cabinet size is a separate product. No structured workflow. Sales reps build quotes without a guided process.</div>
+  <div class="callout callout-red">8,200+ product codes in SFDC today — every voltage, amperage, and delivery type is a separate product. Adding 415V doubles the circuit catalog. No guided workflow. Same flat 11-day calendar lead time on every product regardless of complexity, market, or scope.</div>
   <div class="sf-wrap">
     <div class="sf-topbar">
       <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
@@ -113,9 +113,9 @@ tr:hover td{background:#f8f8ff}
     </div>
     <div class="sf-subbar">
       <span class="sf-subbar-title">Product Catalog</span>
-      <span class="badge b-red">Current state — 50+ codes · No guided workflow</span>
+      <span class="badge b-red">Current state — 8,200+ codes · No guided workflow · Flat lead times</span>
     </div>
-    <div class="sf-meta">Every variation = a separate product code · No step-by-step process · No dynamic filtering</div>
+    <div class="sf-meta">8,200+ product codes · Same flat 11-day lead time on all · No guided workflow · 415V doubles catalog</div>
     <div class="sf-table-wrap">
       <table>
         <thead><tr><th>Product name</th><th>Product code</th><th>Status</th><th>Type</th><th>Delivery</th><th>Amps</th><th>Voltage</th></tr></thead>
@@ -987,8 +987,8 @@ function showTopoHint(){
     '5m4':'Five UPS modules where any four can carry full load. Confirmed per Andy — recommended for high-density.',
     'nups':'No UPS — direct utility/generator feed. For non-critical use: laptops, power tools, facility maintenance.'
   };
-  var colors={'2n':'#e3f5e3','4m3':'#e8f4ff','5m4':'#e8f4ff','other':'#fff8e1','nups':'#fde8e8'};
-  var borders={'2n':'#2e7d32','4m3':'#0070d2','5m4':'#0070d2','other':'#f59e0b','nups':'#c23934'};
+  var colors={'2n':'#e3f5e3','4m3':'#e8f4ff','5m4':'#e8f4ff','nups':'#fde8e8'};
+  var borders={'2n':'#2e7d32','4m3':'#0070d2','5m4':'#0070d2','nups':'#c23934'};
   if(val&&hints[val]){hint.textContent=hints[val];hint.style.background=colors[val];hint.style.borderLeft='3px solid '+borders[val];hint.style.color='#16325c';hint.style.display='block';}
   else{hint.style.display='none';}
 }
