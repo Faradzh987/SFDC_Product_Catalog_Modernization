@@ -291,6 +291,9 @@ tr:hover td{background:#f8f8ff}
 <div id="fut" style="display:none">
   <div class="callout callout-green">4 product categories · Space is primary · Power and supplementals attach under space · IX is standalone · Dynamic market filtering from opportunity</div>
 
+  <!-- SPLIT: product config left, quote basket right -->
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start">
+  <div>
   <!-- PRODUCT LANDING -->
   <div id="prod-landing">
     <div class="sf-wrap">
@@ -772,7 +775,7 @@ tr:hover td{background:#f8f8ff}
         <div style="margin-top:14px;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:6px;padding:10px 14px;font-size:11px;color:#065f46;margin-bottom:10px">
           📋 <strong>Product basket hierarchy:</strong> Cage (primary) → Branch Circuits (attached) → Liquid Cooling (attribute) → Supplementals (attached)
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add cage + attachments to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space', 'Cage / Private Suite', getCageDetails())">Add cage + attachments to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
 
       <!-- CORESITE CABINET -->
@@ -1115,7 +1118,7 @@ tr:hover td{background:#f8f8ff}
               <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px"></div>
             </div>
           </div>
-          <div class="sf-btn-row"><button class="sf-btn-p">Add to basket</button><button class="sf-btn-s">Cancel</button></div>
+          <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF · A-side: LA1-08')">Add to basket</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
         </div>
       </div>
     </div>
@@ -1187,12 +1190,33 @@ tr:hover td{background:#f8f8ff}
               <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option></select></div>
             </div>
           </div>
-          <div class="sf-btn-row"><button class="sf-btn-p">Add to basket</button><button class="sf-btn-s">Cancel</button></div>
+          <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF · A-side: LA1-08')">Add to basket</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
         </div>
       </div>
     </div>
 
   </div> <!-- end prod-view -->
+  </div> <!-- end left col -->
+
+  <!-- QUOTE BASKET PANEL -->
+  <div style="background:#fff;border:1px solid #dddbda;border-radius:8px;overflow:hidden;position:sticky;top:16px">
+    <div style="background:#0070d2;padding:10px 14px;display:flex;align-items:center;justify-content:space-between">
+      <span style="color:#fff;font-size:13px;font-weight:600">Quote basket</span>
+      <span id="basket-count" style="background:rgba(255,255,255,0.25);color:#fff;font-size:11px;padding:1px 8px;border-radius:3px;font-weight:600">0 items</span>
+    </div>
+    <div id="basket-empty" style="padding:24px 16px;text-align:center;color:#706e6b;font-size:12px">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#dddbda" stroke-width="1.5" style="display:block;margin:0 auto 8px"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+      No items added yet
+    </div>
+    <div id="basket-items" style="display:none;max-height:400px;overflow-y:auto"></div>
+    <div id="basket-footer" style="display:none;padding:10px 14px;border-top:1px solid #e5e7eb">
+      <div id="basket-summary" style="font-size:11px;color:#706e6b;margin-bottom:10px;line-height:1.6"></div>
+      <button onclick="generateQuote()" style="width:100%;padding:8px;background:#2e7d32;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">Generate Quote →</button>
+      <button onclick="clearBasket()" style="width:100%;padding:6px;background:#fff;color:#706e6b;border:1px solid #dddbda;border-radius:4px;font-size:11px;cursor:pointer;font-family:inherit;margin-top:4px">Clear basket</button>
+    </div>
+  </div>
+
+  </div> <!-- end grid -->
 </div>
 
 <!-- IMPACT -->
@@ -1203,6 +1227,52 @@ tr:hover td{background:#f8f8ff}
 </div>
 
 <script>
+var basket = [];
+function addToBasket(type, name, details){
+  var id = Date.now();
+  basket.push({id:id, type:type, name:name, details:details});
+  renderBasket();
+  // Flash confirmation
+  var btn = event && event.target;
+  if(btn){ var orig=btn.textContent; btn.textContent='Added!'; btn.style.background='#2e7d32'; setTimeout(function(){ btn.textContent=orig; btn.style.background='#0070d2'; },1000); }
+}
+function removeFromBasket(id){
+  basket = basket.filter(function(i){ return i.id !== id; });
+  renderBasket();
+}
+function renderBasket(){
+  var count = basket.length;
+  document.getElementById('basket-count').textContent = count + ' item'+(count!==1?'s':'');
+  document.getElementById('basket-empty').style.display = count===0?'block':'none';
+  document.getElementById('basket-items').style.display = count===0?'none':'block';
+  document.getElementById('basket-footer').style.display = count===0?'none':'block';
+  var colors = {Space:'#e8f4ff',Power:'#fff3e0',Supplementals:'#e3f5e3',IX:'#f3f3f3'};
+  var tcols = {Space:'#0070d2',Power:'#e65100',Supplementals:'#2e7d32',IX:'#706e6b'};
+  var html = basket.map(function(item){
+    return '<div style="padding:10px 14px;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'+
+      '<div style="flex:1;min-width:0">'+
+      '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">'+
+      '<span style="font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;background:'+(colors[item.type]||'#f3f3f3')+';color:'+(tcols[item.type]||'#706e6b')+'">'+item.type+'</span></div>'+
+      '<div style="font-size:12px;font-weight:600;color:#16325c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+item.name+'</div>'+
+      '<div style="font-size:11px;color:#706e6b;margin-top:2px;line-height:1.4">'+item.details+'</div>'+
+      '</div>'+
+      '<button onclick="removeFromBasket('+item.id+')" style="color:#c23934;background:none;border:none;cursor:pointer;font-size:16px;padding:0;flex-shrink:0;line-height:1">&times;</button>'+
+      '</div>';
+  }).join('');
+  document.getElementById('basket-items').innerHTML = html;
+  var types = {};
+  basket.forEach(function(i){ types[i.type]=(types[i.type]||0)+1; });
+  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e){ return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;·&nbsp; ');
+}
+function clearBasket(){
+  basket=[];
+  renderBasket();
+}
+function generateQuote(){
+  if(basket.length===0) return;
+  var lines = basket.map(function(i,idx){ return (idx+1)+'. ['+i.type+'] '+i.name+' — '+i.details; }).join('\n');
+  alert('Quote generated!\n\nItems:\n'+lines+'\n\nIn real SFDC this would create a Quote record linked to the Opportunity.');
+}
 function showProduct(type){
   document.getElementById('prod-landing').style.display='none';
   document.getElementById('prod-view').style.display='block';
@@ -1211,6 +1281,13 @@ function showProduct(type){
   ['space','power','supplementals','ix'].forEach(function(v){
     document.getElementById('view-'+v).style.display=v===type?'block':'none';
   });
+}
+function getCageDetails(){
+  var cageType = document.querySelector('#pane-cage select') ? document.querySelector('#pane-cage select').value : 'Private Cage';
+  var sqft = document.querySelector('#pane-cage input[type=number]') ? document.querySelector('#pane-cage input[type=number]').value : '';
+  var lc = document.getElementById('lc-sel') ? document.getElementById('lc-sel').value : 'none';
+  var lcLabel = lc==='none'?'Air cooled':lc;
+  return (sqft?sqft+' sqft · ':'')+'Cage type: '+cageType+' · Cooling: '+lcLabel;
 }
 function backToLanding(){
   document.getElementById('prod-landing').style.display='block';
