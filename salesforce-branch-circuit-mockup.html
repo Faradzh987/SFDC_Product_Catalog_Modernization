@@ -822,7 +822,7 @@ tr:hover td{background:#f8f8ff}
             </div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','CoreSite Cabinet',getCabinetDetails())">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
       <!-- ROOF -->
@@ -840,7 +840,7 @@ tr:hover td{background:#f8f8ff}
             <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Roof Space','Roof space · standard')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
       <!-- OFFICE -->
@@ -856,7 +856,7 @@ tr:hover td{background:#f8f8ff}
             <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Office Space','Office space')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
       <!-- STORAGE -->
@@ -872,7 +872,7 @@ tr:hover td{background:#f8f8ff}
             <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Storage Space','Storage space')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
       <!-- RACEWAY -->
@@ -890,7 +890,7 @@ tr:hover td{background:#f8f8ff}
             <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Raceway','Raceway')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
       <!-- IX — Interconnection -->
@@ -910,7 +910,7 @@ tr:hover td{background:#f8f8ff}
             <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
       <!-- LC-READY POD -->
@@ -933,7 +933,7 @@ tr:hover td{background:#f8f8ff}
             <div class="sf-field"><label>Notes</label><input type="text" placeholder="e.g. Confirm availability with Alec/Andy"></div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','LC-Ready Pod','LC-Ready Pod')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
     </div>
   </div>
@@ -1307,6 +1307,9 @@ function showProduct(type){
   ['space','power','supplementals','ix'].forEach(function(v){
     document.getElementById('view-'+v).style.display=v===type?'block':'none';
   });
+}
+function getCabinetDetails(){
+  return 'CoreSite Cabinet · 48U';
 }
 function getCageDetails(){
   var cageType = document.querySelector('#pane-cage select') ? document.querySelector('#pane-cage select').value : 'Private Cage';
