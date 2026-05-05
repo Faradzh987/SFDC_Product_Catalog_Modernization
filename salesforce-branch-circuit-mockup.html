@@ -541,7 +541,7 @@ tr:hover td{background:#f8f8ff}
     <div class="step-label">
       <span class="step-num">Step 2-A</span>
       <span class="step-title">Add Space Types</span>
-      <span class="step-sub">— Cage, CoreSite Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod</span>
+      <span class="step-sub">— Space is the primary product · Power, liquid cooling &amp; supplementals attach under it</span>
     </div>
     <div class="sf-wrap">
       <div class="sf-topbar">
@@ -549,7 +549,7 @@ tr:hover td{background:#f8f8ff}
         <span class="sf-topbar-title">Sales — Product Catalog</span>
         <span class="sf-topbar-pill">Step 2-A · Space Types</span>
       </div>
-      <div class="sf-meta" style="padding:8px 14px">Select a space type to configure · Markets auto-filter from Step 1</div>
+      <div class="sf-meta" style="padding:8px 14px">Space is the primary product · Power and supplementals attach under the space · Markets auto-filter from Step 1</div>
       <div class="product-tabs">
         <div class="ptab active" id="tab-cage" onclick="switchTab('cage')">🔲 Cage</div>
         <div class="ptab" id="tab-cabinet" onclick="switchTab('cabinet')">🗄 CoreSite Cabinet</div>
@@ -603,7 +603,66 @@ tr:hover td{background:#f8f8ff}
             </div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <!-- POWER — attached under cage -->
+        <div style="margin-top:14px;padding-top:14px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#0070d2;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
+            ⚡ Branch Circuits — added under this cage
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px">
+            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option selected>60A</option><option>100A</option></select></div>
+            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option selected>208V</option><option>415V</option></select></div>
+            <div class="sf-field"><label>Poles</label><select><option>1-pole</option><option>2-pole</option><option selected>3-pole</option></select></div>
+            <div class="sf-field"><label>Delivery type</label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
+          </div>
+          <div style="font-size:11px;color:#706e6b;background:#f8f8f8;border-radius:4px;padding:6px 10px;margin-bottom:8px">
+            Auto-generates product code: <strong style="color:#0070d2">PW-AC-208-60-3P-PR</strong> · bKW: 21.6 · cKW: 17.3
+          </div>
+        </div>
+
+        <!-- LIQUID COOLING — attribute on cage -->
+        <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#059669;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#059669;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTRIBUTE</span>
+            ❄️ Liquid Cooling — option on this cage
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div class="sf-field"><label>Liquid cooling</label>
+              <select id="lc-sel" onchange="toggleLC(this.value)">
+                <option value="none" selected>None — air cooled</option>
+                <option value="colocool">ColoCool (in-row liquid assisted)</option>
+                <option value="rdhx">Rear-door heat exchanger</option>
+                <option value="direct">Direct chip liquid cooling</option>
+              </select>
+            </div>
+            <div class="sf-field" id="lc-cdu" style="display:none"><label>CDU size</label><select><option>10 kW</option><option>20 kW</option><option selected>40 kW</option><option>80 kW</option></select></div>
+            <div class="sf-field" id="lc-hose" style="display:none"><label>Hose configuration</label><select><option selected>EDPM hose with mobile header</option><option>Stainless steel hard pipe</option></select></div>
+          </div>
+          <div id="lc-note" style="display:none;font-size:11px;color:#059669;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:4px;padding:6px 10px;margin-top:6px">
+            ✓ Liquid cooling added as attribute · Also exists as standalone LC-Ready Pod product per Alec
+          </div>
+        </div>
+
+        <!-- SUPPLEMENTALS — attached under cage -->
+        <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#e65100;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#e65100;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
+            📦 Supplementals — added under this cage
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="sf-field"><label>Item type</label>
+              <select><option>Caging / cage panels</option><option>Ladder rack</option><option>Cable containment</option><option>Overhead conveyance</option><option>Grounding</option><option>Seismic bracing</option></select>
+            </div>
+            <div class="sf-field"><label>Source</label>
+              <select><option selected>Static — Wesco / Graybar eCatalog</option><option>Dynamic — vendor portal (custom scope)</option></select>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:6px;padding:10px 14px;font-size:11px;color:#065f46;margin-bottom:10px">
+          📋 <strong>Product basket hierarchy:</strong> Cage (primary) → Branch Circuits (attached) → Liquid Cooling (attribute) → Supplementals (attached)
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add cage + attachments to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
 
       <!-- CORESITE CABINET -->
@@ -1001,6 +1060,12 @@ function toggleTopoInfo(){
 }
 function openCXML(vendor){
   window.open('cxml-auth.html?vendor='+vendor,'_blank','width=600,height=500');
+}
+function toggleLC(val){
+  var show = val !== 'none';
+  document.getElementById('lc-cdu').style.display = show ? 'block' : 'none';
+  document.getElementById('lc-hose').style.display = show ? 'block' : 'none';
+  document.getElementById('lc-note').style.display = show ? 'block' : 'none';
 }
 function checkWeight(){
   var w=parseFloat(document.getElementById('cab-weight').value)||0;
