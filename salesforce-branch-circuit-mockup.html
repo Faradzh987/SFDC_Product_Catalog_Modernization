@@ -379,12 +379,18 @@ tr:hover td{background:#f8f8ff}
     <div id="view-space" style="display:none">
       <!-- STEP 1 -->
   <div class="step-wrap">
-    <div class="step-label">
-      <span class="step-num">Step 1</span>
-      <span class="step-title">Opportunity Setup</span>
-      <span class="step-sub">— Mirrors the opportunity record in Salesforce</span>
+    <div class="step-label" onclick="toggleOpp()" style="cursor:pointer;user-select:none;padding:12px 14px;background:#fff;border:1px solid #dddbda;border-radius:6px;display:flex;align-items:center;justify-content:space-between;margin-bottom:0">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="step-num" style="background:#2e7d32" id="opp-check">✓</span>
+        <div>
+          <span class="step-title">Opportunity Setup</span>
+          <span class="step-sub" id="opp-summary"> — Click to configure</span>
+        </div>
+      </div>
+      <span id="opp-chevron" style="font-size:18px;color:#706e6b;transition:transform 0.2s">&#8964;</span>
     </div>
-    <div class="step1-card">
+    <div id="opp-form" style="display:none">
+    <div class="step1-card" style="border-top:none;border-radius:0 0 6px 6px;margin-top:0">
 
       <!-- Section: Opportunity Information -->
       <div style="font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">Opportunity Information</div>
@@ -617,9 +623,10 @@ tr:hover td{background:#f8f8ff}
       </div>
 
       <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;padding-top:8px;border-top:1px solid #f0f0f0">
-        <button class="sf-btn-s">Save &amp; continue to Step 2</button>
+        <button class="sf-btn-s" onclick="saveOpp()">Save &amp; continue ↓</button>
       </div>
     </div>
+    </div> <!-- end opp-form -->
   </div>
 
   <!-- STEP 2-A -->
@@ -1272,6 +1279,25 @@ function generateQuote(){
   if(basket.length===0) return;
   var lines = basket.map(function(i,idx){ return (idx+1)+'. ['+i.type+'] '+i.name+' — '+i.details; }).join('\n');
   alert('Quote generated!\n\nItems:\n'+lines+'\n\nIn real SFDC this would create a Quote record linked to the Opportunity.');
+}
+function toggleOpp(){
+  var form = document.getElementById('opp-form');
+  var chevron = document.getElementById('opp-chevron');
+  var open = form.style.display === 'block';
+  form.style.display = open ? 'none' : 'block';
+  chevron.style.transform = open ? '' : 'rotate(180deg)';
+}
+function saveOpp(){
+  var name = document.getElementById('opp-name') ? document.getElementById('opp-name').value : '';
+  var account = document.getElementById('account-name') ? document.getElementById('account-name').value : '';
+  var summary = document.getElementById('opp-summary');
+  if(summary){
+    summary.textContent = (name||'Opportunity') + (account?' · '+account:'') + ' — configured';
+  }
+  var check = document.getElementById('opp-check');
+  if(check){ check.textContent='✓'; check.style.background='#2e7d32'; }
+  document.getElementById('opp-form').style.display='none';
+  document.getElementById('opp-chevron').style.transform='';
 }
 function showProduct(type){
   document.getElementById('prod-landing').style.display='none';
