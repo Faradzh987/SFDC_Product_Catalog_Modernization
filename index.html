@@ -18,10 +18,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 h1{font-size:38px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:12px;letter-spacing:-0.02em}
 h1 span{color:#4f9eff}
 .team{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:40px}
-.btn{display:inline-flex;align-items:center;gap:10px;background:#0070d2;color:#fff;text-decoration:none;padding:14px 36px;border-radius:6px;font-size:15px;font-weight:700;transition:all 0.2s;border:2px solid #0070d2}
-.btn:hover{background:transparent;color:#4f9eff;border-color:#4f9eff;transform:translateY(-2px)}
+.btn-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:14px 28px;border-radius:6px;font-size:14px;font-weight:700;transition:all 0.2s;border:2px solid}
+.btn-primary{background:#0070d2;color:#fff;border-color:#0070d2}
+.btn-primary:hover{background:transparent;color:#4f9eff;border-color:#4f9eff;transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:rgba(255,255,255,0.75);border-color:rgba(255,255,255,0.2)}
+.btn-secondary:hover{background:rgba(255,255,255,0.06);color:#fff;border-color:rgba(255,255,255,0.5);transform:translateY(-2px)}
+.btn-dark{background:#16325c;color:#fff;border-color:#16325c}
+.btn-dark:hover{background:transparent;color:#8eb8ff;border-color:#8eb8ff;transform:translateY(-2px)}
 .btn svg{transition:transform 0.2s}
 .btn:hover svg{transform:translateX(4px)}
+.divider{width:1px;height:32px;background:rgba(255,255,255,0.1)}
 </style>
 </head>
 <body>
@@ -34,10 +41,23 @@ h1 span{color:#4f9eff}
   </div>
   <div class="eyebrow">CoreSite · Product Team</div>
   <h1>Salesforce Product<br><span>Catalog Modernization</span></h1>
-  <a href="salesforce-branch-circuit-mockup.html" class="btn">
-    View Mockup
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
+  <div class="team">Alex A. · Richard · Chris · Andy review</div>
+  <div class="btn-row">
+    <a href="salesforce-branch-circuit-mockup.html" class="btn btn-primary">
+      📦 Product Catalog
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="divider"></div>
+    <a href="vendor-portal-mockup.html" class="btn btn-secondary">
+      🏗 Vendor Portal (External)
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="divider"></div>
+    <a href="vendor-management-portal.html" class="btn btn-dark">
+      🏢 Vendor Management (Internal)
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
 </div>
 </body>
 </html>
