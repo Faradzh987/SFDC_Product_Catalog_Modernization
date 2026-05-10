@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoreSite Vendor Portal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f3f3;color:#16325c;font-size:13px}
+.topbar{background:#032D60;padding:0 16px;display:flex;align-items:center;gap:12px;height:40px}
+.topbar-title{color:#fff;font-size:13px;font-weight:600;flex:1}
+.vendor-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:4px 10px}
+.vendor-pill select{background:none;border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;outline:none;font-family:inherit}
+.vendor-pill select option{color:#16325c;background:#fff}
+.acc-banner{padding:5px 16px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;background:#e3f5e3;color:#2e7d32}
+.pg-header{background:#fff;border-bottom:1px solid #dddbda;padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.pg-title{font-size:16px;font-weight:600;color:#16325c}
+.pg-sub{font-size:11px;color:#706e6b;margin-top:2px}
+.main-tabs{background:#fff;border-bottom:2px solid #0070d2;padding:0 20px;display:flex;gap:0}
+.mtab{padding:10px 16px;font-size:12px;font-weight:600;cursor:pointer;color:#706e6b;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.mtab.active{color:#0070d2;border-bottom-color:#0070d2}
+.mtab:hover:not(.active){color:#0070d2;background:#f8fbff}
+.content{padding:20px;max-width:1200px}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.card{background:#fff;border:1px solid #dddbda;border-radius:8px;overflow:hidden;margin-bottom:16px}
+.card-hd{padding:10px 16px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:11px;font-weight:700;color:#16325c;text-transform:uppercase;letter-spacing:0.06em}
+.card-body{padding:16px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid #dddbda;border-radius:8px;padding:14px;text-align:center}
+.kpi-num{font-size:24px;font-weight:700;line-height:1}
+.kpi-lbl{font-size:10px;color:#706e6b;margin-top:3px;text-transform:uppercase;letter-spacing:0.04em}
+.badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:600;white-space:nowrap}
+.b-green{background:#e3f5e3;color:#2e7d32}
+.b-blue{background:#e0f0ff;color:#0070d2}
+.b-red{background:#fde8e8;color:#c23934}
+.b-orange{background:#fff3e0;color:#e65100}
+.b-gray{background:#f3f3f3;color:#706e6b}
+.b-purple{background:#f3e8ff;color:#6b21a8}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:#f3f3f3;border-bottom:1px solid #dddbda}
+th{padding:7px 10px;text-align:left;font-size:11px;font-weight:600;color:#706e6b;white-space:nowrap}
+td{padding:7px 10px;border-bottom:0.5px solid #f0f0f0;vertical-align:middle}
+tr:hover td{background:#f8f8ff}
+.btn-p{padding:6px 14px;background:#0070d2;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-s{padding:6px 12px;background:#fff;color:#0070d2;border:1px solid #0070d2;border-radius:4px;font-size:11px;cursor:pointer;font-family:inherit}
+.btn-g{padding:6px 14px;background:#2e7d32;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-r{padding:6px 14px;background:#c23934;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-sm{padding:3px 10px;font-size:10px;border-radius:3px;border:none;cursor:pointer;font-family:inherit;font-weight:600}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sf-field{margin-bottom:10px}
+.sf-field label{display:block;font-size:10px;font-weight:600;color:#706e6b;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:3px}
+.sf-field input,.sf-field select,.sf-field textarea{width:100%;padding:6px 9px;border:1px solid #dddbda;border-radius:4px;font-size:12px;color:#16325c;background:#fff;font-family:inherit}
+.sf-field textarea{resize:vertical;min-height:64px}
+.hint{font-size:10px;color:#706e6b;margin-top:2px}
+.required{color:#c23934}
+.callout{padding:8px 12px;border-radius:4px;font-size:11px;margin-bottom:14px;border-left:3px solid;line-height:1.6}
+.callout-blue{background:#e8f4ff;border-color:#0070d2;color:#16325c}
+.callout-orange{background:#fff3e0;border-color:#e65100;color:#e65100}
+.callout-green{background:#e3f5e3;border-color:#2e7d32;color:#2e7d32}
+.sec-title{font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;padding:8px 0 6px;border-bottom:1px solid #f0f0f0;margin-bottom:10px}
+.bid-card{border:2px solid #dddbda;border-radius:8px;padding:16px;margin-bottom:12px;transition:border-color 0.15s}
+.bid-card:hover{border-color:#0070d2}
+.bid-card.urgent{border-color:#e65100;background:#fffbf5}
+.bid-card.new{border-color:#0070d2;background:#f8fbff}
+.drawer{display:none;position:fixed;top:0;right:0;width:560px;height:100vh;background:#fff;border-left:1px solid #dddbda;box-shadow:-4px 0 24px rgba(0,0,0,0.12);z-index:100;overflow-y:auto;flex-direction:column}
+.drawer.open{display:flex}
+.drawer-hd{background:#0070d2;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1}
+.drawer-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;line-height:1;padding:0}
+.drawer-body{padding:20px;flex:1}
+.timer{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div style="width:26px;height:26px;background:rgba(255,255,255,0.9);border-radius:4px;display:flex;align-items:center;justify-content:center">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#032D60" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  </div>
+  <span class="topbar-title">CoreSite Vendor Portal — External</span>
+  <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-right:6px">Logged in as:</div>
+  <div class="vendor-pill">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <select id="vendor-sel" onchange="switchVendor(this.value)">
+      <option value="nti">NTI — National Tech Installers</option>
+      <option value="mwcage">Midwest Cage &amp; Cable</option>
+      <option value="bass">Bay Area Structured Systems</option>
+      <option value="apex">Apex Field Services (New)</option>
+    </select>
+  </div>
+</div>
+<div id="acc-banner" class="acc-banner">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+  NTI — National Tech Installers · Chicago, IL · Active vendor · Markets: CH1, SV1
+</div>
+<div class="pg-header">
+  <div>
+    <div class="pg-title">Vendor Portal</div>
+    <div class="pg-sub">View open bid invitations, submit quotes, track active jobs, update standard pricing</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:11px;color:#706e6b;text-decoration:none">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Home
+    </a>
+    <button class="btn-p" onclick="window.open('vendor-management-portal.html','_blank')">🏢 Internal Portal →</button>
+  </div>
+</div>
+<div class="main-tabs">
+  <div class="mtab active" id="mt-bids" onclick="switchTab('bids')">📬 Open Bid Invitations <span style="background:#e65100;color:#fff;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:4px">3</span></div>
+  <div class="mtab" id="mt-active" onclick="switchTab('active')">🔨 Active Jobs</div>
+  <div class="mtab" id="mt-history" onclick="switchTab('history')">📋 Job History</div>
+  <div class="mtab" id="mt-pricing" onclick="switchTab('pricing')">💲 Standard Pricing</div>
+  <div class="mtab" id="mt-profile" onclick="switchTab('profile')">⚙️ Profile &amp; Capabilities</div>
+</div>
+<div class="content">
+
+<div class="tab-pane active" id="pane-bids">
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-num" style="color:#e65100">3</div><div class="kpi-lbl">Open Invitations</div></div>
+    <div class="kpi"><div class="kpi-num" style="color:#0070d2">1</div><div class="kpi-lbl">Awaiting Response</div></div>
+    <div class="kpi"><div class="kpi-num" style="color:#2e7d32">94%</div><div class="kpi-lbl">Bid Response Rate</div></div>
+    <div class="kpi"><div class="kpi-num" style="color:#2e7d32">18h</div><div class="kpi-lbl">Avg Response Time</div></div>
+  </div>
+  <div class="bid-card urgent">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span style="font-size:14px;font-weight:700;color:#16325c">CH1 — Cage 30x30 Installation</span>
+          <span class="badge b-orange">Non-Standard</span>
+          <span class="badge b-blue">CH1</span>
+        </div>
+        <div style="font-size:11px;color:#706e6b">Scope ref: OP-2026-0498 · Submitted by: Alex A. · Received: May 9, 2026</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:#e65100;font-weight:600;margin-bottom:2px">⏰ RESPONSE DUE</div>
+        <div class="timer" style="color:#e65100" id="timer1">06:42:18</div>
+        <div style="font-size:10px;color:#706e6b">SLA: 72h · Non-standard</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;background:#fff8f0;border-radius:6px;padding:10px">
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Work Types</div><div style="font-size:12px;font-weight:600;margin-top:2px">Caging · Ladder Rack</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Cage Size</div><div style="font-size:12px;font-weight:600;margin-top:2px">30ft × 30ft</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Linear Footage</div><div style="font-size:12px;font-weight:600;margin-top:2px">~120 ft</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Customer Want Date</div><div style="font-size:12px;font-weight:600;margin-top:2px;color:#e65100">Jun 10, 2026</div></div>
+    </div>
+    <div style="background:#f9f9f9;border-radius:4px;padding:8px 10px;font-size:11px;color:#706e6b;margin-bottom:12px">📎 Scope drawing attached · <span style="color:#0070d2;cursor:pointer;text-decoration:underline">CH1-Cage-30x30-scope.pdf</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-p" onclick="openBidForm('ch1-cage-30x30','CH1 — Cage 30x30 Installation','Non-Standard')">Submit Bid →</button>
+      <button class="btn-s">Download Scope</button>
+      <button class="btn-sm" style="background:#fde8e8;color:#c23934;border:1px solid #c23934;padding:5px 12px;font-size:11px" onclick="declineBid(this)">Decline</button>
+    </div>
+  </div>
+  <div class="bid-card new">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span style="font-size:14px;font-weight:700;color:#16325c">CH1 — Ladder Rack + Mesh Basket</span>
+          <span class="badge b-green">Standard</span>
+          <span class="badge b-blue">CH1</span>
+        </div>
+        <div style="font-size:11px;color:#706e6b">Scope ref: OP-2026-0502 · Submitted by: Ron R. · Received: May 10, 2026</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:#2e7d32;font-weight:600;margin-bottom:2px">⏰ RESPONSE DUE</div>
+        <div class="timer" style="color:#2e7d32">31:14:05</div>
+        <div style="font-size:10px;color:#706e6b">SLA: 48h · Standard</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;background:#f8fbff;border-radius:6px;padding:10px">
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Work Types</div><div style="font-size:12px;font-weight:600;margin-top:2px">Ladder Rack · Mesh Basket</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Quantity</div><div style="font-size:12px;font-weight:600;margin-top:2px">8 sections · 3 sections</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Location</div><div style="font-size:12px;font-weight:600;margin-top:2px">Row 7, Aisle B</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Customer Want Date</div><div style="font-size:12px;font-weight:600;margin-top:2px;color:#2e7d32">Jun 20, 2026</div></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-p" onclick="openBidForm('ch1-ladder','CH1 — Ladder Rack + Mesh Basket','Standard')">Submit Bid →</button>
+      <button class="btn-s">View Details</button>
+      <button class="btn-sm" style="background:#fde8e8;color:#c23934;border:1px solid #c23934;padding:5px 12px;font-size:11px" onclick="declineBid(this)">Decline</button>
+    </div>
+  </div>
+  <div class="bid-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span style="font-size:14px;font-weight:700;color:#16325c">SV1 — Cage Panels + Sliding Door</span>
+          <span class="badge b-green">Standard</span>
+          <span class="badge b-gray">SV1</span>
+        </div>
+        <div style="font-size:11px;color:#706e6b">Scope ref: OP-2026-0499 · Submitted by: Erick S. · Received: May 10, 2026</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:#2e7d32;font-weight:600;margin-bottom:2px">⏰ RESPONSE DUE</div>
+        <div class="timer" style="color:#2e7d32">40:00:00</div>
+        <div style="font-size:10px;color:#706e6b">SLA: 48h · Standard</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;background:#f9f9f9;border-radius:6px;padding:10px">
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Work Types</div><div style="font-size:12px;font-weight:600;margin-top:2px">Caging · Doors</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Linear Footage</div><div style="font-size:12px;font-weight:600;margin-top:2px">60 ft</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Doors</div><div style="font-size:12px;font-weight:600;margin-top:2px">2 sliding doors</div></div>
+      <div><div style="font-size:10px;color:#706e6b;text-transform:uppercase">Customer Want Date</div><div style="font-size:12px;font-weight:600;margin-top:2px;color:#2e7d32">Jun 25, 2026</div></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-p" onclick="openBidForm('sv1-cage','SV1 — Cage Panels + Sliding Door','Standard')">Submit Bid →</button>
+      <button class="btn-s">View Details</button>
+      <button class="btn-sm" style="background:#fde8e8;color:#c23934;border:1px solid #c23934;padding:5px 12px;font-size:11px" onclick="declineBid(this)">Decline</button>
+    </div>
+  </div>
+</div>
+
+<div class="tab-pane" id="pane-active">
+  <div class="callout callout-blue">Enter actual completion date when work is done — this updates your on-time scorecard. If delayed, you and the PM can both log a delay reason code.</div>
+  <div class="card">
+    <div class="card-hd"><span class="card-title">🔨 Active Jobs</span></div>
+    <table>
+      <thead><tr><th>Job / Scope</th><th>Market</th><th>Work Type</th><th>Start Date</th><th>Committed Date</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>CH1 — Cage 20x20</strong><div style="font-size:10px;color:#706e6b">OP-2026-0488 · Alex A.</div></td>
+          <td>CH1</td><td><span class="badge b-purple">Caging</span></td><td>May 1</td><td><strong>May 21</strong></td>
+          <td><span class="badge b-blue">In Progress</span></td>
+          <td style="display:flex;gap:6px">
+            <button class="btn-g btn-sm" style="padding:4px 10px;font-size:10px" onclick="openComplete('ch1-cage')">Mark Complete</button>
+            <button class="btn-sm" style="background:#fff3e0;color:#e65100;border:1px solid #e65100;padding:4px 10px;font-size:10px" onclick="openDelay('ch1-cage')">Log Delay</button>
+          </td>
+        </tr>
+        <tr style="background:#fff8f0">
+          <td><strong>CH1 — Ladder Rack Install</strong><div style="font-size:10px;color:#706e6b">OP-2026-0481 · Alex A.</div></td>
+          <td>CH1</td><td><span class="badge b-purple">Ladder Rack</span></td><td>Apr 28</td><td><strong style="color:#c23934">May 10 ⚠ Today</strong></td>
+          <td><span class="badge b-orange">Due Today</span></td>
+          <td style="display:flex;gap:6px">
+            <button class="btn-g btn-sm" style="padding:4px 10px;font-size:10px" onclick="openComplete('ch1-ladder')">Mark Complete</button>
+            <button class="btn-sm" style="background:#fff3e0;color:#e65100;border:1px solid #e65100;padding:4px 10px;font-size:10px" onclick="openDelay('ch1-ladder')">Log Delay</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="tab-pane" id="pane-history">
+  <div class="card">
+    <div class="card-hd"><span class="card-title">📋 Job History</span>
+      <div style="display:flex;gap:6px">
+        <select style="padding:4px 8px;border:1px solid #dddbda;border-radius:4px;font-size:11px;font-family:inherit"><option>All Markets</option><option>CH1</option><option>SV1</option></select>
+        <select style="padding:4px 8px;border:1px solid #dddbda;border-radius:4px;font-size:11px;font-family:inherit"><option>Last 90 days</option><option>YTD</option><option>All time</option></select>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Job</th><th>Market</th><th>Work Type</th><th>Price</th><th>Committed</th><th>Actual</th><th>On Time?</th><th>PM Score</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CH1 Cage 20x20</strong><div style="font-size:10px;color:#706e6b">OP-2026-0412</div></td><td>CH1</td><td><span class="badge b-purple">Caging</span></td><td>$3,200</td><td>Apr 28</td><td>Apr 28</td><td><span class="badge b-green">✓ On time</span></td><td><span style="color:#f59e0b">★★★★★</span></td></tr>
+        <tr><td><strong>CH1 Ladder Rack</strong><div style="font-size:10px;color:#706e6b">OP-2026-0401</div></td><td>CH1</td><td><span class="badge b-purple">Ladder Rack</span></td><td>$1,800</td><td>Apr 10</td><td>Apr 10</td><td><span class="badge b-green">✓ On time</span></td><td><span style="color:#f59e0b">★★★★</span></td></tr>
+        <tr><td><strong>SV1 Cage Panels</strong><div style="font-size:10px;color:#706e6b">OP-2026-0388</div></td><td>SV1</td><td><span class="badge b-purple">Caging</span></td><td>$2,600</td><td>Mar 20</td><td><strong style="color:#c23934">Mar 22 (+2d)</strong></td><td><span class="badge b-red">✗ Late</span></td><td><span style="color:#f59e0b">★★★</span></td></tr>
+      </tbody>
+    </table>
+    <div style="padding:12px 16px;background:#f9f9f9;border-top:1px solid #f0f0f0;display:flex;gap:24px;font-size:12px">
+      <span>Total jobs: <strong>14</strong></span>
+      <span>On-time rate: <strong style="color:#2e7d32">94%</strong></span>
+      <span>Avg PM score: <strong style="color:#0070d2">4.2 / 5</strong></span>
+      <span>YTD revenue: <strong>$38,400</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="tab-pane" id="pane-pricing">
+  <div class="callout callout-blue">CoreSite requires vendors to keep standard item pricing current. These rates are used for automatic quote estimates on standard-complexity jobs.</div>
+  <div class="card">
+    <div class="card-hd"><span class="card-title">💲 Standard Item Pricing — NTI</span><button class="btn-g" onclick="savePricing()">Save All Changes</button></div>
+    <table>
+      <thead><tr><th>Item</th><th>Unit</th><th>Your Price</th><th>Lead Time (BD)</th><th>Last Updated</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cage Wall — Std 8ft</strong><div style="font-size:10px;color:#706e6b">Per linear foot · Posts &amp; capping included</div></td><td>per ft</td><td><input type="number" value="42" style="width:80px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">$/ft</span></td><td><input type="number" value="5" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">BD</span></td><td style="font-size:11px;color:#706e6b">Apr 1, 2026</td><td><span class="badge b-green">Current</span></td></tr>
+        <tr><td><strong>Cage Wall — 10ft</strong><div style="font-size:10px;color:#706e6b">Floor-to-ceiling · Posts &amp; capping included</div></td><td>per ft</td><td><input type="number" value="58" style="width:80px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">$/ft</span></td><td><input type="number" value="6" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">BD</span></td><td style="font-size:11px;color:#706e6b">Apr 1, 2026</td><td><span class="badge b-green">Current</span></td></tr>
+        <tr><td><strong>Cage Door — Sliding</strong><div style="font-size:10px;color:#706e6b">Per unit · Wire Mesh 4'x8'</div></td><td>per unit</td><td><input type="number" value="380" style="width:80px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">$/ea</span></td><td><input type="number" value="3" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">BD</span></td><td style="font-size:11px;color:#706e6b">Apr 1, 2026</td><td><span class="badge b-green">Current</span></td></tr>
+        <tr><td><strong>Ladder Rack — 10ft section</strong><div style="font-size:10px;color:#706e6b">Per section · Unistrut, materials &amp; labor</div></td><td>per sec</td><td><input type="number" value="210" style="width:80px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">$/sec</span></td><td><input type="number" value="4" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">BD</span></td><td style="font-size:11px;color:#e65100">Jan 15, 2026</td><td><span class="badge b-orange">Update needed</span></td></tr>
+        <tr><td><strong>Mesh Basket — 10ft section</strong><div style="font-size:10px;color:#706e6b">Per section · 12"W x 4"D · labor included</div></td><td>per sec</td><td><input type="number" value="185" style="width:80px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">$/sec</span></td><td><input type="number" value="4" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:12px"> <span style="font-size:11px;color:#706e6b">BD</span></td><td style="font-size:11px;color:#e65100">Jan 15, 2026</td><td><span class="badge b-orange">Update needed</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="tab-pane" id="pane-profile">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-hd"><span class="card-title">⚙️ Company Profile</span><button class="btn-s">Edit</button></div>
+      <div class="card-body">
+        <div class="sec-title">Contact Information</div>
+        <div class="sf-field"><label>Company Name</label><input type="text" value="NTI — National Tech Installers"></div>
+        <div class="sf-field"><label>Primary Contact</label><input type="text" value="Mike Johnson"></div>
+        <div class="sf-field"><label>Email</label><input type="text" value="mjohnson@nti-install.com"></div>
+        <div class="sf-field"><label>Phone</label><input type="text" value="(312) 555-0142"></div>
+        <div class="sec-title" style="margin-top:8px">Work Capabilities</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px">
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" checked> Caging / Cage Panels</label>
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" checked> Ladder Rack</label>
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Mesh Basket</label>
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Fiber Tray</label>
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Branch Circuits</label>
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Overhead Conveyance</label>
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Seismic / Grounding</label>
+          <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Control Circuits</label>
+        </div>
+        <button class="btn-p" style="margin-top:10px">Save Profile</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><span class="card-title">📄 Compliance Documents</span></div>
+      <div class="card-body">
+        <div class="sec-title">Required Documents</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f0fdf4;border:1px solid #a5d6a7;border-radius:4px"><div><div style="font-size:12px;font-weight:600">General Liability Insurance</div><div style="font-size:10px;color:#706e6b">Expires: Dec 31, 2026 · $2M per occurrence</div></div><span class="badge b-green">✓ Valid</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f0fdf4;border:1px solid #a5d6a7;border-radius:4px"><div><div style="font-size:12px;font-weight:600">Contractor's License — IL</div><div style="font-size:10px;color:#706e6b">License #: IL-GC-204819 · Expires: Jun 2027</div></div><span class="badge b-green">✓ Valid</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f0fdf4;border:1px solid #a5d6a7;border-radius:4px"><div><div style="font-size:12px;font-weight:600">W-9 / Tax Information</div><div style="font-size:10px;color:#706e6b">On file with billing · Last updated Jan 2026</div></div><span class="badge b-green">✓ On file</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff3e0;border:1px solid #ffcc80;border-radius:4px"><div><div style="font-size:12px;font-weight:600">Contractor's License — CA</div><div style="font-size:10px;color:#e65100">Required for SV1 work · Not on file</div></div><div style="display:flex;gap:6px;align-items:center"><span class="badge b-orange">⚠ Missing</span><button class="btn-sm" style="background:#0070d2;color:#fff;padding:3px 10px">Upload</button></div></div>
+        </div>
+        <div class="sec-title" style="margin-top:14px">Performance Summary</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div style="text-align:center;padding:10px;background:#e3f5e3;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#2e7d32">94%</div><div style="font-size:10px;color:#706e6b">On-Time Rate</div></div>
+          <div style="text-align:center;padding:10px;background:#e8f4ff;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#0070d2">4.2</div><div style="font-size:10px;color:#706e6b">Quality Score</div></div>
+          <div style="text-align:center;padding:10px;background:#e3f5e3;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#2e7d32">A</div><div style="font-size:10px;color:#706e6b">Overall Grade</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="drawer" id="bid-drawer">
+  <div class="drawer-hd">
+    <div><div id="bid-drawer-title" style="color:#fff;font-size:14px;font-weight:700">Submit Bid</div><div id="bid-drawer-sub" style="color:rgba(255,255,255,0.75);font-size:11px;margin-top:2px">Enter your price, lead time, and availability</div></div>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="drawer-body"><div id="bid-form-content"></div></div>
+</div>
+<div class="drawer" id="action-drawer">
+  <div class="drawer-hd">
+    <div><div id="action-drawer-title" style="color:#fff;font-size:14px;font-weight:700">Update Job</div><div style="color:rgba(255,255,255,0.75);font-size:11px;margin-top:2px">Log completion or delay</div></div>
+    <button class="drawer-close" onclick="closeActionDrawer()">×</button>
+  </div>
+  <div class="drawer-body" id="action-drawer-body"></div>
+</div>
+<div id="overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.2);z-index:99" onclick="closeDrawer();closeActionDrawer()"></div>
+
+<script>
+function switchTab(tab){['bids','active','history','pricing','profile'].forEach(function(t){document.getElementById('mt-'+t).classList.toggle('active',t===tab);document.getElementById('pane-'+t).classList.toggle('active',t===tab);});}
+function switchVendor(v){var info={nti:{text:'NTI — National Tech Installers · Chicago, IL · Active vendor · Markets: CH1, SV1',bg:'#e3f5e3',color:'#2e7d32'},mwcage:{text:'Midwest Cage & Cable · Chicago, IL · Active vendor · Markets: CH1, DE1',bg:'#e3f5e3',color:'#2e7d32'},bass:{text:'Bay Area Structured Systems · Santa Clara, CA · Active vendor · Markets: SV1, LA1',bg:'#e3f5e3',color:'#2e7d32'},apex:{text:'Apex Field Services · Boston, MA · New vendor — Trial · Markets: BO1',bg:'#fff3e0',color:'#e65100'}};var b=document.getElementById('acc-banner');b.textContent=info[v].text;b.style.background=info[v].bg;b.style.color=info[v].color;}
+function openBidForm(jobId,jobName,complexity){document.getElementById('bid-drawer-title').textContent='Submit Bid — '+jobName;document.getElementById('bid-drawer-sub').textContent=complexity+' scope · Fill in all fields before submitting';var cc={'Standard':'#2e7d32','Non-Standard':'#e65100','Custom':'#c23934'};document.getElementById('bid-form-content').innerHTML='<div style="background:#f3f3f3;border-radius:6px;padding:10px 12px;margin-bottom:16px;font-size:11px"><strong>Job:</strong> '+jobName+' &nbsp;·&nbsp; <strong>Complexity:</strong> <span style="color:'+(cc[complexity]||'#e65100')+';font-weight:700">'+complexity+'</span></div><div class="sec-title">Your Bid</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="sf-field"><label>Total Price ($) <span class="required">*</span></label><input type="number" placeholder="e.g. 3200" id="bid-price"><div class="hint">All-in including materials &amp; labor</div></div><div class="sf-field"><label>Lead Time (BD) <span class="required">*</span></label><input type="number" placeholder="e.g. 14" id="bid-lead"><div class="hint">From operational readiness to completion</div></div><div class="sf-field"><label>Linear Footage (if caging)</label><input type="number" placeholder="e.g. 120" id="bid-lf"></div><div class="sf-field"><label>Labor Hours</label><input type="number" placeholder="e.g. 16" id="bid-hours"></div><div class="sf-field"><label>Availability <span class="required">*</span></label><select id="bid-avail"><option value="available">Available — can start immediately</option><option value="1week">Available in 1 week</option><option value="2week">Available in 2 weeks</option><option value="unavailable">Unavailable for this job</option></select></div><div class="sf-field"><label>Earliest Start Date</label><input type="date" value="2026-05-15" id="bid-start"></div></div><div class="sf-field"><label>Notes / Assumptions</label><textarea placeholder="e.g. Price assumes standard 8ft cage wall height." id="bid-notes"></textarea></div><div class="sf-field"><label>Upload Estimate (optional)</label><div style="border:2px dashed #dddbda;border-radius:4px;padding:12px;text-align:center;cursor:pointer;background:#f9f9f9"><div style="font-size:12px;color:#706e6b">📎 Attach estimate or drawings</div></div></div><div id="bid-preview" style="display:none;background:#e8f4ff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 12px;margin-bottom:12px;font-size:11px"></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn-g" onclick="submitBid(\''+jobId+'\')">Submit Bid →</button><button class="btn-s" onclick="previewBid()">Preview</button><button class="btn-sm" style="background:#f3f3f3;color:#706e6b;border:1px solid #dddbda;padding:5px 12px;font-size:11px" onclick="closeDrawer()">Cancel</button></div>';document.getElementById('bid-drawer').classList.add('open');document.getElementById('overlay').style.display='block';}
+function previewBid(){var price=document.getElementById('bid-price').value;var lead=document.getElementById('bid-lead').value;if(!price||!lead){alert('Please enter price and lead time first');return;}var prev=document.getElementById('bid-preview');prev.style.display='block';prev.innerHTML='<strong style="color:#0070d2">Bid Preview:</strong> $'+Number(price).toLocaleString()+' · '+lead+' BD · This will be submitted anonymously to the SE (Bidder A/B/C format)';}
+function submitBid(jobId){var price=document.getElementById('bid-price').value;var lead=document.getElementById('bid-lead').value;if(!price||!lead){alert('Price and lead time are required');return;}closeDrawer();alert('✓ Bid submitted!\n\nPrice: $'+Number(price).toLocaleString()+'\nLead time: '+lead+' BD\n\nThe SE will review bids anonymously. You will be notified if selected.');}
+function declineBid(btn){var reason=prompt('Reason for declining (optional):');btn.closest('.bid-card').style.opacity='0.4';btn.closest('.bid-card').style.pointerEvents='none';alert('Bid declined.'+(reason?'\nReason logged: '+reason:''));}
+function openComplete(jobId){document.getElementById('action-drawer-title').textContent='Mark Job Complete';document.getElementById('action-drawer-body').innerHTML='<div class="callout callout-green">Entering your actual completion date updates your on-time scorecard in real time.</div><div class="sf-field"><label>Actual Completion Date <span class="required">*</span></label><input type="date" value="2026-05-10"></div><div class="sf-field"><label>PM Sign-off Contact</label><input type="text" placeholder="e.g. John Smith, CoreSite PM"></div><div class="sf-field"><label>Notes (optional)</label><textarea placeholder="Any final notes..."></textarea></div><div style="margin-top:12px;display:flex;gap:8px"><button class="btn-g" onclick="confirmComplete()">Confirm Completion</button><button class="btn-s" onclick="closeActionDrawer()">Cancel</button></div>';document.getElementById('action-drawer').classList.add('open');document.getElementById('overlay').style.display='block';}
+function openDelay(jobId){document.getElementById('action-drawer-title').textContent='Log Delay Reason';document.getElementById('action-drawer-body').innerHTML='<div class="callout callout-orange">Late submissions affect your scorecard but do NOT exclude you from future bids. Logging a reason keeps your record transparent.</div><div class="sf-field"><label>Delay Reason Code <span class="required">*</span></label><select><option>WEATHER — Weather-related delay</option><option>MAT-LEAD — Material / supply lead time</option><option>STAFF — Vendor staffing shortage</option><option>SCOPE-CHG — Customer scope change</option><option>ACCESS — Customer access delay</option><option>PERMIT — Permit / inspection hold</option><option>NO-REASON — No reason provided</option></select></div><div class="sf-field"><label>New Estimated Completion Date <span class="required">*</span></label><input type="date"></div><div class="sf-field"><label>Details</label><textarea placeholder="Describe the delay in more detail..."></textarea></div><div style="margin-top:12px;display:flex;gap:8px"><button class="btn-r" onclick="confirmDelay()">Log Delay</button><button class="btn-s" onclick="closeActionDrawer()">Cancel</button></div>';document.getElementById('action-drawer').classList.add('open');document.getElementById('overlay').style.display='block';}
+function confirmComplete(){closeActionDrawer();alert('✓ Job marked complete. Your on-time scorecard has been updated.');}
+function confirmDelay(){closeActionDrawer();alert('Delay reason logged. The PM and procurement have been notified.');}
+function closeDrawer(){document.getElementById('bid-drawer').classList.remove('open');document.getElementById('overlay').style.display='none';}
+function closeActionDrawer(){document.getElementById('action-drawer').classList.remove('open');document.getElementById('overlay').style.display='none';}
+function savePricing(){alert('✓ Standard pricing updated. CoreSite procurement has been notified.');}
+function tick(){var t1=document.getElementById('timer1');if(!t1)return;var parts=t1.textContent.split(':').map(Number);var secs=parts[0]*3600+parts[1]*60+parts[2]-1;if(secs<0)secs=0;var h=Math.floor(secs/3600),m=Math.floor((secs%3600)/60),s=secs%60;t1.textContent=[h,m,s].map(function(x){return String(x).padStart(2,'0')}).join(':');}
+setInterval(tick,1000);
+</script>
+</body>
+</html>
