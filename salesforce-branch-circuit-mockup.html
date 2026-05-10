@@ -1057,8 +1057,7 @@ tr:hover td{background:#f8f8ff}
         <span class="sf-topbar-pill">Step 2-C · Supplementals</span>
       </div>
       <div class="sf-form-card">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div style="background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:14px">
+        <div style="max-width:720px"><div style="background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:14px">
             <div style="font-size:12px;font-weight:700;color:#16325c;margin-bottom:4px">🔧 Contractor Items</div>
             <div style="font-size:11px;color:#706e6b;margin-bottom:12px">Scope uploaded here is sent to vendors for bidding via Salesforce CPQ integration</div>
             <div class="sf-field">
@@ -1081,27 +1080,7 @@ tr:hover td{background:#f8f8ff}
                 <div style="font-size:10px;color:#9ca3af;margin-top:4px">PDF, DWG, DXF, PNG — sent to vendors for bidding</div>
                 <input type="file" id="scope-upload" style="display:none" accept=".pdf,.dwg,.dxf,.png,.jpg">
               </div>
-            </div>
-            <button class="sf-btn-p" style="margin-top:4px;width:100%">Add contractor item</button>
-          </div>
-          <div style="background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:14px">
-            <div style="font-size:12px;font-weight:700;color:#16325c;margin-bottom:4px">🛒 E-Catalog — CXML Integration</div>
-            <div style="font-size:11px;color:#706e6b;margin-bottom:10px">Real-time pricing from Wesco, Graybar, and local vendors via CXML protocol — prices auto-populate into quote</div>
-            <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-              <button onclick="openCXML('wesco')" style="padding:5px 12px;background:#0070d2;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">Wesco eCatalog →</button>
-              <button onclick="openCXML('graybar')" style="padding:5px 12px;background:#0070d2;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">Graybar eCatalog →</button>
-              <button onclick="openCXML('tkd')" style="padding:5px 12px;background:#706e6b;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">TKD (local) →</button>
-            </div>
-            <div id="cxml-status" style="font-size:11px;padding:6px 10px;background:#e8f4ff;border-left:3px solid #0070d2;border-radius:3px;color:#16325c;margin-bottom:8px">
-              ✓ Wesco connected via CXML · Last sync: today · 12,400 items available
-            </div>
-            <div class="sf-field"><label>Search catalog</label><input type="text" placeholder="e.g. PDU 30A 208V or part number"></div>
-            <div style="background:#fff;border:1px solid #dddbda;border-radius:4px;margin-top:6px;font-size:11px">
-              <div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center"><span>Vertiv GEIST 30A 208V PDU</span><span style="display:flex;gap:8px;align-items:center"><span style="color:#2e7d32;font-weight:600">$342 · 3 BD</span><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></span></div>
-              <div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center"><span>Raritan PX3 32A 208V PDU</span><span style="display:flex;gap:8px;align-items:center"><span style="color:#2e7d32;font-weight:600">$498 · 3 BD</span><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></span></div>
-              <div style="padding:6px 10px;display:flex;justify-content:space-between;align-items:center"><span>Panduit 48-port Patch Panel</span><span style="display:flex;gap:8px;align-items:center"><span style="color:#2e7d32;font-weight:600">$187 · 2 BD</span><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></span></div>
-            </div>
-          </div>
+            </div></div>
         </div>
       </div>
     </div>
