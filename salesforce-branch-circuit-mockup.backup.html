@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<!-- ============================================================
-     CoreSite SFDC — Product Catalog Modernization
-     Author: Alex A.
-     Team:   Richard · Chris · Andy
-     Date:   May 2026
-     Desc:   Salesforce CPQ + Experience Cloud mockup
-             Built for IT review and stakeholder presentation
-============================================================ -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -68,12 +60,12 @@ tr:hover td{background:#f8f8ff}
 .cat-tabs{display:flex;gap:0;background:#f3f3f3;border-bottom:2px solid #0070d2;margin:0}
 .ctab{padding:10px 20px;font-size:12px;font-weight:600;cursor:pointer;color:#706e6b;border:1px solid #dddbda;border-bottom:none;background:#f3f3f3;margin-right:4px;border-radius:4px 4px 0 0}
 .ctab.active{background:#0070d2;color:#fff;border-color:#0070d2}
-.ctab:hover:not(.active) {background:#e8f0fe;color:#0070d2}
+.ctab:hover:not(.active){background:#e8f0fe;color:#0070d2}
 /* Product tabs */
 .product-tabs{display:flex;gap:4px;padding:8px 14px 0;background:#fff;border-bottom:1px solid #dddbda;flex-wrap:wrap}
 .ptab{padding:7px 12px;font-size:11px;font-weight:600;cursor:pointer;border-radius:4px 4px 0 0;border:1px solid transparent;border-bottom:none;color:#706e6b;background:#f3f3f3;margin-bottom:-1px}
 .ptab.active{background:#fff;border-color:#dddbda;color:#0070d2;border-bottom-color:#fff}
-.ptab:hover:not(.active) {background:#e8f0fe;color:#0070d2}
+.ptab:hover:not(.active){background:#e8f0fe;color:#0070d2}
 /* Forms */
 .sf-form-card{background:#fff;border:1px solid #dddbda;border-top:none;border-radius:0 0 6px 6px;padding:16px;margin-bottom:16px}
 .sf-form-title{font-size:13px;font-weight:600;color:#16325c;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
@@ -1232,19 +1224,19 @@ tr:hover td{background:#f8f8ff}
 
 <script>
 var basket = [];
-function addToBasket(type, name, details) {
+function addToBasket(type, name, details){
   var id = Date.now();
   basket.push({id:id, type:type, name:name, details:details});
   renderBasket();
   // Flash confirmation
   var btn = event && event.target;
-  if(btn) { var orig=btn.textContent; btn.textContent='Added!'; btn.style.background='#2e7d32'; setTimeout(function() { btn.textContent=orig; btn.style.background='#0070d2'; },1000); }
+  if(btn){ var orig=btn.textContent; btn.textContent='Added!'; btn.style.background='#2e7d32'; setTimeout(function(){ btn.textContent=orig; btn.style.background='#0070d2'; },1000); }
 }
-function removeFromBasket(id) {
-  basket = basket.filter(function(i) { return i.id !== id; });
+function removeFromBasket(id){
+  basket = basket.filter(function(i){ return i.id !== id; });
   renderBasket();
 }
-function renderBasket() {
+function renderBasket(){
   var count = basket.length;
   document.getElementById('basket-count').textContent = count + ' item'+(count!==1?'s':'');
   document.getElementById('basket-empty').style.display = count===0?'block':'none';
@@ -1252,7 +1244,7 @@ function renderBasket() {
   document.getElementById('basket-footer').style.display = count===0?'none':'block';
   var colors = {Space:'#e8f4ff',Power:'#fff3e0',Supplementals:'#e3f5e3',IX:'#f3f3f3'};
   var tcols = {Space:'#0070d2',Power:'#e65100',Supplementals:'#2e7d32',IX:'#706e6b'};
-  var html = basket.map(function(item) {
+  var html = basket.map(function(item){
     return '<div style="padding:10px 14px;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'+
       '<div style="flex:1;min-width:0">'+
       '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">'+
@@ -1265,81 +1257,80 @@ function renderBasket() {
   }).join('');
   document.getElementById('basket-items').innerHTML = html;
   var types = {};
-  basket.forEach(function(i) { types[i.type]=(types[i.type]||0)+1; });
-  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e) { return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;·&nbsp; ');
+  basket.forEach(function(i){ types[i.type]=(types[i.type]||0)+1; });
+  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e){ return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;·&nbsp; ');
 }
-function clearBasket() {
+function clearBasket(){
   basket=[];
   renderBasket();
 }
-function generateQuote() {
+function generateQuote(){
   if(basket.length===0) return;
-  var lines = basket.map(function(i,idx) { return (idx+1)+'. ['+i.type+'] '+i.name+' — '+i.details; }).join('\n');
+  var lines = basket.map(function(i,idx){ return (idx+1)+'. ['+i.type+'] '+i.name+' — '+i.details; }).join('\n');
   alert('Quote generated!\n\nItems:\n'+lines+'\n\nIn real SFDC this would create a Quote record linked to the Opportunity.');
 }
-function toggleOpp() {
+function toggleOpp(){
   var form = document.getElementById('opp-form');
   var chevron = document.getElementById('opp-chevron');
   var open = form.style.display === 'block';
   form.style.display = open ? 'none' : 'block';
   chevron.style.transform = open ? '' : 'rotate(180deg)';
 }
-function saveOpp() {
+function saveOpp(){
   var name = document.getElementById('opp-name') ? document.getElementById('opp-name').value : '';
   var account = document.getElementById('account-name') ? document.getElementById('account-name').value : '';
   var summary = document.getElementById('opp-summary');
-  if(summary) {
+  if(summary){
     summary.textContent = (name||'Opportunity') + (account?' · '+account:'') + ' — configured';
   }
   var check = document.getElementById('opp-check');
-  if(check) { check.textContent='✓'; check.style.background='#2e7d32'; }
+  if(check){ check.textContent='✓'; check.style.background='#2e7d32'; }
   document.getElementById('opp-form').style.display='none';
   document.getElementById('opp-chevron').style.transform='';
 }
-function showProduct(type) {
+function showProduct(type){
   document.getElementById('prod-landing').style.display='none';
   document.getElementById('prod-view').style.display='block';
   var labels={'space':'Space — Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power — Branch Circuits','supplementals':'Supplementals — Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX — Interconnection'};
   document.getElementById('prod-breadcrumb').textContent='Product basket → '+labels[type];
-  ['space','power','supplementals','ix'].forEach(function(v) {
+  ['space','power','supplementals','ix'].forEach(function(v){
     document.getElementById('view-'+v).style.display=v===type?'block':'none';
   });
 }
-function getCabinetDetails() {
+function getCabinetDetails(){
   return 'CoreSite Cabinet · 48U';
 }
-function getCageDetails() {
+function getCageDetails(){
   var cageType = document.querySelector('#pane-cage select') ? document.querySelector('#pane-cage select').value : 'Private Cage';
   var sqft = document.querySelector('#pane-cage input[type=number]') ? document.querySelector('#pane-cage input[type=number]').value : '';
   var lc = document.getElementById('lc-sel') ? document.getElementById('lc-sel').value : 'none';
   var lcLabel = lc==='none'?'Air cooled':lc;
   return (sqft?sqft+' sqft · ':'')+'Cage type: '+cageType+' · Cooling: '+lcLabel;
 }
-function backToLanding() {
+function backToLanding(){
   document.getElementById('prod-landing').style.display='block';
   document.getElementById('prod-view').style.display='none';
 }
-function switchSuppView(cat) {
-  ['caging','ladder','basket','fiber','misc'].forEach(function(c) {
+function switchSuppView(cat){
+  ['caging','ladder','basket','fiber','misc'].forEach(function(c){
     document.getElementById('sv-'+c).style.display=c===cat?'block':'none';
     var btn=document.getElementById('svb-'+c);
-    if(btn) {btn.style.background=c===cat?'#0070d2':'#f3f3f3';btn.style.color=c===cat?'#fff':'#706e6b';btn.style.borderColor=c===cat?'#0070d2':'#dddbda';}
+    if(btn){btn.style.background=c===cat?'#0070d2':'#f3f3f3';btn.style.color=c===cat?'#fff':'#706e6b';btn.style.borderColor=c===cat?'#0070d2':'#dddbda';}
   });
 }
-function sw(on) {
+function sw(on){
   document.getElementById('cur').style.display=on?'none':'block';
   document.getElementById('fut').style.display=on?'block':'none';
   document.getElementById('tt').style.background=on?'#2e7d32':'#c23934';
   document.getElementById('tk').style.transform=on?'translateX(20px)':'translateX(0)';
-  if(on) {
+  if(on){
     document.getElementById('i1').textContent='3';document.getElementById('i1').style.color='#2e7d32';
     document.getElementById('l1').textContent='Core product categories';
     document.getElementById('i2').textContent='3';document.getElementById('i2').style.color='#2e7d32';
     document.getElementById('l2').textContent='Guided workflow steps';
     document.getElementById('i3').textContent='✓';document.getElementById('i3').style.color='#2e7d32';
     document.getElementById('l3').textContent='Dynamic market filtering';
-  }
-else {
+  } else {
     document.getElementById('i1').textContent='50+';document.getElementById('i1').style.color='#c23934';
     document.getElementById('l1').textContent='Product codes';
     document.getElementById('i2').textContent='0';document.getElementById('i2').style.color='#c23934';
@@ -1348,23 +1339,22 @@ else {
     document.getElementById('l3').textContent='Dynamic market filtering';
   }
 }
-// Switch between main nav tabs
-function switchTab(tab) {
-  ['cage','cabinet','roof','office','storage','raceway','ix','lcpod'].forEach(function(t) {
+function switchTab(tab){
+  ['cage','cabinet','roof','office','storage','raceway','ix','lcpod'].forEach(function(t){
     var el=document.getElementById('tab-'+t);
     var pe=document.getElementById('pane-'+t);
     if(el)el.classList.toggle('active',t===tab);
     if(pe)pe.classList.toggle('active',t===tab);
   });
 }
-function updateVoltage(poles) {
+function updateVoltage(poles){
   var sel=document.getElementById('volt-sel');
   sel.innerHTML='';
-  if(poles==='1') {['-48V DC','120V'].forEach(function(v) {var o=document.createElement('option');o.text=v;sel.add(o);});}
-  else if(poles==='2') {['208V','415V','800V DC'].forEach(function(v) {var o=document.createElement('option');o.text=v;sel.add(o);});}
-  else{['208V (3-phase)','415V (3-phase)'].forEach(function(v) {var o=document.createElement('option');o.text=v;sel.add(o);});}
+  if(poles==='1'){['-48V DC','120V'].forEach(function(v){var o=document.createElement('option');o.text=v;sel.add(o);});}
+  else if(poles==='2'){['208V','415V','800V DC'].forEach(function(v){var o=document.createElement('option');o.text=v;sel.add(o);});}
+  else{['208V (3-phase)','415V (3-phase)'].forEach(function(v){var o=document.createElement('option');o.text=v;sel.add(o);});}
 }
-function updateTermDetail(val) {
+function updateTermDetail(val){
   var detailField=document.getElementById('term-detail-field');
   var detailSel=document.getElementById('term-detail-sel');
   detailSel.innerHTML='';
@@ -1375,10 +1365,10 @@ function updateTermDetail(val) {
     pinsleeve:['IEC 60309 2P+E 16A 230V','IEC 60309 2P+E 32A 230V','IEC 60309 3P+E 16A 400V','IEC 60309 3P+E 32A 400V'],
     hardwired:['Bare conductors — field terminated']
   };
-  if(val&&configs[val]) {configs[val].forEach(function(c) {var o=document.createElement('option');o.text=c;detailSel.add(o);});detailField.style.display='block';}
+  if(val&&configs[val]){configs[val].forEach(function(c){var o=document.createElement('option');o.text=c;detailSel.add(o);});detailField.style.display='block';}
   else{detailField.style.display='none';}
 }
-function showTopoHint() {
+function showTopoHint(){
   var val=document.getElementById('topo-sel').value;
   var hint=document.getElementById('topo-hint');
   var hints={
@@ -1389,43 +1379,41 @@ function showTopoHint() {
   };
   var colors={'2n':'#e3f5e3','4m3':'#e8f4ff','5m4':'#e8f4ff','nups':'#fde8e8'};
   var borders={'2n':'#2e7d32','4m3':'#0070d2','5m4':'#0070d2','nups':'#c23934'};
-  if(val&&hints[val]) {hint.textContent=hints[val];hint.style.background=colors[val];hint.style.borderLeft='3px solid '+borders[val];hint.style.color='#16325c';hint.style.display='block';}
+  if(val&&hints[val]){hint.textContent=hints[val];hint.style.background=colors[val];hint.style.borderLeft='3px solid '+borders[val];hint.style.color='#16325c';hint.style.display='block';}
   else{hint.style.display='none';}
 }
-function toggleTopoInfo() {
+function toggleTopoInfo(){
   var hint=document.getElementById('topo-hint');
-  if(hint.style.display==='none'||!hint.textContent) {
+  if(hint.style.display==='none'||!hint.textContent){
     hint.textContent='UPS Topology defines power redundancy. 2N = two full independent systems. 4-to-make-3 = four modules, three needed. 5-to-make-4 = five modules, four needed. Non-UPS = direct feed for non-critical circuits.';
     hint.style.background='#f0f4ff';hint.style.borderLeft='3px solid #0070d2';hint.style.color='#16325c';hint.style.display='block';
-  }
-else {hint.style.display='none';hint.textContent='';}
+  } else {hint.style.display='none';hint.textContent='';}
 }
-function openCXML(vendor) {
+function openCXML(vendor){
   window.open('cxml-auth.html?vendor='+vendor,'_blank','width=600,height=500');
 }
-function switchSupp(cat) {
-  ['caging','ladder','basket','fiber','misc'].forEach(function(c) {
+function switchSupp(cat){
+  ['caging','ladder','basket','fiber','misc'].forEach(function(c){
     document.getElementById('supp-'+c).style.display = c===cat ? 'block' : 'none';
     var btn = document.getElementById('sb-'+c);
-    if(btn) {
+    if(btn){
       btn.style.background = c===cat ? '#0070d2' : '#f3f3f3';
       btn.style.color = c===cat ? '#fff' : '#706e6b';
       btn.style.borderColor = c===cat ? '#0070d2' : '#dddbda';
     }
   });
 }
-function toggleLC(val) {
+function toggleLC(val){
   var show = val !== 'none';
   document.getElementById('lc-cdu').style.display = show ? 'block' : 'none';
   document.getElementById('lc-hose').style.display = show ? 'block' : 'none';
   document.getElementById('lc-note').style.display = show ? 'block' : 'none';
 }
-function checkWeight() {
+function checkWeight(){
   var w=parseFloat(document.getElementById('cab-weight').value)||0;
   document.getElementById('weight-warn').style.display=w>2000?'block':'none';
 }
-// Recalculate lead time whenever inputs change
-function calcDelivery() {
+function calcDelivery(){
   var triggerEl = document.getElementById('lt-trigger');
   var complexityEl = document.getElementById('lt-complexity');
   var marketEl = document.getElementById('lt-market');
@@ -1435,7 +1423,7 @@ function calcDelivery() {
   var complexity = isVendor ? 0 : (parseInt(complexityVal)||0);
   // Enable/disable vendor field
   var vendorEl = document.getElementById('lt-vendor');
-  if(vendorEl) { vendorEl.disabled = !isVendor; vendorEl.style.background = isVendor?'#fff':'#f9f9f9'; vendorEl.style.color = isVendor?'#16325c':'#706e6b'; }
+  if(vendorEl){ vendorEl.disabled = !isVendor; vendorEl.style.background = isVendor?'#fff':'#f9f9f9'; vendorEl.style.color = isVendor?'#16325c':'#706e6b'; }
   var vendorDays = isVendor ? (parseInt(document.getElementById('lt-vendor')&&document.getElementById('lt-vendor').value)||0) : 0;
   if(isVendor) complexity = vendorDays;
   var market = marketEl ? parseInt(marketEl.value)||0 : 1;
@@ -1447,13 +1435,13 @@ function calcDelivery() {
   // Calc date
   var d = new Date('2026-05-01');
   var bd = 0;
-  while(bd < total + 5) {d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)bd++;}
+  while(bd < total + 5){d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)bd++;}
   var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var dateStr = months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
 
   // Update Step 1 result box
   var r = document.getElementById('lt-result');
-  if(r) {
+  if(r){
     var complexityLabel = isVendor ? ('Vendor portal: '+complexity+' BD') : ('Complexity: '+complexity+' BD');
     r.innerHTML = '<span style="font-weight:600;color:#0070d2">&#128337; Calculated Lead Time</span>'+(isVendor?'&nbsp;<span style="background:#fff3e0;color:#e65100;font-size:10px;padding:1px 8px;border-radius:3px;font-weight:600">Vendor portal active</span>':'')+'<br>'+
       'Base: '+base+' BD &nbsp;+&nbsp; Trigger: '+trigger+' BD &nbsp;+&nbsp; '+complexityLabel+' &nbsp;+&nbsp; Market: '+market+' BD = <strong>'+total+' BD total</strong><br>'+
@@ -1468,7 +1456,7 @@ function calcDelivery() {
   }
 
   // Update Step 2-B circuit box dynamically
-  var setEl = function(id, val) { var e=document.getElementById(id); if(e) e.textContent=val; };
+  var setEl = function(id, val){ var e=document.getElementById(id); if(e) e.textContent=val; };
   setEl('lt-c-base', base);
   setEl('lt-c-trigger', '+'+trigger);
   setEl('lt-c-complexity', '+'+complexity);
@@ -1477,7 +1465,7 @@ function calcDelivery() {
   setEl('lt-c-exp', 'Exp: '+total+' BD');
   setEl('lt-c-max', 'Max: '+maxDays+' BD');
   var tLbl = document.getElementById('lt-c-trigger-lbl');
-  if(tLbl) {
+  if(tLbl){
     var isOpReady = trigger > 0;
     tLbl.innerHTML = isOpReady ?
       '&#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> — not customer signature date' :
@@ -1488,16 +1476,16 @@ function calcDelivery() {
   }
   // Show vendor portal button only when custom scope selected
   var vpBtn = document.getElementById('vendor-portal-btn');
-  if(vpBtn) {
+  if(vpBtn){
     vpBtn.style.display = isVendor ? 'inline-flex' : 'none';
   }
 }
 
-function openVendorPortal() {
+function openVendorPortal(){
   window.open('vendor-management-portal.html','_blank');
 }
 
-function swLt(on) {
+function swLt(on){
   document.getElementById('lt-cur-state').style.display = on ? 'none' : 'block';
   document.getElementById('lt-fut-state').style.display = on ? 'block' : 'none';
   document.getElementById('lt-tt').style.background = on ? '#2e7d32' : '#c23934';
@@ -1509,7 +1497,7 @@ function swLt(on) {
   if(on) calcDelivery();
 }
 
-window.addEventListener('load', function() { calcDelivery(); });
+window.addEventListener('load', function(){ calcDelivery(); });
 </script>
 </body>
 </html>

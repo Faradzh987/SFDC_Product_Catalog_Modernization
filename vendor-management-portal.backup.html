@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<!-- ============================================================
-     CoreSite SFDC — Product Catalog Modernization
-     Author: Alex A.
-     Team:   Richard · Chris · Andy
-     Date:   May 2026
-     Desc:   Salesforce CPQ + Experience Cloud mockup
-             Built for IT review and stakeholder presentation
-============================================================ -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -28,7 +20,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .main-tabs{background:#fff;border-bottom:2px solid #0070d2;padding:0 20px;display:flex;gap:0}
 .mtab{padding:11px 18px;font-size:12px;font-weight:600;cursor:pointer;color:#706e6b;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
 .mtab.active{color:#0070d2;border-bottom-color:#0070d2}
-.mtab:hover:not(.active) {color:#0070d2;background:#f8fbff}
+.mtab:hover:not(.active){color:#0070d2;background:#f8fbff}
 .content{padding:20px;max-width:1400px}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
@@ -518,15 +510,13 @@ tr:hover td{background:#f8f8ff}
 <div id="drawer-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.2);z-index:99" onclick="closeDrawer()"></div>
 
 <script>
-// Switch between main nav tabs
-function switchTab(tab) {
-  ['directory','kpi','awards','onboard','scope'].forEach(function(t) {
+function switchTab(tab){
+  ['directory','kpi','awards','onboard','scope'].forEach(function(t){
     document.getElementById('mt-'+t).classList.toggle('active',t===tab);
     document.getElementById('pane-'+t).classList.toggle('active',t===tab);
   });
 }
-// Update access banner based on selected role
-function applyRole(role) {
+function applyRole(role){
   var banners={
     procurement:{bg:'#e3f5e3',color:'#2e7d32',text:'Procurement — Full access: Vendor directory, KPIs, onboarding approvals, award reporting, all markets'},
     pm:{bg:'#e8f4ff',color:'#0070d2',text:'PM / Operations — Access: SOW details, completion date entry, PM quality scoring. No: vendor financials, onboarding approvals'},
@@ -548,8 +538,7 @@ var drawerData={
   'rc-power':{name:'RC Power Solutions',sub:'Denver, CO · Probation · rcpower.com',html:rcHtml},
   'new-vendor':{name:'New Vendor Application',sub:'Due diligence form',html:newVendorHtml}
 };
-// Open vendor detail side drawer
-function openDrawer(key) {
+function openDrawer(key){
   var d=drawerData[key];if(!d)return;
   document.getElementById('drawer-vendor-name').textContent=d.name;
   document.getElementById('drawer-vendor-sub').textContent=d.sub;
@@ -557,18 +546,18 @@ function openDrawer(key) {
   document.getElementById('vendor-drawer').classList.add('open');
   document.getElementById('drawer-overlay').style.display='block';
 }
-function closeDrawer() {
+function closeDrawer(){
   document.getElementById('vendor-drawer').classList.remove('open');
   document.getElementById('drawer-overlay').style.display='none';
 }
-function toggleAnon(on) {
+function toggleAnon(on){
   document.getElementById('anon-tt').style.background=on?'#2e7d32':'#c23934';
   document.getElementById('anon-tk').style.transform=on?'translateX(16px)':'translateX(0)';
   document.getElementById('anon-label').textContent=on?'Vendor names HIDDEN during SE bid selection — Anonymity ON':'Vendor names VISIBLE during SE bid selection — Anonymity OFF';
   document.getElementById('anon-sub').textContent=on?'SEs see Bidder A / Bidder B / Bidder C · Reduces unconscious bias toward known vendors like NTI · SE selects on price + lead time only':'SEs will see vendor company names during bid selection — may introduce unconscious bias toward established vendors';
 }
-function selectComplexity(el) {
-  el.parentElement.querySelectorAll('label').forEach(function(l) {l.style.borderColor='#dddbda';l.style.background='#fff';});
+function selectComplexity(el){
+  el.parentElement.querySelectorAll('label').forEach(function(l){l.style.borderColor='#dddbda';l.style.background='#fff';});
   el.style.borderColor='#0070d2';el.style.background='#f0f8ff';
 }
 </script>
