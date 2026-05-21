@@ -438,7 +438,7 @@ tr:hover td{background:#f8fafc}
 <div id="fut" style="display:none">
   <div class="callout callout-green">4 product categories · Space is primary · Power and supplementals attach under space · IX is standalone · Dynamic market filtering from opportunity</div>
 
-  <!-- SPLIT: product config left, quote basket right -->
+  <!-- SPLIT: product config left, quote right -->
   <div style="display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start">
   <div>
   <!-- PRODUCT LANDING -->
@@ -446,14 +446,25 @@ tr:hover td{background:#f8fafc}
     <div class="sf-wrap">
       <div class="sf-topbar">
         <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-        <span class="sf-topbar-title">Sales — Product Basket</span>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
         <span class="sf-topbar-pill">Future state · Select a product category</span>
       </div>
       <div style="padding:16px 20px;background:#eef2f7">
         <div style="margin-bottom:20px">
           <div style="font-size:13px;color:#706e6b;margin-bottom:4px">Step 2 — Add products to this opportunity</div>
-          <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Product Basket</div>
+          <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Product Catalog</div>
           <div style="font-size:12px;color:#706e6b">Select a category to begin configuring · Markets auto-filter from Step 1</div>
+        </div>
+        
+        <div style="margin-bottom:16px;">
+          <button onclick="alert('Opens CPQ basket in Salesforce Revenue Cloud')"
+            style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;
+            background:linear-gradient(135deg,#0058a8,#0070d2);color:#fff;border:none;
+            border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
+            box-shadow:0 2px 10px rgba(0,112,210,0.3);">
+            Go to Product Basket &#8594;
+          </button>
+          <span style="font-size:11px;color:#706e6b;margin-left:12px;">Opens CPQ basket in Salesforce Revenue Cloud</span>
         </div>
         <div style="display:block;margin-bottom:20px">
 
@@ -517,7 +528,7 @@ tr:hover td{background:#f8fafc}
   <div id="prod-view" style="display:none">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
       <button onclick="backToLanding()" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;color:#0070d2">
-        &#8249; Back to product basket
+        &#8249; Back to product catalog
       </button>
       <span id="prod-breadcrumb" style="font-size:12px;color:#706e6b"></span>
     </div>
@@ -534,7 +545,7 @@ tr:hover td{background:#f8fafc}
       <div class="sf-wrap">
         <div class="sf-topbar">
           <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-          <span class="sf-topbar-title">Sales — Product Basket · Power</span>
+          <span class="sf-topbar-title">Sales — Product Catalog · Power</span>
           <span class="sf-topbar-pill">Branch Circuits</span>
         </div>
         <div class="sf-form-card">
@@ -544,8 +555,42 @@ tr:hover td{background:#f8fafc}
               <div class="sf-col-title">Circuit specifications</div>
               <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option selected>60A</option><option>100A</option></select></div>
               <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option selected>208V</option><option>415V</option></select></div>
-              <div class="sf-field"><label>UPS Topology <span class="required">*</span></label><select><option>— Select —</option><option>2N</option><option>4-to-make-3</option><option>5-to-make-4</option><option>Non-UPS</option></select></div>
-              <div class="sf-field"><label>Delivery type</label><select><option selected>Primary &amp; Redundant</option><option>Primary only</option></select></div>
+              
+            <div class="sf-field">
+              <label>NEMA Receptacles</label>
+              <select>
+                <option value="">— Select NEMA config —</option>
+                <optgroup label="Straight Blade">
+                  <option>NEMA 5-15 · 125V · 15A</option>
+                  <option>NEMA 5-20 · 125V · 20A</option>
+                  <option>NEMA 6-20 · 250V · 20A</option>
+                  <option>NEMA 6-30 · 250V · 30A</option>
+                  <option>NEMA 14-50 · 125/250V · 50A</option>
+                </optgroup>
+                <optgroup label="Twist-Lock">
+                  <option>NEMA L6-20 · 250V · 20A ★</option>
+                  <option>NEMA L6-30 · 250V · 30A ★</option>
+                  <option>NEMA L21-20 · 3Ø 208V · 20A ★</option>
+                  <option>NEMA L21-30 · 3Ø 208V · 30A ★</option>
+                  <option>NEMA L22-20 · 3Ø 480V · 20A ★</option>
+                  <option>NEMA L22-30 · 3Ø 480V · 30A ★</option>
+                </optgroup>
+                <optgroup label="IEC">
+                  <option>IEC C13 · 250V · 10-15A ★</option>
+                  <option>IEC C19 · 250V · 16-20A ★</option>
+                </optgroup>
+                <optgroup label="Pin and Sleeve IEC 60309">
+                  <option>IEC 60309 · 3P+E · 16A · 400V ★</option>
+                  <option>IEC 60309 · 3P+E · 32A · 400V ★</option>
+                  <option>IEC 60309 · 3P+E · 63A · 400V ★</option>
+                  <option>IEC 60309 · 3P+N+E · 32A · 400V</option>
+                  <option>IEC 60309 · 3P+N+E · 63A · 400V</option>
+                </optgroup>
+              </select>
+              <div class="hint">★ = data center standard</div>
+            </div>
+            <div class="sf-field"><label>UPS Topology <span class="required">*</span></label><select><option>— Select —</option><option>2N</option><option>4-to-make-3</option><option>5-to-make-4</option><option>Non-UPS</option></select></div>
+              <div class="sf-field"><label>Rating <span style="color:red">*</span></label><select><option value="">— Select rating —</option><option value="80">80% — Standard (NEC continuous load)</option><option value="100">100% — Listed for continuous duty</option></select></div>
             </div>
             <div>
               <div class="sf-col-title">Configuration</div>
@@ -565,7 +610,7 @@ tr:hover td{background:#f8fafc}
       <div class="sf-wrap">
         <div class="sf-topbar">
           <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-          <span class="sf-topbar-title">Sales — Product Basket · Supplementals</span>
+          <span class="sf-topbar-title">Sales — Product Catalog · Supplementals</span>
           <span class="sf-topbar-pill">Caging, Ladder Rack, Mesh Basket, Fiber Tray</span>
         </div>
         <div class="sf-form-card">
@@ -608,7 +653,7 @@ tr:hover td{background:#f8fafc}
       <div class="sf-wrap">
         <div class="sf-topbar">
           <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-          <span class="sf-topbar-title">Sales — Product Basket · IX</span>
+          <span class="sf-topbar-title">Sales — Product Catalog · IX</span>
           <span class="sf-topbar-pill">Interconnection</span>
         </div>
         <div class="sf-form-card" id="pane-ix">
