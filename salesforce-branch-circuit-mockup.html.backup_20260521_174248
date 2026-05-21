@@ -1100,7 +1100,10 @@ tr:hover td{background:#f8fafc}
       </div>
       <div class="sf-meta" style="padding:8px 14px">Branch Circuit — power product that attaches to a space</div>
       <div class="sf-form-card">
-        <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span> <button onclick="openNEMA()" style="margin-left:8px;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#16325c,#0070d2);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg> NEMA / Connector Reference</button><div style="display:flex;align-items:center;gap:8px;"><span class="badge b-blue">Power product</span></div></div></div>
+        <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span><div style="display:flex;align-items:center;gap:8px;"><span class="badge b-blue">Power product</span></div><button class="nema-ref-btn" onclick="openNEMA()" style="margin-left:8px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+              NEMA / Connector Reference
+            </button></div></div>
         <div class="sf-cols">
           <div>
             <div class="sf-col-title">Circuit specifications</div>
