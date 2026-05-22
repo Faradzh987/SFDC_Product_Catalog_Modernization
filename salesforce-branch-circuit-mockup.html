@@ -226,6 +226,13 @@ tr:hover td{background:#f8fafc}
   ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 </style>
 
+<script>
+function showPowerType(type){
+  document.getElementById("power-landing").style.display=!type?"block":"none";
+  document.getElementById("power-branch").style.display=type==="branch"?"block":"none";
+  document.getElementById("power-panels").style.display=type==="panels"?"block":"none";
+}
+</script>
 </head>
 <body>
 <div style="background:#032D60;padding:6px 16px;display:flex;align-items:center;justify-content:space-between">
@@ -2155,11 +2162,7 @@ document.getElementById('nema-modal').addEventListener('click',function(e){if(e.
 </script>
 
 <script>
-function showPowerType(type){
-  document.getElementById("power-landing").style.display=!type?"block":"none";
-  document.getElementById("power-branch").style.display=type==="branch"?"block":"none";
-  document.getElementById("power-panels").style.display=type==="panels"?"block":"none";
-}
+
 </script>
 </body>
 </html>
