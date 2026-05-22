@@ -1728,14 +1728,12 @@ function saveOpp() {
 function showProduct(type) {
   // Reset power sub-views when entering power
   if(type==='power'){
-    setTimeout(function(){
-      var pl=document.getElementById('power-landing');
-      var pb=document.getElementById('power-branch');
-      var pp=document.getElementById('power-panels');
-      if(pl) pl.style.display='block';
-      if(pb) pb.style.display='none';
-      if(pp) pp.style.display='none';
-    },10);
+    var pl=document.getElementById('power-landing');
+    var pb=document.getElementById('power-branch');
+    var pp=document.getElementById('power-panels');
+    if(pl) pl.style.display='block';
+    if(pb) pb.style.display='none';
+    if(pp) pp.style.display='none';
   }
   document.getElementById('prod-landing').style.display='none';
   document.getElementById('prod-view').style.display='block';
