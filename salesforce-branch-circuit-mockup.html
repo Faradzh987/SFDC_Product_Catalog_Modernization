@@ -1741,7 +1741,7 @@ function showProduct(type) {
   document.getElementById('prod-view').style.display='block';
   var labels={'space':'Space — Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power — Branch Circuits','supplementals':'Supplementals — Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX — Interconnection'};
   document.getElementById('prod-breadcrumb').textContent='Product basket → '+labels[type];
-  ['space','power','panels','supplementals','ix'].forEach(function(v) {
+  ['space','power','supplementals','ix'].forEach(function(v) {
     document.getElementById('view-'+v).style.display=v===type?'block':'none';
   });
 }
