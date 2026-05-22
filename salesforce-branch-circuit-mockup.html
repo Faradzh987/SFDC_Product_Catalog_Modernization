@@ -536,7 +536,704 @@ tr:hover td{background:#f8fafc}
     <!-- SPACE VIEW -->
     <div id="view-space" style="display:none">
       <!-- STEP 1 -->
-  
+  <div class="step-wrap">
+    <div class="step-label" onclick="toggleOpp()" style="cursor:pointer;user-select:none;padding:12px 14px;background:#fff;border:1px solid #dddbda;border-radius:6px;display:flex;align-items:center;justify-content:space-between;margin-bottom:0">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="step-num" style="background:#2e7d32" id="opp-check">✓</span>
+        <div>
+          <span class="step-title">Opportunity Setup</span>
+          <span class="step-sub" id="opp-summary"> — Click to configure</span>
+        </div>
+      </div>
+      <span id="opp-chevron" style="font-size:18px;color:#706e6b;transition:transform 0.2s">&#8964;</span>
+    </div>
+    <div id="opp-form" style="display:none">
+    <div class="step1-card" style="border-top:none;border-radius:0 0 6px 6px;margin-top:0">
+
+      <!-- Section: Opportunity Information -->
+      <div style="font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">Opportunity Information</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+        <div class="sf-field">
+          <label>Opportunity Name <span class="required">*</span></label>
+          <input type="text" placeholder="e.g. Advocacy Digital Media@CH2">
+        </div>
+        <div class="sf-field">
+          <label>Account Name <span class="required">*</span></label>
+          <input type="text" placeholder="e.g. Advocacy Digital Media">
+        </div>
+        <div class="sf-field">
+          <label>Opportunity Owner <span class="required">*</span></label>
+          <input type="text" placeholder="e.g. Ron Rodi">
+        </div>
+        <div class="sf-field">
+          <label>Opportunity Record Type</label>
+          <select>
+            <option>New Logo</option>
+            <option>Expansion</option>
+            <option>Renewal</option>
+            <option>Solution Partner</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Stage <span class="required">*</span></label>
+          <select>
+            <option>Registered</option>
+            <option>Qualified</option>
+            <option>Proposal</option>
+            <option>Negotiation</option>
+            <option>Closed Won</option>
+            <option>Closed Lost</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Region <span class="required">*</span></label>
+          <select>
+            <option>Mid Atlantic</option>
+            <option>West</option>
+            <option>East</option>
+            <option>Central</option>
+            <option>International</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Deal Type</label>
+          <select>
+            <option>New</option>
+            <option>Expansion</option>
+            <option>Renewal</option>
+            <option>Bare Metal</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>New Logo?</label>
+          <select><option>Yes</option><option>No</option></select>
+        </div>
+        <div class="sf-field">
+          <label>Market(s) <span class="required">*</span></label>
+          <select>
+            <option>Los Angeles (LA1)</option>
+            <option>Los Angeles (LA2)</option>
+            <option>Chicago (CH1)</option>
+            <option>Denver (DE1)</option>
+            <option>New York (NY2)</option>
+            <option>Santa Clara (SV1)</option>
+            <option>Santa Clara (SV9)</option>
+            <option>Washington DC (VA1)</option>
+            <option>Boston (BO1)</option>
+          </select>
+          <div class="hint">Drives available markets in Step 2</div>
+        </div>
+      </div>
+
+      <!-- Section: Team -->
+      <div style="font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">Team</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+        <div class="sf-field">
+          <label>Primary Sales Engineer</label>
+          <input type="text" placeholder="e.g. Erick Smith">
+        </div>
+        <div class="sf-field">
+          <label>Solution Architect</label>
+          <input type="text" placeholder="e.g. Jane Doe">
+        </div>
+        <div class="sf-field">
+          <label>Referring Sales Rep</label>
+          <input type="text" placeholder="e.g. Ron Rodi">
+        </div>
+        <div class="sf-field">
+          <label>Lead Generation Rep</label>
+          <input type="text" placeholder="e.g. Philip Kueber">
+        </div>
+        <div class="sf-field">
+          <label>Solution Partner</label>
+          <input type="text" placeholder="e.g. Villa-Tech">
+        </div>
+        <div class="sf-field">
+          <label>Originating Contact</label>
+          <input type="text" placeholder="e.g. Kevin Markey">
+        </div>
+      </div>
+
+      <!-- Section: Deal Metrics -->
+      <div style="font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">Deal Metrics</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+        <div class="sf-field">
+          <label>Start Date <span class="required">*</span></label>
+          <input type="date" value="2026-05-01">
+        </div>
+        <div class="sf-field">
+          <label>Customer Want Date <span class="required">*</span></label>
+          <input type="date" value="2026-06-15">
+          <div class="hint">When customer needs delivery — drives lead time calc</div>
+        </div>
+        <div class="sf-field">
+          <label>Term in Months</label>
+          <input type="number" placeholder="e.g. 36" min="1">
+        </div>
+        <div class="sf-field">
+          <label>MRR Amount</label>
+          <input type="number" placeholder="e.g. 25000" min="0">
+        </div>
+        <div class="sf-field">
+          <label>Total Contract Value</label>
+          <input type="number" placeholder="e.g. 900000" min="0">
+        </div>
+        <div class="sf-field">
+          <label>One-Time Payment</label>
+          <select><option>No</option><option>Yes</option></select>
+        </div>
+        <div class="sf-field">
+          <label>Primary Data Center Provider?</label>
+          <select><option>Yes</option><option>No</option></select>
+        </div>
+        <div class="sf-field">
+          <label>Colocation Opportunity New CkW</label>
+          <input type="number" placeholder="e.g. 500" min="0">
+        </div>
+      </div>
+
+      <!-- Section: Delivery Timeline (lead time) -->
+      <div style="font-size:10px;font-weight:700;color:#16325c;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #f0f0f0">&#128336; Delivery Timeline</div>
+
+      <!-- Mini toggle -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span id="lt-lbl-cur" onclick="swLt(false)" style="font-size:11px;font-weight:700;padding:3px 12px;border-radius:4px;background:#c23934;color:#fff;cursor:pointer">Current state</span>
+        <label style="position:relative;width:36px;height:20px;border-radius:10px;cursor:pointer;transition:background 0.2s;display:inline-block" id="lt-tt" style="background:#c23934">
+          <input type="checkbox" id="lt-tog" onchange="swLt(this.checked)" style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;z-index:1">
+          <span id="lt-tk" style="position:absolute;top:3px;left:3px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform 0.2s;pointer-events:none"></span>
+        </label>
+        <span id="lt-lbl-fut" onclick="document.getElementById('lt-tog').checked=true;swLt(true)" style="font-size:11px;font-weight:700;padding:3px 12px;border-radius:4px;background:#f3f3f3;color:#706e6b;cursor:pointer">Future state</span>
+      </div>
+
+      <!-- CURRENT STATE lead time -->
+      <div id="lt-cur-state">
+        <div style="background:#fde8e8;border:1px solid #f5c6c6;border-radius:6px;padding:12px 14px;margin-bottom:8px">
+          <div style="font-size:11px;font-weight:700;color:#c23934;margin-bottom:10px">&#9888; Current state — flat calendar day value, no logic</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <div class="sf-field">
+              <label>Lead Time</label>
+              <input type="number" value="11" style="background:#fff;border:1px solid #dddbda;border-radius:4px;padding:6px 9px;font-size:13px;width:100%;font-family:inherit">
+              <div class="hint" style="color:#c23934">Calendar days · same for every product · no trigger · no complexity · no market adjustment</div>
+            </div>
+            <div class="sf-field">
+              <label>Trigger Point</label>
+              <input type="text" value="Customer Signature" disabled style="background:#f9f9f9;color:#706e6b;border:1px solid #dddbda;border-radius:4px;padding:6px 9px;font-size:13px;width:100%;font-family:inherit">
+              <div class="hint" style="color:#c23934">Not configurable — always starts at signature</div>
+            </div>
+            <div class="sf-field">
+              <label>Complexity / Market Adj</label>
+              <input type="text" value="None" disabled style="background:#f9f9f9;color:#706e6b;border:1px solid #dddbda;border-radius:4px;padding:6px 9px;font-size:13px;width:100%;font-family:inherit">
+              <div class="hint" style="color:#c23934">No tiers · no market logic · no vendor integration</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FUTURE STATE lead time -->
+      <div id="lt-fut-state" style="display:none">
+        <div style="background:#e3f5e3;border:1px solid #a5d6a7;border-radius:6px;padding:8px 14px;margin-bottom:10px;font-size:11px;color:#2e7d32;font-weight:600">
+          ✓ Business days · ✓ Trigger at operational readiness · ✓ Complexity tiers · ✓ Market adjustment · ✓ Vendor portal integration
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="sf-field">
+            <label>Lead Time Trigger</label>
+            <select id="lt-trigger" onchange="calcDelivery()">
+              <option value="0">Customer Signature</option>
+              <option value="5" selected>Operational Readiness (+5 BD)</option>
+            </select>
+            <div class="hint">When the delivery clock starts</div>
+          </div>
+          <div class="sf-field">
+            <label>Complexity Tier</label>
+            <select id="lt-complexity" onchange="calcDelivery()">
+              <option value="0" selected>Standard (+0 BD)</option>
+              <option value="5">Non-standard (+5 BD)</option>
+              <option value="vendor">Custom scope — vendor specifies</option>
+            </select>
+            <div class="hint">Custom scope triggers vendor portal</div>
+          </div>
+          <div class="sf-field">
+            <label>Market Adjustment</label>
+            <select id="lt-market" onchange="calcDelivery()">
+              <option value="0">LA1 / LA2 (+0 BD)</option>
+              <option value="1" selected>SV1 (+1 BD)</option>
+              <option value="2">SV2 (+2 BD)</option>
+              <option value="3">NY2 (+3 BD)</option>
+              <option value="0">CH1 (+0 BD)</option>
+            </select>
+          </div>
+          <div class="sf-field">
+            <label>Vendor Lead Time (if custom)</label>
+            <input type="number" id="lt-vendor" placeholder="Vendor specifies" min="0" oninput="calcDelivery()" disabled style="background:#f9f9f9;color:#706e6b">
+            <div class="hint">Auto-populated from vendor portal</div>
+          </div>
+        </div>
+        <div id="lt-result" style="margin-top:10px;background:#e8f4ff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;font-size:12px;color:#16325c;line-height:1.8">
+          Loading...
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+          <button id="vendor-portal-btn" onclick="openVendorPortal()" style="display:none;padding:7px 18px;background:#2e7d32;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;align-items:center;gap:6px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open Vendor Portal
+          </button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;padding-top:8px;border-top:1px solid #f0f0f0">
+        <button class="sf-btn-s" onclick="saveOpp()">Save &amp; continue ↓</button>
+      </div>
+    </div>
+    </div> <!-- end opp-form -->
+  </div>
+
+  <!-- STEP 2-A -->
+  <div class="step-wrap">
+    <div class="step-label">
+      <span class="step-num">Step 2-A</span>
+      <span class="step-title">Add Space Types</span>
+      <span class="step-sub">— Space is the primary product · Power, liquid cooling &amp; supplementals attach under it</span>
+    </div>
+    <div class="sf-wrap">
+      <div class="sf-topbar">
+        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
+        <span class="sf-topbar-pill">Step 2-A · Space Types</span>
+      </div>
+      <div class="sf-meta" style="padding:8px 14px">Space is the primary product · Power and supplementals attach under the space · Markets auto-filter from Step 1</div>
+      <div class="product-tabs">
+        <div class="ptab active" id="tab-cage" onclick="switchTab('cage')">🔲 Cage</div>
+        <div class="ptab" id="tab-cabinet" onclick="switchTab('cabinet')">🗄 CoreSite Cabinet</div>
+        <div class="ptab" id="tab-roof" onclick="switchTab('roof')">🏢 Roof</div>
+        <div class="ptab" id="tab-office" onclick="switchTab('office')">💼 Office</div>
+        <div class="ptab" id="tab-storage" onclick="switchTab('storage')">📦 Storage</div>
+        <div class="ptab" id="tab-raceway" onclick="switchTab('raceway')">🔌 Raceway</div>
+        <div class="ptab" id="tab-ix" onclick="switchTab('ix')">🌐 IX</div>
+        <div class="ptab" id="tab-lcpod" onclick="switchTab('lcpod')">❄️ LC-Ready Pod</div>
+      </div>
+
+      <!-- CAGE -->
+      <div class="product-pane active sf-form-card" id="pane-cage">
+        <div class="sf-form-title"><span>🔲 Cage / Private Suite — configure</span><span class="badge b-purple">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field">
+              <label>Cage type <span class="required">*</span></label>
+              <select><option>Private Cage</option><option>Private Suite</option><option>Custom Build Out</option></select>
+            </div>
+            <div class="sf-field">
+              <label>Square footage (sq ft) <span class="required">*</span></label>
+              <input type="number" placeholder="e.g. 400" min="1">
+              <div class="hint">Used to calculate W/sq ft and room requirements</div>
+            </div>
+            <div class="sf-field">
+              <label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label>
+              <select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option></select>
+              <div class="hint">Only markets entered in Step 1 are available</div>
+            </div>
+          </div>
+          <div>
+            <div class="sf-col-title">Cooling</div>
+            <div class="sf-field">
+              <label>Cooling type</label>
+              <select>
+                <option selected>Air — standard CRAC/CRAH</option>
+                <option>ColoCool (in-row liquid assisted)</option>
+                <option>Rear-door heat exchanger</option>
+                <option>Direct chip liquid cooling</option>
+              </select>
+              <div class="hint">ColoCool = attribute of this space, not a separate space type</div>
+            </div>
+            <div class="sf-field">
+              <label>ColoCool provisioned</label>
+              <select>
+                <option selected>No</option>
+                <option>Yes — EDPM hose with mobile header</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- POWER — attached under cage -->
+        <div style="margin-top:14px;padding-top:14px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#0070d2;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
+            ⚡ Branch Circuits — added under this cage
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px">
+            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option selected>60A</option><option>100A</option></select></div>
+            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option selected>208V</option><option>415V</option></select></div>
+            <div class="sf-field"><label>Poles</label><select><option>1-pole</option><option>2-pole</option><option selected>3-pole</option></select></div>
+            <div class="sf-field"><label>Delivery type</label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
+          </div>
+          <div style="font-size:11px;color:#706e6b;background:#f8f8f8;border-radius:4px;padding:6px 10px;margin-bottom:8px">
+            Auto-generates product code: <strong style="color:#0070d2">PW-AC-208-60-3P-PR</strong> · bKW: 21.6 · cKW: 17.3
+          </div>
+        </div>
+
+        <!-- LIQUID COOLING — attribute on cage -->
+        <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#059669;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#059669;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTRIBUTE</span>
+            ❄️ Liquid Cooling — option on this cage
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div class="sf-field"><label>Liquid cooling</label>
+              <select id="lc-sel" onchange="toggleLC(this.value)">
+                <option value="none" selected>None — air cooled</option>
+                <option value="colocool">ColoCool (in-row liquid assisted)</option>
+                <option value="rdhx">Rear-door heat exchanger</option>
+                <option value="direct">Direct chip liquid cooling</option>
+              </select>
+            </div>
+            <div class="sf-field" id="lc-cdu" style="display:none"><label>CDU size</label><select><option>10 kW</option><option>20 kW</option><option selected>40 kW</option><option>80 kW</option></select></div>
+            <div class="sf-field" id="lc-hose" style="display:none"><label>Hose configuration</label><select><option selected>EDPM hose with mobile header</option><option>Stainless steel hard pipe</option></select></div>
+          </div>
+          <div id="lc-note" style="display:none;font-size:11px;color:#059669;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:4px;padding:6px 10px;margin-top:6px">
+            ✓ Liquid cooling added as attribute · Also exists as standalone LC-Ready Pod product per Alec
+          </div>
+        </div>
+
+        <!-- SUPPLEMENTALS — attached under cage -->
+        <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#e65100;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#e65100;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
+            📦 Supplementals — added under this cage
+          </div>
+          <div style="display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap">
+            <button onclick="switchSupp('caging')" id="sb-caging" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #0070d2;background:#0070d2;color:#fff;cursor:pointer;font-family:inherit">Caging</button>
+            <button onclick="switchSupp('ladder')" id="sb-ladder" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Ladder Rack</button>
+            <button onclick="switchSupp('basket')" id="sb-basket" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Mesh Basket</button>
+            <button onclick="switchSupp('fiber')" id="sb-fiber" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Fiber Tray</button>
+            <button onclick="switchSupp('misc')" id="sb-misc" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Misc</button>
+          </div>
+          <div id="supp-caging"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1.5"x3" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh 1.5"x3" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft (1"x1")</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1"x1" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft (1"x1")</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh 1"x1" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Slide</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' sliding door</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Swing</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' hinged door</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-ladder" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' sections · Unistrut support, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Junction &amp; Butt Splices</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cabinet Bolt Down &amp; Grounding</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Unpack, set/level, bolt down &amp; grounding · Install kit + labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-basket" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' section · 12"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Polymer Inserts</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' plastic inlay to protect fibers</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit · Price varies by part</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-fiber" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">6' section · 6"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit · Price varies by exact part</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-misc" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Koldloks</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Flush mount raised floor grommet, split (11"x8.25"x1.625")</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div style="margin-top:8px;font-size:11px;color:#706e6b;background:#f9f9f9;border-radius:4px;padding:6px 10px">
+            ✓ Labor included on all items &nbsp;·&nbsp; Custom scope → <span style="color:#e65100;font-weight:600">Submit to Vendor Portal</span> for competitive bidding
+          </div>
+        </div>
+
+        <div style="margin-top:14px;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:6px;padding:10px 14px;font-size:11px;color:#065f46;margin-bottom:10px">
+          📋 <strong>Product basket hierarchy:</strong> Cage (primary) → Branch Circuits (attached) → Liquid Cooling (attribute) → Supplementals (attached)
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space', 'Cage / Private Suite', getCageDetails())">Add cage + attachments to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+
+      <!-- CORESITE CABINET -->
+      <div class="product-pane sf-form-card" id="pane-cabinet">
+        <div class="sf-form-title"><span>🗄 CoreSite Cabinet — configure</span><span class="badge b-green">Space type · Pre-deployed CoreSite asset</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Physical dimensions</div>
+            <div class="sf-field"><label>Rack units (U) <span class="required">*</span></label><select><option>42U</option><option>45U</option><option selected>48U</option><option>52U</option><option>54U</option></select></div>
+            <div class="sf-field"><label>Width <span class="required">*</span></label><select><option selected>600mm (23.6")</option><option>700mm (27.6")</option><option>750mm (29.5")</option><option>800mm (31.5")</option></select></div>
+            <div class="sf-field"><label>Depth <span class="required">*</span></label><select><option>900mm</option><option selected>1000mm</option><option>1070mm</option><option>1200mm</option><option>1370mm</option><option>1500mm</option></select></div>
+            <div class="sf-field">
+              <label>Weight of equipment (lbs) <span class="required">*</span></label>
+              <input type="number" id="cab-weight" placeholder="e.g. 1200" min="0" oninput="checkWeight()">
+              <div class="warn-flag" id="weight-warn">⚠ Weight may exceed max floor load for selected market — verify with facilities</div>
+            </div>
+          </div>
+          <div>
+            <div class="sf-col-title">Cooling & location</div>
+            <div class="sf-field">
+              <label>Cooling type</label>
+              <select>
+                <option selected>Air — standard CRAC/CRAH</option>
+                <option>ColoCool (in-row liquid assisted)</option>
+                <option>Rear-door heat exchanger</option>
+                <option>Direct chip liquid cooling</option>
+              </select>
+              <div class="hint">ColoCool = attribute of this cabinet, not a separate space type</div>
+            </div>
+            <div class="sf-field">
+              <label>ColoCool provisioned</label>
+              <select><option selected>No</option><option>Yes — EDPM hose with mobile header</option></select>
+            </div>
+            <div class="sf-field">
+              <label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label>
+              <select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option></select>
+            </div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','CoreSite Cabinet',getCabinetDetails())">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+      </div>
+
+      <!-- ROOF -->
+      <div class="product-pane sf-form-card" id="pane-roof">
+        <div class="sf-form-title"><span>🏢 Roof Space — configure</span><span class="badge b-orange">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field"><label>Square footage (sq ft) <span class="required">*</span></label><input type="number" placeholder="e.g. 200" min="1"></div>
+            <div class="sf-field"><label>Dunnage (sq ft)</label><input type="number" placeholder="e.g. 50" min="0"><div class="hint">Raised platform area on roof</div></div>
+            <div class="sf-field"><label>Max equipment weight (lbs)</label><input type="number" placeholder="e.g. 500" min="0"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Roof Space','Roof space · standard')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+      </div>
+
+      <!-- OFFICE -->
+      <div class="product-pane sf-form-card" id="pane-office">
+        <div class="sf-form-title"><span>💼 Office Space — configure</span><span class="badge b-gray">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field"><label>Square footage (sq ft) <span class="required">*</span></label><input type="number" placeholder="e.g. 150" min="1"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Office Space','Office space')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+      </div>
+
+      <!-- STORAGE -->
+      <div class="product-pane sf-form-card" id="pane-storage">
+        <div class="sf-form-title"><span>📦 Storage Space — configure</span><span class="badge b-gray">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Space details</div>
+            <div class="sf-field"><label>Square footage (sq ft) <span class="required">*</span></label><input type="number" placeholder="e.g. 100" min="1"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Storage Space','Storage space')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+      </div>
+
+      <!-- RACEWAY -->
+      <div class="product-pane sf-form-card" id="pane-raceway">
+        <div class="sf-form-title"><span>🔌 Raceway — configure</span><span class="badge b-gray">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Physical details</div>
+            <div class="sf-field"><label>Diameter <span class="required">*</span></label><select><option>1"</option><option>2"</option><option selected>4"</option><option>6"</option></select></div>
+            <div class="sf-field"><label>Type <span class="required">*</span></label><select><option selected>Internal</option><option>External</option></select></div>
+            <div class="sf-field"><label>Conduit type</label><select><option selected>Innerduct</option><option>Conduit</option></select></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Raceway','Raceway')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+      </div>
+
+      <!-- IX — Interconnection -->
+      <div class="product-pane sf-form-card" id="pane-ix">
+        <div class="sf-form-title"><span>🌐 IX / Interconnection — configure</span><span class="badge b-teal">Space type</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Connection details</div>
+            <div class="sf-field"><label>Connection type <span class="required">*</span></label><select><option>Cross Connect — Fiber</option><option>Cross Connect — Copper</option><option>Cross Connect — Coax</option><option>Campus Cross Connect</option><option>Any2 Exchange</option><option>Blended IP</option></select></div>
+            <div class="sf-field"><label>Bandwidth / Speed</label><select><option>1 GbE</option><option>10 GbE</option><option>100 GbE</option><option>Custom</option></select></div>
+            <div class="sf-field"><label>Connector type</label><select><option selected>LC Duplex (SMF)</option><option>LC Duplex (MMF)</option><option>SC Duplex</option><option>RJ-45</option><option>BNC</option></select></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location & routing</div>
+            <div class="sf-field"><label>A-side location <span class="required">*</span></label><input type="text" placeholder="e.g. LA1-08-0805-CORE-AC17"></div>
+            <div class="sf-field"><label>Z-side location</label><input type="text" placeholder="e.g. Carrier cage or meet-me room"></div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+      </div>
+
+      <!-- LC-READY POD -->
+      <div class="product-pane sf-form-card" id="pane-lcpod">
+        <div class="sf-form-title"><span>❄️ LC-Ready Pod — configure</span><span class="badge b-blue">Space type · Liquid cooling infrastructure</span></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Pod details</div>
+            <div class="sf-field">
+              <label>Pod type <span class="required">*</span></label>
+              <select><option>Standard LC-Ready Pod</option><option>High-density LC Pod</option><option>Custom build</option></select>
+              <div class="hint">LC-Ready Pods are a separate space type — ColoCool is an attribute of existing cages/cabinets</div>
+            </div>
+            <div class="sf-field"><label>Power capacity (kW) <span class="required">*</span></label><input type="number" placeholder="e.g. 100" min="1"></div>
+            <div class="sf-field"><label>Cooling capacity (tons)</label><input type="number" placeholder="e.g. 30" min="1"></div>
+          </div>
+          <div>
+            <div class="sf-col-title">Location</div>
+            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
+            <div class="sf-field"><label>Notes</label><input type="text" placeholder="e.g. Confirm availability with Alec/Andy"></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','LC-Ready Pod','LC-Ready Pod')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2-B -->
+  <div class="step-wrap">
+    <div class="step-label">
+      <span class="step-num">Step 2-B</span>
+      <span class="step-title">Add Branch Circuits</span>
+      <span class="step-sub">— Power attaches to a space selected in Step 2-A</span>
+    </div>
+    <div class="sf-wrap">
+      <div class="sf-topbar">
+        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
+        <span class="sf-topbar-pill">Step 2-B · Power</span>
+      </div>
+      <div class="sf-meta" style="padding:8px 14px">Branch Circuit — power product that attaches to a space</div>
+      <div class="sf-form-card">
+        <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span> <button onclick="openNEMA()" style="margin-left:8px;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#16325c,#0070d2);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg> NEMA / Connector Reference</button><div style="display:flex;align-items:center;gap:8px;"><span class="badge b-blue">Power product</span></div></div></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Circuit specifications</div>
+            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>10A</option><option>15A</option><option>20A</option><option selected>30A</option><option>60A</option><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>250A</option></select></div>
+            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select id="volt-sel"><option>208V</option><option>415V</option><option>800V DC</option></select></div>
+            <div class="sf-field">
+              <label>Termination type</label>
+              <select id="term-sel" onchange="updateTermDetail(this.value)">
+                <option value="">— Select —</option>
+                <option value="straight">Straight Blade (NEMA)</option>
+                <option value="twistlock">Twist-Lock (NEMA L-series)</option>
+                <option value="iec">IEC (C13 / C19)</option>
+                <option value="pinsleeve">Pin & Sleeve (IEC 60309)</option>
+                <option value="hardwired">Hardwired / Bare</option>
+              </select>
+            </div>
+            <div class="sf-field" id="term-detail-field" style="display:none">
+              <label>NEMA Configuration</label>
+              <select id="term-detail-sel"></select>
+            </div>
+            <div class="sf-field">
+              <label>UPS Topology <span class="required">*</span><span class="info-btn" onclick="toggleTopoInfo()">[what is this?]</span></label>
+              <select id="topo-sel" onchange="showTopoHint()">
+                <option value="">— Select topology —</option>
+                <option value="2n">2N — Two independent UPS systems</option>
+                <option value="4m3">4-to-make-3 — Four modules, any three carry load</option>
+                <option value="5m4">5-to-make-4 — Five modules, any four carry load</option>
+                <option value="nups">Non-UPS (utility / generator direct)</option>
+              </select>
+              <div style="font-size:10px;color:#706e6b;margin-top:3px">Only available CoreSite UPS topologies shown — per Andy feedback</div>
+              <div id="topo-hint" class="topo-hint"></div>
+            </div>
+          </div>
+          <div>
+            <div class="sf-col-title">Configuration</div>
+            <div class="sf-field"><label>Poles <span class="required">*</span></label><select id="poles-sel" onchange="updateVoltage(this.value)"><option value="1">1-pole</option><option value="2" selected>2-pole</option><option value="3">3-pole</option></select><div class="hint">Updates available voltage options</div></div>
+            <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select><div class="hint">Required for some PDU configurations</div></div>
+            <div class="sf-field"><label>Delivery type <span class="required">*</span></label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
+            <div class="sf-field"><label>Attach to space</label><select><option>— Select space from Step 2-A —</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Private Cage)</option></select><div class="hint">Links circuit to space added in Step 2-A</div></div>
+            <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
+          </div>
+        </div>
+        <div id="lt-circuit-box" style="background:#f8fbff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">&#128337; Lead Time — This Circuit</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px">
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div id="lt-c-base" style="font-size:18px;font-weight:700;color:#0070d2">8</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Base (BD)</div>
+            </div>
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div id="lt-c-trigger" style="font-size:18px;font-weight:700;color:#e65100">+5</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Trigger offset</div>
+            </div>
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div id="lt-c-complexity" style="font-size:18px;font-weight:700;color:#2e7d32">+0</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Complexity</div>
+            </div>
+            <div style="text-align:center;background:#e8f4ff;border:1px solid #0070d2;border-radius:4px;padding:8px">
+              <div id="lt-c-total" style="font-size:18px;font-weight:700;color:#0070d2">14 BD</div>
+              <div style="font-size:10px;color:#0070d2;margin-top:2px">Expected</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:6px;align-items:center;font-size:11px;flex-wrap:wrap">
+            <span style="color:#706e6b">Delivery range:</span>
+            <span id="lt-c-min" style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600">Min: 12 BD</span>
+            <span style="color:#706e6b">&#8594;</span>
+            <span id="lt-c-exp" style="background:#e8f4ff;color:#0070d2;padding:1px 8px;border-radius:3px;font-weight:600">Exp: 14 BD</span>
+            <span style="color:#706e6b">&#8594;</span>
+            <span id="lt-c-max" style="background:#fde8e8;color:#c23934;padding:1px 8px;border-radius:3px;font-weight:600">Max: 18 BD</span>
+            <span style="color:#706e6b;margin-left:4px">· Auto-populated from Step 1 settings</span>
+          </div>
+          <div id="lt-c-trigger-lbl" style="margin-top:6px;font-size:11px;padding:5px 8px;background:#fff3e0;border-left:3px solid #e65100;border-radius:3px;color:#e65100">
+            &#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> — not customer signature date
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2-C -->
+  <div class="step-wrap">
+    
+    <div class="sf-wrap">
+      <div class="sf-topbar">
+        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
+        <span class="sf-topbar-pill">Step 2-C · Supplementals</span>
+      </div>
+      <div class="sf-form-card">
+        <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+          <button onclick="switchSuppView('caging')" id="svb-caging" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #0070d2;background:#0070d2;color:#fff;cursor:pointer;font-family:inherit">Caging</button>
+          <button onclick="switchSuppView('ladder')" id="svb-ladder" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Ladder Rack</button>
+          <button onclick="switchSuppView('basket')" id="svb-basket" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Mesh Basket</button>
+          <button onclick="switchSuppView('fiber')" id="svb-fiber" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Fiber Tray</button>
+          <button onclick="switchSuppView('misc')" id="svb-misc" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Misc</button>
+        </div>
+        <div id="sv-caging"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1.5"x3" · Posts &amp; capping included</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh · Posts &amp; capping included</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Slide</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' sliding door</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Swing</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' hinged door</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+        </tbody></table></div>
+        <div id="sv-ladder" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">10' sections · Unistrut support, materials &amp; labor</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack Transitions</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Junction &amp; Butt Splices</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cabinet Bolt Down &amp; Grounding</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Unpack, set/level, bolt down &amp; grounding</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+        </tbody></table></div>
+        <div id="sv-basket" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">10' section · 12"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Polymer Inserts</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">10' plastic inlay to protect fibers</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Transitions</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+        </tbody></table></div>
+        <div id="sv-fiber" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">6' section · 6"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray Transitions</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+        </tbody></table></div>
+        <div id="sv-misc" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Koldloks</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Flush mount raised floor grommet, split (11"x8.25"x1.625")</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button style="padding:3px 12px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:11px;cursor:pointer">Add</button></td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
   </div>
     </div> <!-- end view-space -->
 
