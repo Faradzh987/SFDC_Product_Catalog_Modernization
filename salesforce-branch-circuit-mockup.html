@@ -2084,7 +2084,7 @@ function renderNEMATable(){
   if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="padding:28px;text-align:center;color:#706e6b;">No configurations match.</td></tr>';return;}
   tbody.innerHTML=rows.map(function(r){
     var m=_nMeta[r.type]||{label:r.type,cls:'nb-straight'};
-    var star=r.highlight?'<span style="font-size:9px;background:#fef08a;color:#713f12;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px;">★ DC STD</span>':'';
+    var star=r.highlight?'<span style="font-size:9px;background:#fef08a;color:#713f12;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px;">DC STD</span>':'';
     var bg=r.highlight?'#fefce8':'#fff';
     var cfg=r.config.replace(/'/g,"\'");
     return '<tr class="nema-row" style="border-bottom:1px solid #f1f5f9;background:'+bg+'" onclick="selectNEMARow(this)">'+
