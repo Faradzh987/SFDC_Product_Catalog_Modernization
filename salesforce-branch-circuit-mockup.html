@@ -2154,5 +2154,12 @@ function closeNEMA(){
 document.getElementById('nema-modal').addEventListener('click',function(e){if(e.target===this)closeNEMA();});
 </script>
 
+<script>
+function showPowerType(type){
+  document.getElementById("power-landing").style.display=!type?"block":"none";
+  document.getElementById("power-branch").style.display=type==="branch"?"block":"none";
+  document.getElementById("power-panels").style.display=type==="panels"?"block":"none";
+}
+</script>
 </body>
 </html>
