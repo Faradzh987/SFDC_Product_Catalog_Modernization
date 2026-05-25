@@ -1669,7 +1669,7 @@ function clearBasket() {
 }
 function generateQuote() {
   if(basket.length===0) return;
-  var lines = basket.map(function(i,idx) { return (idx+1)+'. ['+i.type+'] '+i.name+' — '+i.details; }).join('\n');
+  var lines = basket.map(function(i,idx) { return (idx+1)+'. ['+i.type+'] '+i.name+' - '+i.details; }).join('\n');
   alert('Quote generated!\n\nItems:\n'+lines+'\n\nIn real SFDC this would create a Quote record linked to the Opportunity.');
 }
 function toggleOpp() {
@@ -1684,10 +1684,10 @@ function saveOpp() {
   var account = document.getElementById('account-name') ? document.getElementById('account-name').value : '';
   var summary = document.getElementById('opp-summary');
   if(summary) {
-    summary.textContent = (name||'Opportunity') + (account?' · '+account:'') + ' — configured';
+    summary.textContent = (name||'Opportunity') + (account?' · '+account:'') + ' - configured';
   }
   var check = document.getElementById('opp-check');
-  if(check) { check.textContent='✓'; check.style.background='#2e7d32'; }
+  if(check) { check.textContent='&#10003;'; check.style.background='#2e7d32'; }
   document.getElementById('opp-form').style.display='none';
   document.getElementById('opp-chevron').style.transform='';
 }
@@ -1703,7 +1703,7 @@ function showProduct(type) {
   }
   document.getElementById('prod-landing').style.display='none';
   document.getElementById('prod-view').style.display='block';
-  var labels={'space':'Space — Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power — Branch Circuits','supplementals':'Supplementals — Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX — Interconnection'};
+  var labels={'space':'Space - Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power - Branch Circuits','supplementals':'Supplementals - Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX - Interconnection'};
   document.getElementById('prod-breadcrumb').textContent='Product basket → '+labels[type];
   ['space','power','supplementals','ix'].forEach(function(v) {
     document.getElementById('view-'+v).style.display=v===type?'block':'none';
@@ -1740,7 +1740,7 @@ function sw(on) {
     document.getElementById('l1').textContent='Core product categories';
     document.getElementById('i2').textContent='3';document.getElementById('i2').style.color='#2e7d32';
     document.getElementById('l2').textContent='Guided workflow steps';
-    document.getElementById('i3').textContent='✓';document.getElementById('i3').style.color='#2e7d32';
+    document.getElementById('i3').textContent='&#10003;';document.getElementById('i3').style.color='#2e7d32';
     document.getElementById('l3').textContent='Dynamic market filtering';
   }
 else {
@@ -1777,7 +1777,7 @@ function updateTermDetail(val) {
     twistlock:['NEMA L5-20 (125V 20A)','NEMA L5-30 (125V 30A)','NEMA L6-20 (250V 20A)','NEMA L6-30 (250V 30A)','NEMA L6-50 (250V 50A)','NEMA L21-20 (3ph 120/208V 20A)','NEMA L21-30 (3ph 120/208V 30A)'],
     iec:['IEC C13 (250V 15A)','IEC C19 (250V 20A)'],
     pinsleeve:['IEC 60309 2P+E 16A 230V','IEC 60309 2P+E 32A 230V','IEC 60309 3P+E 16A 400V','IEC 60309 3P+E 32A 400V'],
-    hardwired:['Bare conductors — field terminated']
+    hardwired:['Bare conductors - field terminated']
   };
   if(val&&configs[val]) {configs[val].forEach(function(c) {var o=document.createElement('option');o.text=c;detailSel.add(o);});detailField.style.display='block';}
   else{detailField.style.display='none';}
@@ -1788,8 +1788,8 @@ function showTopoHint() {
   var hints={
     '2n':'Two fully independent UPS systems. If one fails, the other carries 100% of load. Most common in Tier III/IV.',
     '4m3':'Four UPS modules where any three can carry full load. More efficient than 2N. Common in modern hyperscale.',
-    '5m4':'Five UPS modules where any four can carry full load. Confirmed per Andy — recommended for high-density.',
-    'nups':'No UPS — direct utility/generator feed. For non-critical use: laptops, power tools, facility maintenance.'
+    '5m4':'Five UPS modules where any four can carry full load. Confirmed per Andy - recommended for high-density.',
+    'nups':'No UPS - direct utility/generator feed. For non-critical use: laptops, power tools, facility maintenance.'
   };
   var colors={'2n':'#e3f5e3','4m3':'#e8f4ff','5m4':'#e8f4ff','nups':'#fde8e8'};
   var borders={'2n':'#2e7d32','4m3':'#0070d2','5m4':'#0070d2','nups':'#c23934'};
@@ -1884,8 +1884,8 @@ function calcDelivery() {
   if(tLbl) {
     var isOpReady = trigger > 0;
     tLbl.innerHTML = isOpReady ?
-      '&#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> — not customer signature date' :
-      '&#128274; Trigger: Clock starts at <strong>Customer Signature</strong> — current state (not recommended)';
+      '&#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> - not customer signature date' :
+      '&#128274; Trigger: Clock starts at <strong>Customer Signature</strong> - current state (not recommended)';
     tLbl.style.background = isOpReady ? '#fff3e0' : '#fde8e8';
     tLbl.style.borderLeftColor = isOpReady ? '#e65100' : '#c23934';
     tLbl.style.color = isOpReady ? '#e65100' : '#c23934';
@@ -1975,56 +1975,56 @@ window.addEventListener('load', function() { calcDelivery(); });
 var NEMA_DATA=[
   // STRAIGHT BLADE
   {type:'straight',config:'NEMA 1-15',voltage:'125V',amps:'15A',poles:'2P / 2W',ground:'No',use:'Non-grounding general purpose',highlight:false},
-  {type:'straight',config:'NEMA 5-15',voltage:'125V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Standard 120V outlet — most common in US',highlight:true},
-  {type:'straight',config:'NEMA 5-20',voltage:'125V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'20A 120V — IT lab, kitchen, office',highlight:true},
-  {type:'straight',config:'NEMA 5-30',voltage:'125V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'30A 120V — high-draw appliances',highlight:false},
-  {type:'straight',config:'NEMA 5-50',voltage:'125V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'50A 120V — large appliances',highlight:false},
-  {type:'straight',config:'NEMA 6-15',voltage:'250V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'15A 240V — A/C units, power tools',highlight:false},
-  {type:'straight',config:'NEMA 6-20',voltage:'250V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'20A 240V — tools, PDU tail feeds',highlight:true},
-  {type:'straight',config:'NEMA 6-30',voltage:'250V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'30A 240V — welders, HVAC, PDUs',highlight:false},
-  {type:'straight',config:'NEMA 6-50',voltage:'250V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'50A 240V — EV chargers, large equipment',highlight:false},
-  {type:'straight',config:'NEMA 6-60',voltage:'250V',amps:'60A',poles:'2P / 3W',ground:'Yes',use:'60A 240V — industrial panel feeds',highlight:false},
-  {type:'straight',config:'NEMA 10-30',voltage:'125/250V',amps:'30A',poles:'3P / 3W',ground:'No',use:'Legacy dryer outlet — no ground (old code)',highlight:false},
-  {type:'straight',config:'NEMA 14-20',voltage:'125/250V',amps:'20A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 20A — PDU branch circuits',highlight:false},
-  {type:'straight',config:'NEMA 14-30',voltage:'125/250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 30A — dryers, PDU feeds',highlight:false},
-  {type:'straight',config:'NEMA 14-50',voltage:'125/250V',amps:'50A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 50A — EV, RV hookups, PDUs',highlight:true},
+  {type:'straight',config:'NEMA 5-15',voltage:'125V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Standard 120V outlet - most common in US',highlight:true},
+  {type:'straight',config:'NEMA 5-20',voltage:'125V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'20A 120V - IT lab, kitchen, office',highlight:true},
+  {type:'straight',config:'NEMA 5-30',voltage:'125V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'30A 120V - high-draw appliances',highlight:false},
+  {type:'straight',config:'NEMA 5-50',voltage:'125V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'50A 120V - large appliances',highlight:false},
+  {type:'straight',config:'NEMA 6-15',voltage:'250V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'15A 240V - A/C units, power tools',highlight:false},
+  {type:'straight',config:'NEMA 6-20',voltage:'250V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'20A 240V - tools, PDU tail feeds',highlight:true},
+  {type:'straight',config:'NEMA 6-30',voltage:'250V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'30A 240V - welders, HVAC, PDUs',highlight:false},
+  {type:'straight',config:'NEMA 6-50',voltage:'250V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'50A 240V - EV chargers, large equipment',highlight:false},
+  {type:'straight',config:'NEMA 6-60',voltage:'250V',amps:'60A',poles:'2P / 3W',ground:'Yes',use:'60A 240V - industrial panel feeds',highlight:false},
+  {type:'straight',config:'NEMA 10-30',voltage:'125/250V',amps:'30A',poles:'3P / 3W',ground:'No',use:'Legacy dryer outlet - no ground (old code)',highlight:false},
+  {type:'straight',config:'NEMA 14-20',voltage:'125/250V',amps:'20A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 20A - PDU branch circuits',highlight:false},
+  {type:'straight',config:'NEMA 14-30',voltage:'125/250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 30A - dryers, PDU feeds',highlight:false},
+  {type:'straight',config:'NEMA 14-50',voltage:'125/250V',amps:'50A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 50A - EV, RV hookups, PDUs',highlight:true},
   {type:'straight',config:'NEMA 15-20',voltage:'3Ø 125/250V',amps:'20A',poles:'3P / 4W',ground:'Yes',use:'3-phase 20A light industrial',highlight:false},
-  {type:'straight',config:'NEMA 15-30',voltage:'3Ø 250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'3-phase 30A — motors, HVAC',highlight:false},
+  {type:'straight',config:'NEMA 15-30',voltage:'3Ø 250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'3-phase 30A - motors, HVAC',highlight:false},
   // TWIST-LOCK
-  {type:'twistlock',config:'NEMA L5-15',voltage:'125V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 15A — IT equipment',highlight:false},
-  {type:'twistlock',config:'NEMA L5-20',voltage:'125V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 20A — PDU branch circuits',highlight:true},
+  {type:'twistlock',config:'NEMA L5-15',voltage:'125V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 15A - IT equipment',highlight:false},
+  {type:'twistlock',config:'NEMA L5-20',voltage:'125V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 20A - PDU branch circuits',highlight:true},
   {type:'twistlock',config:'NEMA L5-30',voltage:'125V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 30A',highlight:false},
   {type:'twistlock',config:'NEMA L6-15',voltage:'250V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 15A',highlight:false},
-  {type:'twistlock',config:'NEMA L6-20',voltage:'250V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 20A — data center PDU standard',highlight:true},
-  {type:'twistlock',config:'NEMA L6-30',voltage:'250V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 30A — UPS output, PDU input',highlight:true},
+  {type:'twistlock',config:'NEMA L6-20',voltage:'250V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 20A - data center PDU standard',highlight:true},
+  {type:'twistlock',config:'NEMA L6-30',voltage:'250V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 30A - UPS output, PDU input',highlight:true},
   {type:'twistlock',config:'NEMA L6-50',voltage:'250V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 50A',highlight:false},
   {type:'twistlock',config:'NEMA L6-60',voltage:'250V',amps:'60A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 60A',highlight:false},
   {type:'twistlock',config:'NEMA L14-20',voltage:'125/250V',amps:'20A',poles:'3P / 4W',ground:'Yes',use:'Locking split-phase 20A',highlight:false},
-  {type:'twistlock',config:'NEMA L14-30',voltage:'125/250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'Locking split-phase 30A — generator feeds',highlight:false},
-  {type:'twistlock',config:'NEMA L21-20',voltage:'3Ø 120/208V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 208V 20A — most common data center',highlight:true},
-  {type:'twistlock',config:'NEMA L21-30',voltage:'3Ø 120/208V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 208V 30A — standard PDU input',highlight:true},
-  {type:'twistlock',config:'NEMA L22-20',voltage:'3Ø 277/480V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 480V 20A — use for 415V circuits',highlight:true},
-  {type:'twistlock',config:'NEMA L22-30',voltage:'3Ø 277/480V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 480V 30A — 415V PDU standard',highlight:true},
-  {type:'twistlock',config:'NEMA L23-20',voltage:'3Ø 347/600V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 600V 20A — Canadian facilities',highlight:false},
+  {type:'twistlock',config:'NEMA L14-30',voltage:'125/250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'Locking split-phase 30A - generator feeds',highlight:false},
+  {type:'twistlock',config:'NEMA L21-20',voltage:'3Ø 120/208V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 208V 20A - most common data center',highlight:true},
+  {type:'twistlock',config:'NEMA L21-30',voltage:'3Ø 120/208V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 208V 30A - standard PDU input',highlight:true},
+  {type:'twistlock',config:'NEMA L22-20',voltage:'3Ø 277/480V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 480V 20A - use for 415V circuits',highlight:true},
+  {type:'twistlock',config:'NEMA L22-30',voltage:'3Ø 277/480V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 3Ø 480V 30A - 415V PDU standard',highlight:true},
+  {type:'twistlock',config:'NEMA L23-20',voltage:'3Ø 347/600V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 600V 20A - Canadian facilities',highlight:false},
   {type:'twistlock',config:'NEMA L23-30',voltage:'3Ø 347/600V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 600V 30A',highlight:false},
   // IEC
-  {type:'iec',config:'IEC C13',voltage:'250V',amps:'10A (15A rated)',poles:'2P / 3W',ground:'Yes',use:'Server PSU inlet — universal standard',highlight:true},
+  {type:'iec',config:'IEC C13',voltage:'250V',amps:'10A (15A rated)',poles:'2P / 3W',ground:'Yes',use:'Server PSU inlet - universal standard',highlight:true},
   {type:'iec',config:'IEC C14 (plug)',voltage:'250V',amps:'10A (15A rated)',poles:'2P / 3W',ground:'Yes',use:'PDU outlet plug for C13 inlet',highlight:true},
-  {type:'iec',config:'IEC C15',voltage:'250V',amps:'10A',poles:'2P / 3W',ground:'Yes',use:'High-temp C13 variant — hot equipment',highlight:false},
+  {type:'iec',config:'IEC C15',voltage:'250V',amps:'10A',poles:'2P / 3W',ground:'Yes',use:'High-temp C13 variant - hot equipment',highlight:false},
   {type:'iec',config:'IEC C19',voltage:'250V',amps:'16A (20A rated)',poles:'2P / 3W',ground:'Yes',use:'High-density server PSU, network switches',highlight:true},
   {type:'iec',config:'IEC C20 (plug)',voltage:'250V',amps:'16A (20A rated)',poles:'2P / 3W',ground:'Yes',use:'PDU outlet plug for C19 inlet',highlight:true},
   {type:'iec',config:'IEC C21',voltage:'250V',amps:'16A',poles:'2P / 3W',ground:'Yes',use:'High-temp C19 variant',highlight:false},
   // PIN & SLEEVE
   {type:'pinsleeve',config:'IEC 60309 2P+E 16A 110V',voltage:'100-130V',amps:'16A',poles:'2P+E / 3W',ground:'Yes',use:'Construction site 110V (Yellow)',highlight:false},
-  {type:'pinsleeve',config:'IEC 60309 2P+E 16A 230V',voltage:'200-250V',amps:'16A',poles:'2P+E / 3W',ground:'Yes',use:'Single-phase 230V 16A — Blue (EU standard)',highlight:true},
-  {type:'pinsleeve',config:'IEC 60309 2P+E 32A 230V',voltage:'200-250V',amps:'32A',poles:'2P+E / 3W',ground:'Yes',use:'Single-phase 230V 32A — Blue',highlight:false},
-  {type:'pinsleeve',config:'IEC 60309 3P+E 16A 400V',voltage:'380-415V',amps:'16A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 400/415V 16A — Red (DC standard)',highlight:true},
-  {type:'pinsleeve',config:'IEC 60309 3P+E 32A 400V',voltage:'380-415V',amps:'32A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 415V 32A — Red — PDU input',highlight:true},
-  {type:'pinsleeve',config:'IEC 60309 3P+E 63A 400V',voltage:'380-415V',amps:'63A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 415V 63A — Red — high-density rows',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 2P+E 16A 230V',voltage:'200-250V',amps:'16A',poles:'2P+E / 3W',ground:'Yes',use:'Single-phase 230V 16A - Blue (EU standard)',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 2P+E 32A 230V',voltage:'200-250V',amps:'32A',poles:'2P+E / 3W',ground:'Yes',use:'Single-phase 230V 32A - Blue',highlight:false},
+  {type:'pinsleeve',config:'IEC 60309 3P+E 16A 400V',voltage:'380-415V',amps:'16A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 400/415V 16A - Red (DC standard)',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 3P+E 32A 400V',voltage:'380-415V',amps:'32A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 415V 32A - Red - PDU input',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 3P+E 63A 400V',voltage:'380-415V',amps:'63A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 415V 63A - Red - high-density rows',highlight:true},
   {type:'pinsleeve',config:'IEC 60309 3P+N+E 16A 400V',voltage:'380-415V',amps:'16A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 16A (Red 5-pin)',highlight:false},
   {type:'pinsleeve',config:'IEC 60309 3P+N+E 32A 400V',voltage:'380-415V',amps:'32A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 32A (Red 5-pin)',highlight:false},
   {type:'pinsleeve',config:'IEC 60309 3P+N+E 63A 400V',voltage:'380-415V',amps:'63A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 63A (Red 5-pin)',highlight:false},
-  {type:'pinsleeve',config:'IEC 60309 3P+N+E 125A 400V',voltage:'380-415V',amps:'125A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 125A — main feeds',highlight:false},
+  {type:'pinsleeve',config:'IEC 60309 3P+N+E 125A 400V',voltage:'380-415V',amps:'125A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 125A - main feeds',highlight:false},
 ];
 
 var _nFilter='all', _nSearch='';
@@ -2052,11 +2052,11 @@ function renderNEMATable(){
       '<td style="padding:8px 12px;font-family:monospace;color:#0070d2;font-weight:600;">'+r.voltage+'</td>'+
       '<td style="padding:8px 12px;font-weight:700;color:#e65100;">'+r.amps+'</td>'+
       '<td style="padding:8px 12px;color:#706e6b;font-size:11px;">'+r.poles+'</td>'+
-      '<td style="padding:8px 12px"><span style="font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;background:'+(r.ground==='Yes'?'#dcfce7':'#fee2e2')+';color:'+(r.ground==='Yes'?'#15803d':'#dc2626')+'">'+(r.ground==='Yes'?'✓ Yes':'✕ No')+'</span></td>'+
+      '<td style="padding:8px 12px"><span style="font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;background:'+(r.ground==='Yes'?'#dcfce7':'#fee2e2')+';color:'+(r.ground==='Yes'?'#15803d':'#dc2626')+'">'+(r.ground==='Yes'?'&#10003; Yes':'✕ No')+'</span></td>'+
       '<td style="padding:8px 12px;color:#374151;font-size:11px;max-width:240px;white-space:normal;line-height:1.4;">'+r.use+star+'</td>'+
       '<td style="padding:8px 12px;text-align:center"><button onclick="event.stopPropagation();applyNEMA(''+cfg+'')" '+
         'style="padding:4px 12px;background:#0070d2;color:#fff;border:none;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s;" '+
-        'onmouseover="this.style.background='#0058a8'" onmouseout="this.style.background='#0070d2'">Select ↵</button></td>'+
+        'onmouseover="this.style.background='#0058a8'" onmouseout="this.style.background='#0070d2'">Select &#8629;</button></td>'+
     '</tr>';
   }).join('');
 }
@@ -2094,7 +2094,7 @@ function applyNEMA(config){
   }
   // Show applied badge if element exists
   var applied=document.getElementById('nema-applied');
-  if(applied){applied.style.display='block';applied.innerHTML='✓ Applied: <strong>'+config+'</strong> &middot; '+row.voltage+' &middot; '+row.amps;}
+  if(applied){applied.style.display='block';applied.innerHTML='&#10003; Applied: <strong>'+config+'</strong> &middot; '+row.voltage+' &middot; '+row.amps;}
   closeNEMA();
   // Toast notification
   var t=document.createElement('div');
