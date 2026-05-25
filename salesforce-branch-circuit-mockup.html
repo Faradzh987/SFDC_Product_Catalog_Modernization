@@ -1205,7 +1205,6 @@ function showPowerType(type){
 
     <!-- POWER VIEW -->
     <div id="view-power" style="display:none">
-      <!-- Power landing: pick Branch Circuits or Panels -->
       <div id="power-landing" style="display:block;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
           <button onclick="backToLanding()" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to product catalog</button>
@@ -1214,13 +1213,13 @@ function showPowerType(type){
         <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Select a power product type</div>
         <div style="font-size:12px;color:#706e6b;margin-bottom:20px">Both attach to a space selected in Step 2-A</div>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <button onclick="showPowerType('branch')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;transition:all 0.15s;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
+          <button onclick="showPowerType('branch')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
             <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
             <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Branch Circuits</div>
             <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Amperage, voltage, UPS topology, NEMA receptacles, rating</div>
             <span style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
           </button>
-          <button onclick="showPowerType('panels')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;transition:all 0.15s;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
+          <button onclick="showPowerType('panels')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
             <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 9h6M2 15h6"/></svg></div>
             <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Panels</div>
             <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Voltage, amperage, rating (80%/100%)</div>
@@ -1229,143 +1228,61 @@ function showPowerType(type){
         </div>
       </div>
 
-      <!-- Branch Circuits -->
       <div id="power-branch" style="display:none;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
           <button onclick="showPowerType(null)" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to power</button>
           <span style="font-size:12px;color:#706e6b">Power &rarr; Branch Circuits</span>
-        </div>
-      <!-- Power landing: pick Branch Circuits or Panels -->
-      <div id="power-landing" style="display:block;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <button onclick="backToLanding()" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to product catalog</button>
-          <span style="font-size:12px;color:#706e6b">Product catalog &rarr; Power</span>
-        </div>
-        <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Select a power product type</div>
-        <div style="font-size:12px;color:#706e6b;margin-bottom:20px">Both attach to a space selected in Step 2-A</div>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <button onclick="showPowerType('branch')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;transition:all 0.15s;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
-            <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-            <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Branch Circuits</div>
-            <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Amperage, voltage, UPS topology, NEMA receptacles, rating</div>
-            <span style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
-          </button>
-          <button onclick="showPowerType('panels')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;transition:all 0.15s;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
-            <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 9h6M2 15h6"/></svg></div>
-            <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Panels</div>
-            <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Voltage, amperage, rating (80%/100%)</div>
-            <span style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Branch Circuits -->
-      <div id="power-branch" style="display:none;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <button onclick="showPowerType(null)" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to power</button>
-          <span style="font-size:12px;color:#706e6b">Power &rarr; Branch Circuits</span>
-        </div>
-      <div class="sf-wrap">
-        <div class="sf-topbar">
-          <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-          <span class="sf-topbar-title">Sales — Product Catalog · Power</span>
-          <span class="sf-topbar-pill">Branch Circuits</span>
-        </div>
-        <div class="sf-form-card">
-          <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span><span class="badge b-blue">Power product · attaches to space</span></div>
-          <div class="sf-cols">
-            <div>
-              <div class="sf-col-title">Circuit specifications</div>
-              <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option selected>60A</option><option>100A</option></select></div>
-              <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option selected>208V</option><option>415V</option></select></div>
-              
-            <div class="sf-field">
-              <label>NEMA Receptacles</label>
-              <select>
-                <option value="">— Select NEMA config —</option>
-                <optgroup label="Straight Blade">
-                  <option>NEMA 5-15 · 125V · 15A</option>
-                  <option>NEMA 5-20 · 125V · 20A</option>
-                  <option>NEMA 6-20 · 250V · 20A</option>
-                  <option>NEMA 6-30 · 250V · 30A</option>
-                  <option>NEMA 14-50 · 125/250V · 50A</option>
-                </optgroup>
-                <optgroup label="Twist-Lock">
-                  <option>NEMA L6-20 · 250V · 20A ★</option>
-                  <option>NEMA L6-30 · 250V · 30A ★</option>
-                  <option>NEMA L21-20 · 3Ø 208V · 20A ★</option>
-                  <option>NEMA L21-30 · 3Ø 208V · 30A ★</option>
-                  <option>NEMA L22-20 · 3Ø 480V · 20A ★</option>
-                  <option>NEMA L22-30 · 3Ø 480V · 30A ★</option>
-                </optgroup>
-                <optgroup label="IEC">
-                  <option>IEC C13 · 250V · 10-15A ★</option>
-                  <option>IEC C19 · 250V · 16-20A ★</option>
-                </optgroup>
-                <optgroup label="Pin and Sleeve IEC 60309">
-                  <option>IEC 60309 · 3P+E · 16A · 400V ★</option>
-                  <option>IEC 60309 · 3P+E · 32A · 400V ★</option>
-                  <option>IEC 60309 · 3P+E · 63A · 400V ★</option>
-                  <option>IEC 60309 · 3P+N+E · 32A · 400V</option>
-                  <option>IEC 60309 · 3P+N+E · 63A · 400V</option>
-                </optgroup>
-              </select>
-              <div class="hint">★ = data center standard</div>
-            </div>
-            <div class="sf-field"><label>UPS Topology <span class="required">*</span></label><select><option>— Select —</option><option>2N</option><option>4-to-make-3</option><option>5-to-make-4</option><option>N+1 — One redundant UPS module</option><option>Non-UPS</option></select></div>
-              <div class="sf-field"><label>Rating <span style="color:red">*</span></label><select><option value="">— Select rating —</option><option value="80">80% — Standard (NEC continuous load)</option><option value="100">100% — Listed for continuous duty</option></select></div>
-            </div>
-            <div>
-              <div class="sf-col-title">Configuration</div>
-              <div class="sf-field"><label>Poles</label><select><option>1-pole</option><option>2-pole</option><option selected>3-pole</option></select></div>
-              <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select></div>
-              <div class="sf-field"><label>Attach to space</label><select><option>— Select space —</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Cage)</option></select></div>
-              <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px"></div>
-            </div>
-          </div>
-          <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF · A-side: LA1-08')">Add to basket</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
-        </div>
-      </div>
-    
-      </div>
-
-      <!-- Panels -->
-      <div id="power-panels" style="display:none;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <button onclick="showPowerType(null)" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to power</button>
-          <span style="font-size:12px;color:#706e6b">Power &rarr; Panels</span>
         </div>
         <div class="sf-wrap">
           <div class="sf-topbar">
             <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-            <span class="sf-topbar-title">Sales — Product Catalog · Power</span>
-            <span class="sf-topbar-pill">Panels</span>
+            <span class="sf-topbar-title">Sales &mdash; Product Catalog &middot; Power</span>
+            <span class="sf-topbar-pill">Branch Circuits</span>
           </div>
           <div class="sf-form-card">
-            <div class="sf-form-title"><span>⚡ Panel — configure</span><span class="badge b-orange">Power product · attaches to space</span></div>
+            <div class="sf-form-title"><span>&#9889; Branch Circuit &mdash; configure</span><span class="badge b-blue">Power product &middot; attaches to space</span></div>
             <div class="sf-cols">
               <div>
-                <div class="sf-col-title">Panel Specifications</div>
-                <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option>208V</option><option>415V</option><option>480V</option><option>120/208V</option><option>277/480V</option></select></div>
-                <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>225A</option><option>400A</option><option>600A</option><option>800A</option></select></div>
-                <div class="sf-field"><label>Rating <span class="required">*</span></label><select><option value="">— Select rating —</option><option value="80">80% — Standard (NEC continuous load)</option><option value="100">100% — Listed for continuous duty</option></select><div class="hint">80% = NEC standard · 100% = listed for continuous load</div></div>
+                <div class="sf-col-title">Circuit specifications</div>
+                <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>10A</option><option>15A</option><option>20A</option><option selected>30A</option><option>60A</option><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>250A</option></select></div>
+                <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option>208V</option><option>415V</option><option>-48V DC</option><option>800V DC</option></select></div>
+                <div class="sf-field"><label>NEMA Receptacles</label>
+                  <select>
+                    <option value="">-- Select NEMA config --</option>
+                    <optgroup label="Straight Blade"><option>NEMA 5-15 125V 15A</option><option>NEMA 5-20 125V 20A</option><option>NEMA 6-20 250V 20A</option><option>NEMA 6-30 250V 30A</option><option>NEMA 14-50 125/250V 50A</option></optgroup>
+                    <optgroup label="Twist-Lock"><option>NEMA L6-20 250V 20A</option><option>NEMA L6-30 250V 30A</option><option>NEMA L21-20 3ph 208V 20A</option><option>NEMA L21-30 3ph 208V 30A</option><option>NEMA L22-20 3ph 480V 20A</option><option>NEMA L22-30 3ph 480V 30A</option></optgroup>
+                    <optgroup label="IEC"><option>IEC C13 250V 10-15A</option><option>IEC C19 250V 16-20A</option></optgroup>
+                    <optgroup label="Pin and Sleeve IEC 60309"><option>IEC 60309 3P+E 16A 400V</option><option>IEC 60309 3P+E 32A 400V</option><option>IEC 60309 3P+E 63A 400V</option><option>IEC 60309 3P+N+E 32A 400V</option><option>IEC 60309 3P+N+E 63A 400V</option></optgroup>
+                  </select>
+                  <div class="hint">Data center standard configurations listed</div>
+                </div>
+                <div class="sf-field"><label>UPS Topology <span class="required">*</span></label>
+                  <select id="topo-sel2" onchange="showTopoHint()">
+                    <option value="">-- Select topology --</option>
+                    <option value="2n">2N -- Two independent UPS systems</option>
+                    <option value="4m3">4-to-make-3</option>
+                    <option value="5m4">5-to-make-4</option>
+                    <option value="n1">N+1 -- One redundant UPS module</option>
+                    <option value="nups">Non-UPS (utility / generator direct)</option>
+                  </select>
+                </div>
+                <div class="sf-field"><label>Rating <span class="required">*</span></label>
+                  <select><option value="">-- Select rating --</option><option value="80">80% -- Standard (NEC continuous load)</option><option value="100">100% -- Listed for continuous duty</option></select>
+                </div>
               </div>
               <div>
                 <div class="sf-col-title">Configuration</div>
-                <div class="sf-field"><label>Panel type</label><select><option>Main Lug Only (MLO)</option><option>Main Breaker</option><option>Sub-panel</option></select></div>
-                <div class="sf-field"><label>Number of circuits</label><select><option>12</option><option>18</option><option>24</option><option>30</option><option>42</option><option>Custom</option></select></div>
-                <div class="sf-field"><label>Attach to space</label><select><option>— Select space from Step 2-A —</option></select></div>
-                <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px;"></div>
+                <div class="sf-field"><label>Poles <span class="required">*</span></label><select><option value="1">1-pole</option><option value="2" selected>2-pole</option><option value="3">3-pole</option></select></div>
+                <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select></div>
+                <div class="sf-field"><label>Attach to space</label><select><option>-- Select space from Step 2-A --</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Cage)</option></select></div>
+                <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
               </div>
             </div>
             <div class="sf-btn-row"><button class="sf-btn-p">Add to basket</button><button class="sf-btn-s" onclick="showPowerType(null)">Cancel</button></div>
           </div>
         </div>
       </div>
-    
-      </div>
 
-      <!-- Panels -->
       <div id="power-panels" style="display:none;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
           <button onclick="showPowerType(null)" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to power</button>
@@ -1374,23 +1291,23 @@ function showPowerType(type){
         <div class="sf-wrap">
           <div class="sf-topbar">
             <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-            <span class="sf-topbar-title">Sales — Product Catalog · Power</span>
+            <span class="sf-topbar-title">Sales &mdash; Product Catalog &middot; Power</span>
             <span class="sf-topbar-pill">Panels</span>
           </div>
           <div class="sf-form-card">
-            <div class="sf-form-title"><span>⚡ Panel — configure</span><span class="badge b-orange">Power product · attaches to space</span></div>
+            <div class="sf-form-title"><span>&#9889; Panel &mdash; configure</span><span class="badge b-orange">Power product &middot; attaches to space</span></div>
             <div class="sf-cols">
               <div>
                 <div class="sf-col-title">Panel Specifications</div>
                 <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option>208V</option><option>415V</option><option>480V</option><option>120/208V</option><option>277/480V</option></select></div>
                 <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>225A</option><option>400A</option><option>600A</option><option>800A</option></select></div>
-                <div class="sf-field"><label>Rating <span class="required">*</span></label><select><option value="">— Select rating —</option><option value="80">80% — Standard (NEC continuous load)</option><option value="100">100% — Listed for continuous duty</option></select><div class="hint">80% = NEC standard · 100% = listed for continuous load</div></div>
+                <div class="sf-field"><label>Rating <span class="required">*</span></label><select><option value="">-- Select rating --</option><option value="80">80% -- Standard (NEC continuous load)</option><option value="100">100% -- Listed for continuous duty</option></select><div class="hint">80% = NEC standard · 100% = listed for continuous load</div></div>
               </div>
               <div>
                 <div class="sf-col-title">Configuration</div>
                 <div class="sf-field"><label>Panel type</label><select><option>Main Lug Only (MLO)</option><option>Main Breaker</option><option>Sub-panel</option></select></div>
                 <div class="sf-field"><label>Number of circuits</label><select><option>12</option><option>18</option><option>24</option><option>30</option><option>42</option><option>Custom</option></select></div>
-                <div class="sf-field"><label>Attach to space</label><select><option>— Select space from Step 2-A —</option></select></div>
+                <div class="sf-field"><label>Attach to space</label><select><option>-- Select space from Step 2-A --</option></select></div>
                 <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px;"></div>
               </div>
             </div>
