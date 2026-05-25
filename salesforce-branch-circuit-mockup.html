@@ -1661,7 +1661,7 @@ function renderBasket() {
   document.getElementById('basket-items').innerHTML = html;
   var types = {};
   basket.forEach(function(i) { types[i.type]=(types[i.type]||0)+1; });
-  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e) { return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;·&nbsp; ');
+  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e) { return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;&#183;&nbsp; ');
 }
 function clearBasket() {
   basket=[];
@@ -1684,7 +1684,7 @@ function saveOpp() {
   var account = document.getElementById('account-name') ? document.getElementById('account-name').value : '';
   var summary = document.getElementById('opp-summary');
   if(summary) {
-    summary.textContent = (name||'Opportunity') + (account?' · '+account:'') + ' - configured';
+    summary.textContent = (name||'Opportunity') + (account?' &#183; '+account:'') + ' - configured';
   }
   var check = document.getElementById('opp-check');
   if(check) { check.textContent='&#10003;'; check.style.background='#2e7d32'; }
@@ -1704,20 +1704,20 @@ function showProduct(type) {
   document.getElementById('prod-landing').style.display='none';
   document.getElementById('prod-view').style.display='block';
   var labels={'space':'Space - Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power - Branch Circuits','supplementals':'Supplementals - Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX - Interconnection'};
-  document.getElementById('prod-breadcrumb').textContent='Product basket → '+labels[type];
+  document.getElementById('prod-breadcrumb').textContent='Product basket -> '+labels[type];
   ['space','power','supplementals','ix'].forEach(function(v) {
     document.getElementById('view-'+v).style.display=v===type?'block':'none';
   });
 }
 function getCabinetDetails() {
-  return 'CoreSite Cabinet · 48U';
+  return 'CoreSite Cabinet &#183; 48U';
 }
 function getCageDetails() {
   var cageType = document.querySelector('#pane-cage select') ? document.querySelector('#pane-cage select').value : 'Private Cage';
   var sqft = document.querySelector('#pane-cage input[type=number]') ? document.querySelector('#pane-cage input[type=number]').value : '';
   var lc = document.getElementById('lc-sel') ? document.getElementById('lc-sel').value : 'none';
   var lcLabel = lc==='none'?'Air cooled':lc;
-  return (sqft?sqft+' sqft · ':'')+'Cage type: '+cageType+' · Cooling: '+lcLabel;
+  return (sqft?sqft+' sqft &#183; ':'')+'Cage type: '+cageType+' &#183; Cooling: '+lcLabel;
 }
 function backToLanding() {
   document.getElementById('prod-landing').style.display='block';
