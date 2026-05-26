@@ -1651,21 +1651,22 @@ function sw(on) {
   document.getElementById('fut').style.display=on?'block':'none';
   document.getElementById('tt').style.background=on?'#2e7d32':'#c23934';
   document.getElementById('tk').style.transform=on?'translateX(20px)':'translateX(0)';
+  var i1=document.getElementById('i1'),i2=document.getElementById('i2'),i3=document.getElementById('i3');
+  var l1=document.getElementById('l1'),l2=document.getElementById('l2'),l3=document.getElementById('l3');
   if(on) {
-    document.getElementById('i1').textContent='3';document.getElementById('i1').style.color='#2e7d32';
-    document.getElementById('l1').textContent='Core product categories';
-    document.getElementById('i2').textContent='3';document.getElementById('i2').style.color='#2e7d32';
-    document.getElementById('l2').textContent='Guided workflow steps';
-    document.getElementById('i3').textContent='&#10003;';document.getElementById('i3').style.color='#2e7d32';
-    document.getElementById('l3').textContent='Dynamic market filtering';
-  }
-else {
-    document.getElementById('i1').textContent='50+';document.getElementById('i1').style.color='#c23934';
-    document.getElementById('l1').textContent='Product codes';
-    document.getElementById('i2').textContent='0';document.getElementById('i2').style.color='#c23934';
-    document.getElementById('l2').textContent='Guided workflow steps';
-    document.getElementById('i3').textContent='0';document.getElementById('i3').style.color='#c23934';
-    document.getElementById('l3').textContent='Dynamic market filtering';
+    if(i1){i1.textContent='3';i1.style.color='#2e7d32';}
+    if(l1){l1.textContent='Core product categories';}
+    if(i2){i2.textContent='3';i2.style.color='#2e7d32';}
+    if(l2){l2.textContent='Guided workflow steps';}
+    if(i3){i3.textContent='&#10003;';i3.style.color='#2e7d32';}
+    if(l3){l3.textContent='Dynamic market filtering';}
+  } else {
+    if(i1){i1.textContent='50+';i1.style.color='#c23934';}
+    if(l1){l1.textContent='Product codes';}
+    if(i2){i2.textContent='0';i2.style.color='#c23934';}
+    if(l2){l2.textContent='Guided workflow steps';}
+    if(i3){i3.textContent='0';i3.style.color='#c23934';}
+    if(l3){l3.textContent='Dynamic market filtering';}
   }
 }
 // Switch between main nav tabs
