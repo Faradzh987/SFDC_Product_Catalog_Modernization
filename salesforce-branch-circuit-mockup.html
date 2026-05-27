@@ -1,95 +1,249 @@
 <!DOCTYPE html>
+<!-- ============================================================
+     CoreSite SFDC — Product Catalog Modernization
+     Author: Alex A.
+     Team:   Richard · Chris · Andy
+     Date:   May 2026
+     Desc:   Salesforce CPQ + Experience Cloud mockup
+             Built for IT review and stakeholder presentation
+============================================================ -->
 <html lang="en">
 <head>
+<!-- OVERRIDE START -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<style>
+html body { font-family: "DM Sans", sans-serif !important; background: #eef2f7 !important; }
+html body * { font-family: "DM Sans", sans-serif !important; }
+.sf-topbar { background: linear-gradient(135deg, #0070d2 0%, #005399 100%) !important; }
+.sf-wrap { box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important; border-radius: 10px !important; border-color: #e2e8f0 !important; }
+thead tr { background: #f8fafc !important; }
+th { font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.06em !important; color: #64748b !important; font-weight: 600 !important; }
+td { border-bottom-color: #f1f5f9 !important; }
+.badge, .b-green, .b-blue, .b-red, .b-orange, .b-purple, .b-gray, .b-teal { border-radius: 20px !important; }
+input, select, textarea { border-radius: 8px !important; border-color: #e2e8f0 !important; }
+input:focus, select:focus { border-color: #0070d2 !important; box-shadow: 0 0 0 3px rgba(0,112,210,0.1) !important; outline: none !important; }
+.step-label { background: #fff !important; border-color: #e2e8f0 !important; box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important; border-radius: 10px !important; }
+.impact-card { border-radius: 10px !important; border-color: #e2e8f0 !important; box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important; }
+.vendor-card { border-radius: 10px !important; transition: all 0.2s !important; }
+.vendor-card:hover { box-shadow: 0 6px 20px rgba(0,112,210,0.15) !important; transform: translateY(-2px) !important; }
+
+/* ── NEMA Reference Button & Modal ───────────────────────────── */
+.nema-ref-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#16325c,#0070d2);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 2px 8px rgba(0,112,210,0.3);transition:all 0.15s;letter-spacing:0.01em;}
+.nema-ref-btn:hover{background:linear-gradient(135deg,#0058a8,#004a90);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,112,210,0.4);}
+.nf-btn{padding:5px 12px;font-size:11px;font-weight:600;border-radius:5px;border:1px solid #e2e8f0;background:#fff;color:#706e6b;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.nf-btn:hover{background:#eff6ff;color:#0070d2;border-color:#bfdbfe;}
+.nf-active{background:#0070d2!important;color:#fff!important;border-color:#0070d2!important;}
+.nema-row{cursor:pointer;transition:background 0.1s;}
+.nema-row:hover td{background:#eff6ff!important;}
+.nema-row.nema-selected td{background:#dcfce7!important;}
+.nema-badge{display:inline-flex;align-items:center;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;white-space:nowrap;}
+.nb-straight{background:#dbeafe;color:#1d4ed8;}
+.nb-twistlock{background:#f3e8ff;color:#7c3aed;}
+.nb-pinsleeve{background:#fff3e0;color:#c2410c;}
+.nb-iec{background:#ccfbf1;color:#0f766e;}
+
+</style>
+<!-- OVERRIDE END -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Salesforce Product Catalog — Modernization Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
+:root{--blue:#0070d2;--navy:#032D60;--dark:#16325c;--green:#2e7d32;--red:#c23934;--orange:#e65100;--gray:#706e6b;--border:#e5e7eb;--bg:#f0f4f8;--white:#ffffff;--shadow:0 1px 3px rgba(0,0,0,0.07),0 1px 2px rgba(0,0,0,0.05);--shadow-hover:0 4px 16px rgba(0,112,210,0.13),0 2px 6px rgba(0,0,0,0.07)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f3f3;padding:24px;color:#16325c}
-h1{font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px}
-.subtitle{font-size:12px;color:#706e6b;margin-bottom:16px}
-.toggle-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.toggle-lbl{font-size:13px;font-weight:500;color:#444}
-.toggle-track{position:relative;width:44px;height:24px;border-radius:12px;cursor:pointer;transition:background 0.2s;display:inline-block}
+body{font-family:'DM Sans',system-ui,sans-serif!important;background:#f0f4f8!important;color:#16325c;font-size:13px;line-height:1.5}
+h1{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:2px}
+.subtitle{font-size:11px;color:var(--gray);margin-bottom:12px}
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:8px 14px;background:var(--white);border:1px solid var(--border);border-radius:8px;width:fit-content;box-shadow:var(--shadow)}
+.toggle-lbl{font-size:12px;font-weight:500;color:var(--gray)}
+.toggle-track{position:relative;width:40px;height:22px;border-radius:11px;cursor:pointer;transition:background 0.2s;display:inline-block}
 .toggle-track input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;z-index:1}
-.toggle-knob{position:absolute;top:4px;left:4px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform 0.2s;pointer-events:none}
-.callout{padding:8px 12px;border-radius:4px;font-size:12px;margin-bottom:10px;border-left:3px solid}
-.callout-red{background:#fde8e8;border-color:#c23934;color:#c23934}
-.callout-green{background:#e3f5e3;border-color:#2e7d32;color:#2e7d32}
-/* SF chrome */
-.sf-wrap{border-radius:8px;overflow:hidden;border:1px solid #dddbda;margin-bottom:16px}
-.sf-topbar{background:#0070d2;padding:7px 14px;display:flex;align-items:center;gap:10px}
-.sf-topbar-title{color:#fff;font-size:13px;font-weight:500}
-.sf-topbar-pill{background:rgba(255,255,255,0.25);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px}
-.sf-subbar{background:#f3f3f3;border-bottom:1px solid #dddbda;padding:8px 14px;display:flex;align-items:center;justify-content:space-between}
-.sf-subbar-title{font-size:15px;font-weight:600;color:#16325c}
-.sf-meta{font-size:11px;color:#706e6b;padding:5px 14px;background:#fff;border-bottom:1px solid #f0f0f0}
+.toggle-knob{position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform 0.2s;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,0.25)}
+.callout{padding:8px 14px;border-radius:6px;font-size:11px;margin-bottom:12px;border-left:3px solid;line-height:1.6}
+.callout-red{background:#fef2f2;border-color:var(--red);color:#991b1b}
+.callout-green{background:#f0fdf4;border-color:var(--green);color:#166534}
+.callout-blue{background:#eff6ff;border-color:var(--blue);color:#1e40af}
+.callout-orange{background:#fff7ed;border-color:var(--orange);color:#9a3412}
+.sf-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;box-shadow:var(--shadow)}
+.sf-topbar{background:linear-gradient(135deg,#0070d2,#0058a8);padding:8px 14px;display:flex;align-items:center;gap:10px}
+.sf-topbar-title{color:#fff;font-size:12px;font-weight:600;letter-spacing:0.01em}
+.sf-topbar-pill{background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.95);font-size:10px;padding:2px 10px;border-radius:20px;font-weight:500;border:1px solid rgba(255,255,255,0.15)}
+.sf-subbar{background:#f8fafc;border-bottom:1px solid var(--border);padding:7px 14px;display:flex;align-items:center;justify-content:space-between}
+.sf-subbar-title{font-size:14px;font-weight:600;color:var(--dark)}
+.sf-meta{font-size:10px;color:var(--gray);padding:4px 14px;background:#fff;border-bottom:1px solid #f0f4f8}
 .sf-table-wrap{overflow-x:auto;background:#fff}
 table{width:100%;border-collapse:collapse;font-size:12px}
-thead tr{background:#f3f3f3;border-bottom:1px solid #dddbda}
-th{padding:7px 10px;text-align:left;font-size:11px;font-weight:600;color:#706e6b;white-space:nowrap;border-right:0.5px solid #e0e0e0}
-td{padding:6px 10px;border-bottom:0.5px solid #f0f0f0;color:#16325c;white-space:nowrap}
-tr:hover td{background:#f8f8ff}
-.link{color:#0070d2;cursor:pointer;text-decoration:underline}
-.badge{display:inline-block;font-size:10px;padding:1px 7px;border-radius:3px;font-weight:500}
-.b-green{background:#e3f5e3;color:#2e7d32}
-.b-blue{background:#e0f0ff;color:#0070d2}
-.b-red{background:#fde8e8;color:#c23934}
-.b-purple{background:#f3e8ff;color:#6b21a8}
-.b-orange{background:#fff3e0;color:#e65100}
-.b-gray{background:#f3f3f3;color:#706e6b}
-.b-teal{background:#e0f7f4;color:#006d5b}
-/* Step labels */
-.step-wrap{margin-bottom:20px}
-.step-label{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.step-num{background:#0070d2;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:3px;white-space:nowrap}
-.step-title{font-size:13px;font-weight:600;color:#16325c}
-.step-sub{font-size:11px;color:#706e6b;margin-left:4px}
-/* Step 1 form */
-.step1-card{background:#fff;border:1px solid #dddbda;border-radius:6px;padding:16px;margin-bottom:8px}
+thead tr{background:#f8fafc;border-bottom:2px solid var(--border)}
+th{padding:8px 12px;text-align:left;font-size:10px;font-weight:600;color:var(--gray);white-space:nowrap;text-transform:uppercase;letter-spacing:0.05em}
+td{padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--dark);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8fafc}
+.link{color:var(--blue);cursor:pointer;text-decoration:none;font-weight:500}
+.badge{display:inline-flex;align-items:center;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap}
+.b-green{background:#dcfce7;color:#15803d}
+.b-blue{background:#dbeafe;color:#1d4ed8}
+.b-red{background:#fee2e2;color:#dc2626}
+.b-purple{background:#f3e8ff;color:#7c3aed}
+.b-orange{background:#ffedd5;color:#c2410c}
+.b-gray{background:#f1f5f9;color:#475569}
+.b-teal{background:#ccfbf1;color:#0f766e}
+.step-wrap{margin-bottom:14px}
+.step-label{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow)}
+.step-num{background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.step-title{font-size:13px;font-weight:600;color:var(--dark)}
+.step-sub{font-size:11px;color:var(--gray);margin-left:2px}
+.step1-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px;box-shadow:var(--shadow)}
 .step1-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.sf-field{margin-bottom:12px}
-.sf-field label{display:block;font-size:10px;font-weight:600;color:#706e6b;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
-.sf-field select,.sf-field input{width:100%;padding:6px 9px;border:1px solid #dddbda;border-radius:4px;font-size:12px;color:#16325c;background:#fff}
-.sf-field-span{grid-column:1/-1}
-.required{color:#c23934}
-.hint{font-size:11px;color:#706e6b;margin-top:3px}
-.info-btn{font-size:10px;color:#0070d2;cursor:pointer;text-decoration:underline;font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px}
-/* Category tabs */
-.cat-tabs{display:flex;gap:0;background:#f3f3f3;border-bottom:2px solid #0070d2;margin:0}
-.ctab{padding:10px 20px;font-size:12px;font-weight:600;cursor:pointer;color:#706e6b;border:1px solid #dddbda;border-bottom:none;background:#f3f3f3;margin-right:4px;border-radius:4px 4px 0 0}
-.ctab.active{background:#0070d2;color:#fff;border-color:#0070d2}
-.ctab:hover:not(.active){background:#e8f0fe;color:#0070d2}
-/* Product tabs */
-.product-tabs{display:flex;gap:4px;padding:8px 14px 0;background:#fff;border-bottom:1px solid #dddbda;flex-wrap:wrap}
-.ptab{padding:7px 12px;font-size:11px;font-weight:600;cursor:pointer;border-radius:4px 4px 0 0;border:1px solid transparent;border-bottom:none;color:#706e6b;background:#f3f3f3;margin-bottom:-1px}
-.ptab.active{background:#fff;border-color:#dddbda;color:#0070d2;border-bottom-color:#fff}
-.ptab:hover:not(.active){background:#e8f0fe;color:#0070d2}
-/* Forms */
-.sf-form-card{background:#fff;border:1px solid #dddbda;border-top:none;border-radius:0 0 6px 6px;padding:16px;margin-bottom:16px}
-.sf-form-title{font-size:13px;font-weight:600;color:#16325c;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
+.sf-field{margin-bottom:10px}
+.sf-field label{display:block;font-size:10px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.sf-field select,.sf-field input,.sf-field textarea{width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--dark);background:#fff;font-family:'DM Sans',sans-serif;transition:border-color 0.15s,box-shadow 0.15s}
+.sf-field select:focus,.sf-field input:focus,.sf-field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,112,210,0.1)}
+.sf-field textarea{resize:vertical;min-height:60px}
+.hint{font-size:10px;color:var(--gray);margin-top:2px}
+.required{color:var(--red)}
+.info-btn{font-size:10px;color:var(--blue);cursor:pointer;text-decoration:underline;font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px}
+.cat-tabs{display:flex;gap:0;background:#f8fafc;border-bottom:2px solid var(--blue);margin:0}
+.ctab{padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;color:var(--gray);border:1px solid var(--border);border-bottom:none;background:#f8fafc;margin-right:3px;border-radius:6px 6px 0 0;transition:all 0.15s}
+.ctab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.ctab:hover:not(.active){background:#eff6ff;color:var(--blue)}
+.product-tabs{display:flex;gap:2px;padding:8px 14px 0;background:#fff;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.ptab{padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;border-radius:6px 6px 0 0;border:1px solid transparent;border-bottom:none;color:var(--gray);background:transparent;margin-bottom:-1px;transition:all 0.15s}
+.ptab.active{background:#fff;border-color:var(--border);color:var(--blue);border-bottom-color:#fff}
+.ptab:hover:not(.active){background:#f8fafc;color:var(--blue)}
+.sf-form-card{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;padding:16px;margin-bottom:14px}
+.sf-form-title{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between}
 .sf-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
-.sf-col-title{font-size:10px;font-weight:700;color:#706e6b;text-transform:uppercase;letter-spacing:0.06em;padding:6px 0;border-bottom:1px solid #f0f0f0;margin-bottom:10px}
-.sf-btn-row{display:flex;gap:8px;margin-top:14px}
-.sf-btn-p{padding:6px 16px;background:#0070d2;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer}
-.sf-btn-s{padding:6px 14px;background:#fff;color:#0070d2;border:1px solid #0070d2;border-radius:4px;font-size:12px;cursor:pointer}
-.topo-hint{margin-top:6px;font-size:11px;padding:8px 10px;border-radius:4px;display:none;line-height:1.5}
-.warn-flag{margin-top:4px;font-size:11px;padding:5px 8px;border-radius:4px;background:#fde8e8;border-left:3px solid #c23934;color:#c23934;display:none}
-.market-pill{display:inline-flex;align-items:center;gap:4px;background:#e8f4ff;border:1px solid #0070d2;border-radius:3px;font-size:10px;color:#0070d2;padding:1px 6px;margin-left:6px;font-weight:500}
-/* Pane visibility */
+.sf-col-title{font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;padding:5px 0;border-bottom:1px solid #f1f5f9;margin-bottom:8px}
+.sf-btn-row{display:flex;gap:8px;margin-top:12px}
+.sf-btn-p{padding:6px 16px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;box-shadow:0 1px 2px rgba(0,112,210,0.2)}
+.sf-btn-p:hover{background:#0058a8;transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,112,210,0.3)}
+.sf-btn-s{padding:6px 14px;background:#fff;color:var(--blue);border:1px solid var(--blue);border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;font-weight:500}
+.sf-btn-s:hover{background:#eff6ff}
+.topo-hint{margin-top:6px;font-size:11px;padding:8px 10px;border-radius:6px;display:none;line-height:1.5}
+.warn-flag{margin-top:4px;font-size:11px;padding:5px 8px;border-radius:6px;background:#fee2e2;border-left:3px solid var(--red);color:var(--red);display:none}
+.market-pill{display:inline-flex;align-items:center;gap:3px;background:#dbeafe;border:1px solid #bfdbfe;border-radius:20px;font-size:10px;color:#1d4ed8;padding:1px 7px;margin-left:6px;font-weight:500}
 .product-pane{display:none}
 .product-pane.active{display:block}
 .cat-pane{display:none}
 .cat-pane.active{display:block}
-/* Impact */
+.vendor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.vendor-card{background:#fff;border:2px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:all 0.2s;box-shadow:var(--shadow)}
+.vendor-card:hover{border-color:var(--blue);box-shadow:var(--shadow-hover);transform:translateY(-1px)}
+.vendor-card.selected{border-color:var(--green);background:#f0fdf4}
+.vendor-name{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.vendor-detail{font-size:11px;color:var(--gray);margin-bottom:4px;display:flex;justify-content:space-between}
+.vendor-detail span:last-child{font-weight:600;color:var(--dark)}
+.vendor-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;margin-top:6px}
+.vb-best{background:#dcfce7;color:#15803d}
+.vb-fast{background:#dbeafe;color:#1d4ed8}
+.vb-cheap{background:#ffedd5;color:#c2410c}
+.update-box{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px;margin-bottom:14px}
+.update-title{font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.update-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.update-field{background:#fff;border:1px solid #86efac;border-radius:6px;padding:8px 10px;text-align:center}
+.update-val{font-size:18px;font-weight:700;color:var(--green)}
+.update-lbl{font-size:10px;color:var(--gray);margin-top:2px}
+.btn-p{padding:6px 16px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s}
+.btn-p:hover{background:#0058a8;transform:translateY(-1px)}
+.btn-s{padding:6px 14px;background:#fff;color:var(--blue);border:1px solid var(--blue);border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500}
+.btn-g{padding:6px 14px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all 0.15s}
+.btn-g:hover{background:#1b5e20;transform:translateY(-1px)}
 .impact{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-.impact-card{background:#f9f9f9;border-radius:6px;padding:10px 12px;border:1px solid #e0e0e0}
-.impact-num{font-size:20px;font-weight:500}
-.impact-lbl{font-size:11px;color:#706e6b;margin-top:2px}
+.impact-card{background:#fff;border-radius:8px;padding:14px 16px;border:1px solid var(--border);box-shadow:var(--shadow);transition:box-shadow 0.2s}
+.impact-card:hover{box-shadow:var(--shadow-hover)}
+.impact-num{font-size:28px;font-weight:700;line-height:1}
+.impact-lbl{font-size:11px;color:var(--gray);margin-top:3px}
+.supp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.supp-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;box-shadow:var(--shadow)}
+.supp-title{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.supp-sub{font-size:11px;color:var(--gray);margin-bottom:10px;line-height:1.5}
+.supp-item{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:12px}
+.supp-item:last-child{border-bottom:none}
+.sec-title{font-size:10px;font-weight:700;color:var(--gray);padding:8px 0;border-bottom:1px solid #f1f5f9;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;display:flex;align-items:center;gap:6px}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:#f1f5f9}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#94a3b8}
 </style>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style id="override">
+  *, *::before, *::after { font-family: 'DM Sans', system-ui, sans-serif !important; }
+  body { background: #f0f4f8 !important; padding: 16px 20px !important; }
+  
+  /* Nav bar */
+  div[style*="032D60"] { background: #032D60 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important; }
+  
+  /* All white cards */
+  div[style*="background:#fff"], div[style*="background: #fff"] { border-radius: 10px !important; }
+  
+  /* Blue buttons */
+  button[style*="background:#0070d2"], button[style*="background: #0070d2"] {
+    border-radius: 6px !important; font-weight: 600 !important;
+    box-shadow: 0 1px 3px rgba(0,112,210,0.3) !important;
+    transition: all 0.15s !important;
+  }
+  button[style*="background:#0070d2"]:hover { background: #0058a8 !important; transform: translateY(-1px) !important; }
+
+  /* Green buttons */
+  button[style*="background:#2e7d32"] { border-radius: 6px !important; font-weight: 600 !important; transition: all 0.15s !important; }
+
+  /* All inputs */
+  input, select, textarea {
+    border-radius: 6px !important; border: 1px solid #e2e8f0 !important;
+    font-size: 12px !important; padding: 6px 10px !important;
+    transition: border-color 0.15s, box-shadow 0.15s !important;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: #0070d2 !important; box-shadow: 0 0 0 3px rgba(0,112,210,0.1) !important; outline: none !important;
+  }
+
+  /* SF topbar gradient */
+  div[style*="background:#0070d2"] { background: linear-gradient(135deg, #0070d2, #0058a8) !important; }
+
+  /* Tables */
+  th { font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; color: #64748b !important; }
+  td { border-bottom: 1px solid #f1f5f9 !important; }
+  thead tr { background: #f8fafc !important; border-bottom: 2px solid #e2e8f0 !important; }
+
+  /* Badges rounder */
+  span[class*="badge"], span[class*="bdg"] { border-radius: 20px !important; }
+
+  /* Callouts */
+  div[class*="callout"] { border-radius: 6px !important; }
+
+  /* Vendor cards hover */
+  div[class*="vendor-card"] { transition: all 0.2s !important; }
+  div[class*="vendor-card"]:hover { transform: translateY(-2px) !important; box-shadow: 0 4px 16px rgba(0,112,210,0.12) !important; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+</style>
+
+<script>
+function showPowerType(type){
+  document.getElementById("power-landing").style.display=!type?"block":"none";
+  document.getElementById("power-branch").style.display=type==="branch"?"block":"none";
+  document.getElementById("power-panels").style.display=type==="panels"?"block":"none";
+}
+</script>
 </head>
 <body>
+<div style="background:#032D60;padding:6px 16px;display:flex;align-items:center;justify-content:space-between">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.7);font-size:11px;font-weight:600;text-decoration:none;font-family:inherit">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Home
+  </a>
+  <button onclick="window.open('vendor-management-portal.html','_blank')" style="padding:5px 12px;background:#16325c;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">
+    🏢 Vendor Management Portal →
+  </button>
+</div>
 <h1>Salesforce Product Catalog — Modernization</h1>
 <p class="subtitle">CoreSite SFDC Product Modernization · Current State vs Future State · Toggle to compare</p>
 
@@ -291,24 +445,35 @@ tr:hover td{background:#f8f8ff}
 <div id="fut" style="display:none">
   <div class="callout callout-green">4 product categories · Space is primary · Power and supplementals attach under space · IX is standalone · Dynamic market filtering from opportunity</div>
 
-  <!-- SPLIT: product config left, quote basket right -->
-  <div style="display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start">
+  <!-- SPLIT: product config left, quote right -->
+  <div>
   <div>
   <!-- PRODUCT LANDING -->
   <div id="prod-landing">
     <div class="sf-wrap">
       <div class="sf-topbar">
         <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-        <span class="sf-topbar-title">Sales — Product Basket</span>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
         <span class="sf-topbar-pill">Future state · Select a product category</span>
       </div>
-      <div style="padding:24px;background:#fff">
+      <div style="padding:16px 20px;background:#eef2f7">
         <div style="margin-bottom:20px">
           <div style="font-size:13px;color:#706e6b;margin-bottom:4px">Step 2 — Add products to this opportunity</div>
-          <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Product Basket</div>
+          <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Product Catalog</div>
           <div style="font-size:12px;color:#706e6b">Select a category to begin configuring · Markets auto-filter from Step 1</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        
+        <div style="margin-bottom:16px;">
+          <button onclick="alert('Opens CPQ basket in Salesforce Revenue Cloud')"
+            style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;
+            background:linear-gradient(135deg,#0058a8,#0070d2);color:#fff;border:none;
+            border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
+            box-shadow:0 2px 10px rgba(0,112,210,0.3);">
+            Go to Product Basket &#8594;
+          </button>
+          <span style="font-size:11px;color:#706e6b;margin-left:12px;">Opens CPQ basket in Salesforce Revenue Cloud</span>
+        </div>
+        <div style="display:block;margin-bottom:20px">
 
           <button onclick="showProduct('space')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;transition:all 0.15s" onmouseover="this.style.borderColor='#0070d2';this.style.background='#f8fbff'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
             <div style="width:40px;height:40px;border-radius:6px;background:#e8f4ff;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
@@ -370,7 +535,7 @@ tr:hover td{background:#f8f8ff}
   <div id="prod-view" style="display:none">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
       <button onclick="backToLanding()" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;color:#0070d2">
-        &#8249; Back to product basket
+        &#8249; Back to product catalog
       </button>
       <span id="prod-breadcrumb" style="font-size:12px;color:#706e6b"></span>
     </div>
@@ -696,7 +861,22 @@ tr:hover td{background:#f8f8ff}
             </div>
           </div>
         </div>
-
+        <!-- POWER — attached under cage -->
+        <div style="margin-top:14px;padding-top:14px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#0070d2;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
+            ⚡ Branch Circuits — added under this cage
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px">
+            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option selected>60A</option><option>100A</option></select></div>
+            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option selected>208V</option><option>415V</option></select></div>
+            <div class="sf-field"><label>Poles</label><select><option>1-pole</option><option>2-pole</option><option selected>3-pole</option></select></div>
+            <div class="sf-field"><label>Delivery type</label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
+          </div>
+          <div style="font-size:11px;color:#706e6b;background:#f8f8f8;border-radius:4px;padding:6px 10px;margin-bottom:8px">
+            Auto-generates product code: <strong style="color:#0070d2">PW-AC-208-60-3P-PR</strong> · bKW: 21.6 · cKW: 17.3
+          </div>
+        </div>
 
         <!-- LIQUID COOLING — attribute on cage -->
         <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
@@ -721,7 +901,53 @@ tr:hover td{background:#f8f8ff}
           </div>
         </div>
 
-        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space', 'Cage / Private Suite', getCageDetails())">Add cage to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <!-- SUPPLEMENTALS — attached under cage -->
+        <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
+          <div style="font-size:11px;font-weight:700;color:#e65100;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span style="background:#e65100;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
+            📦 Supplementals — added under this cage
+          </div>
+          <div style="display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap">
+            <button onclick="switchSupp('caging')" id="sb-caging" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #0070d2;background:#0070d2;color:#fff;cursor:pointer;font-family:inherit">Caging</button>
+            <button onclick="switchSupp('ladder')" id="sb-ladder" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Ladder Rack</button>
+            <button onclick="switchSupp('basket')" id="sb-basket" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Mesh Basket</button>
+            <button onclick="switchSupp('fiber')" id="sb-fiber" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Fiber Tray</button>
+            <button onclick="switchSupp('misc')" id="sb-misc" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Misc</button>
+          </div>
+          <div id="supp-caging"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1.5"x3" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh 1.5"x3" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft (1"x1")</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1"x1" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft (1"x1")</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh 1"x1" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Slide</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' sliding door</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Swing</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' hinged door</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-ladder" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' sections · Unistrut support, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Junction &amp; Butt Splices</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cabinet Bolt Down &amp; Grounding</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Unpack, set/level, bolt down &amp; grounding · Install kit + labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-basket" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' section · 12"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Polymer Inserts</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' plastic inlay to protect fibers</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit · Price varies by part</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-fiber" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">6' section · 6"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit · Price varies by exact part</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div id="supp-misc" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
+            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Koldloks</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Flush mount raised floor grommet, split (11"x8.25"x1.625")</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
+          </tbody></table></div>
+          <div style="margin-top:8px;font-size:11px;color:#706e6b;background:#f9f9f9;border-radius:4px;padding:6px 10px">
+            ✓ Labor included on all items &nbsp;·&nbsp; Custom scope → <span style="color:#e65100;font-weight:600">Submit to Vendor Portal</span> for competitive bidding
+          </div>
+        </div>
+
+        <div style="margin-top:14px;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:6px;padding:10px 14px;font-size:11px;color:#065f46;margin-bottom:10px">
+          📋 <strong>Product basket hierarchy:</strong> Cage (primary) → Branch Circuits (attached) → Liquid Cooling (attribute) → Supplementals (attached)
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space', 'Cage / Private Suite', getCageDetails())">Add cage + attachments to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
 
       <!-- CORESITE CABINET -->
@@ -877,139 +1103,477 @@ tr:hover td{background:#f8f8ff}
     </div>
   </div>
 
+  <!-- STEP 2-B -->
+  <div class="step-wrap">
+    <div class="step-label">
+      <span class="step-num">Step 2-B</span>
+      <span class="step-title">Add Branch Circuits</span>
+      <span class="step-sub">— Power attaches to a space selected in Step 2-A</span>
+    </div>
+    <div class="sf-wrap">
+      <div class="sf-topbar">
+        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+        <span class="sf-topbar-title">Sales — Product Catalog</span>
+        <span class="sf-topbar-pill">Step 2-B · Power</span>
+      </div>
+      <div class="sf-meta" style="padding:8px 14px">Branch Circuit — power product that attaches to a space</div>
+      <div class="sf-form-card">
+        <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span> <button onclick="openNEMA()" style="margin-left:8px;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#16325c,#0070d2);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg> NEMA / Connector Reference</button><div style="display:flex;align-items:center;gap:8px;"><span class="badge b-blue">Power product</span></div></div></div>
+        <div class="sf-cols">
+          <div>
+            <div class="sf-col-title">Circuit specifications</div>
+            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>10A</option><option>15A</option><option>20A</option><option selected>30A</option><option>60A</option><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>250A</option></select></div>
+            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select id="volt-sel"><option>208V</option><option>415V</option><option>800V DC</option></select></div>
+            <div class="sf-field">
+              <label>Termination type</label>
+              <select id="term-sel" onchange="updateTermDetail(this.value)">
+                <option value="">— Select —</option>
+                <option value="straight">Straight Blade (NEMA)</option>
+                <option value="twistlock">Twist-Lock (NEMA L-series)</option>
+                <option value="iec">IEC (C13 / C19)</option>
+                <option value="pinsleeve">Pin & Sleeve (IEC 60309)</option>
+                <option value="hardwired">Hardwired / Bare</option>
+              </select>
+            </div>
+            <div class="sf-field" id="term-detail-field" style="display:none">
+              <label>NEMA Configuration</label>
+              <select id="term-detail-sel"></select>
+            </div>
+            <div class="sf-field">
+              <label>UPS Topology <span class="required">*</span><span class="info-btn" onclick="toggleTopoInfo()">[what is this?]</span></label>
+              <select id="topo-sel" onchange="showTopoHint()">
+                <option value="">— Select topology —</option>
+                <option value="2n">2N — Two independent UPS systems</option>
+                <option value="4m3">4-to-make-3 — Four modules, any three carry load</option>
+                <option value="5m4">5-to-make-4 — Five modules, any four carry load</option>
+                <option value="nups">Non-UPS (utility / generator direct)</option>
+              </select>
+              <div style="font-size:10px;color:#706e6b;margin-top:3px">Only available CoreSite UPS topologies shown — per Andy feedback</div>
+              <div id="topo-hint" class="topo-hint"></div>
+            </div>
+          </div>
+          <div>
+            <div class="sf-col-title">Configuration</div>
+            <div class="sf-field"><label>Poles <span class="required">*</span></label><select id="poles-sel" onchange="updateVoltage(this.value)"><option value="1">1-pole</option><option value="2" selected>2-pole</option><option value="3">3-pole</option></select><div class="hint">Updates available voltage options</div></div>
+            <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select><div class="hint">Required for some PDU configurations</div></div>
+            <div class="sf-field"><label>Delivery type <span class="required">*</span></label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
+            <div class="sf-field"><label>Attach to space</label><select><option>— Select space from Step 2-A —</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Private Cage)</option></select><div class="hint">Links circuit to space added in Step 2-A</div></div>
+            <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
+          </div>
+        </div>
+        <div id="lt-circuit-box" style="background:#f8fbff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">&#128337; Lead Time — This Circuit</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px">
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div id="lt-c-base" style="font-size:18px;font-weight:700;color:#0070d2">8</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Base (BD)</div>
+            </div>
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div id="lt-c-trigger" style="font-size:18px;font-weight:700;color:#e65100">+5</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Trigger offset</div>
+            </div>
+            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
+              <div id="lt-c-complexity" style="font-size:18px;font-weight:700;color:#2e7d32">+0</div>
+              <div style="font-size:10px;color:#706e6b;margin-top:2px">Complexity</div>
+            </div>
+            <div style="text-align:center;background:#e8f4ff;border:1px solid #0070d2;border-radius:4px;padding:8px">
+              <div id="lt-c-total" style="font-size:18px;font-weight:700;color:#0070d2">14 BD</div>
+              <div style="font-size:10px;color:#0070d2;margin-top:2px">Expected</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:6px;align-items:center;font-size:11px;flex-wrap:wrap">
+            <span style="color:#706e6b">Delivery range:</span>
+            <span id="lt-c-min" style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600">Min: 12 BD</span>
+            <span style="color:#706e6b">&#8594;</span>
+            <span id="lt-c-exp" style="background:#e8f4ff;color:#0070d2;padding:1px 8px;border-radius:3px;font-weight:600">Exp: 14 BD</span>
+            <span style="color:#706e6b">&#8594;</span>
+            <span id="lt-c-max" style="background:#fde8e8;color:#c23934;padding:1px 8px;border-radius:3px;font-weight:600">Max: 18 BD</span>
+            <span style="color:#706e6b;margin-left:4px">· Auto-populated from Step 1 settings</span>
+          </div>
+          <div id="lt-c-trigger-lbl" style="margin-top:6px;font-size:11px;padding:5px 8px;background:#fff3e0;border-left:3px solid #e65100;border-radius:3px;color:#e65100">
+            &#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> — not customer signature date
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+  
+  </div>
     </div> <!-- end view-space -->
 
     <!-- POWER VIEW -->
     <div id="view-power" style="display:none">
-      <div class="sf-wrap">
-        <div class="sf-topbar">
-          <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-          <span class="sf-topbar-title">Sales — Product Basket · Power</span>
-          <span class="sf-topbar-pill">Branch Circuits</span>
+      <div id="power-landing" style="display:block;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <button onclick="backToLanding()" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to product catalog</button>
+          <span style="font-size:12px;color:#706e6b">Product catalog &rarr; Power</span>
         </div>
-        <div class="sf-form-card">
-          <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span><span class="badge b-blue">Power product · attaches to space</span></div>
-          <div class="sf-cols">
-            <div>
-              <div class="sf-col-title">Circuit specifications</div>
-              <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option selected>60A</option><option>100A</option></select></div>
-              <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option selected>208V</option><option>415V</option></select></div>
-              <div class="sf-field"><label>UPS Topology <span class="required">*</span></label><select><option>— Select —</option><option>2N</option><option>4-to-make-3</option><option>5-to-make-4</option><option>Non-UPS</option></select></div>
-              <div class="sf-field"><label>Delivery type</label><select><option selected>Primary &amp; Redundant</option><option>Primary only</option></select></div>
-            </div>
-            <div>
-              <div class="sf-col-title">Configuration</div>
-              <div class="sf-field"><label>Poles</label><select><option>1-pole</option><option>2-pole</option><option selected>3-pole</option></select></div>
-              <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select></div>
-              <div class="sf-field"><label>Attach to space</label><select><option>— Select space —</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Cage)</option></select></div>
-              <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px"></div>
-            </div>
+        <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Select a power product type</div>
+        <div style="font-size:12px;color:#706e6b;margin-bottom:20px">Both attach to a space selected in Step 2-A</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <button onclick="showPowerType('branch')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
+            <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Branch Circuits</div>
+            <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Amperage, voltage, UPS topology, NEMA receptacles, rating</div>
+            <span style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
+          </button>
+          <button onclick="showPowerType('panels')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
+            <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 9h6M2 15h6"/></svg></div>
+            <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Panels</div>
+            <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Voltage, amperage, rating (80%/100%)</div>
+            <span style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
+          </button>
+        </div>
+      </div>
+
+
+      <div id="power-branch" style="display:none;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <button onclick="showPowerType(null)" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to power</button>
+          <span style="font-size:12px;color:#706e6b">Power &rarr; Branch Circuits</span>
+        </div>
+        <div class="sf-wrap">
+          <div class="sf-topbar">
+            <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+            <span class="sf-topbar-title">Sales &mdash; Product Catalog &middot; Power</span>
+            <span class="sf-topbar-pill">Branch Circuits</span>
           </div>
-          <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF · A-side: LA1-08')">Add to basket</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
+          <div class="sf-form-card">
+            <div class="sf-form-title"><span>&#9889; Branch Circuit &mdash; configure</span><span class="badge b-blue">Power product &middot; attaches to space</span></div>
+            <div class="sf-cols">
+              <div>
+                <div class="sf-col-title">Circuit specifications</div>
+                <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>10A</option><option>15A</option><option>20A</option><option selected>30A</option><option>60A</option><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>250A</option></select></div>
+                <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option>208V</option><option>415V</option><option>-48V DC</option><option>800V DC</option></select></div>
+                <div class="sf-field"><label>NEMA Receptacles</label>
+                  <select>
+                    <option value="">-- Select NEMA config --</option>
+                    <optgroup label="Straight Blade"><option>NEMA 5-15 125V 15A</option><option>NEMA 5-20 125V 20A</option><option>NEMA 6-20 250V 20A</option><option>NEMA 6-30 250V 30A</option><option>NEMA 14-50 125/250V 50A</option></optgroup>
+                    <optgroup label="Twist-Lock"><option>NEMA L6-20 250V 20A</option><option>NEMA L6-30 250V 30A</option><option>NEMA L21-20 3ph 208V 20A</option><option>NEMA L21-30 3ph 208V 30A</option><option>NEMA L22-20 3ph 480V 20A</option><option>NEMA L22-30 3ph 480V 30A</option></optgroup>
+                    <optgroup label="IEC"><option>IEC C13 250V 10-15A</option><option>IEC C19 250V 16-20A</option></optgroup>
+                    <optgroup label="Pin and Sleeve IEC 60309"><option>IEC 60309 3P+E 16A 400V</option><option>IEC 60309 3P+E 32A 400V</option><option>IEC 60309 3P+E 63A 400V</option><option>IEC 60309 3P+N+E 32A 400V</option><option>IEC 60309 3P+N+E 63A 400V</option></optgroup>
+                  </select>
+                  <div class="hint">Data center standard configurations listed</div>
+                </div>
+                <div class="sf-field"><label>UPS Topology <span class="required">*</span></label>
+                  <select id="topo-sel2" onchange="showTopoHint()">
+                    <option value="">-- Select topology --</option>
+                    <option value="2n">2N -- Two independent UPS systems</option>
+                    <option value="4m3">4-to-make-3</option>
+                    <option value="5m4">5-to-make-4</option>
+                    <option value="n1">N+1 -- One redundant UPS module</option>
+                    <option value="nups">Non-UPS (utility / generator direct)</option>
+                  </select>
+                </div>
+                <div class="sf-field"><label>Rating <span class="required">*</span></label>
+                  <select><option value="">-- Select rating --</option><option value="80">80% -- Standard (NEC continuous load)</option><option value="100">100% -- Listed for continuous duty</option></select>
+                </div>
+              </div>
+              <div>
+                <div class="sf-col-title">Configuration</div>
+                <div class="sf-field"><label>Poles <span class="required">*</span></label><select><option value="1">1-pole</option><option value="2" selected>2-pole</option><option value="3">3-pole</option></select></div>
+                <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select></div>
+                <div class="sf-field"><label>Attach to space</label><select><option>-- Select space from Step 2-A --</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Cage)</option></select></div>
+                <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
+              </div>
+            </div>
+            <div class="sf-btn-row"><button class="sf-btn-p">Add to basket</button><button class="sf-btn-s" onclick="showPowerType(null)">Cancel</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="power-panels" style="display:none;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <button onclick="showPowerType(null)" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to power</button>
+          <span style="font-size:12px;color:#706e6b">Power &rarr; Panels</span>
+        </div>
+        <div class="sf-wrap">
+          <div class="sf-topbar">
+            <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
+            <span class="sf-topbar-title">Sales &mdash; Product Catalog &middot; Power</span>
+            <span class="sf-topbar-pill">Panels</span>
+          </div>
+          <div class="sf-form-card">
+            <div class="sf-form-title"><span>&#9889; Panel &mdash; configure</span><span class="badge b-orange">Power product &middot; attaches to space</span></div>
+            <div class="sf-cols">
+              <div>
+                <div class="sf-col-title">Panel Specifications</div>
+                <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option>208V</option><option>415V</option><option>480V</option><option>120/208V</option><option>277/480V</option></select></div>
+                <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>225A</option><option>400A</option><option>600A</option><option>800A</option></select></div>
+                <div class="sf-field"><label>Rating <span class="required">*</span></label><select><option value="">-- Select rating --</option><option value="80">80% -- Standard (NEC continuous load)</option><option value="100">100% -- Listed for continuous duty</option></select><div class="hint">80% = NEC standard · 100% = listed for continuous load</div></div>
+              </div>
+              <div>
+                <div class="sf-col-title">Configuration</div>
+                <div class="sf-field"><label>Panel type</label><select><option>Main Lug Only (MLO)</option><option>Main Breaker</option><option>Sub-panel</option></select></div>
+                <div class="sf-field"><label>Number of circuits</label><select><option>12</option><option>18</option><option>24</option><option>30</option><option>42</option><option>Custom</option></select></div>
+                <div class="sf-field"><label>Attach to space</label><select><option>-- Select space from Step 2-A --</option></select></div>
+                <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px;"></div>
+              </div>
+            </div>
+            <div class="sf-btn-row"><button class="sf-btn-p">Add to basket</button><button class="sf-btn-s" onclick="showPowerType(null)">Cancel</button></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- SUPPLEMENTALS VIEW -->
+    </div> <!-- end view-power -->
+
+        <!-- SUPPLEMENTALS VIEW -->
     <div id="view-supplementals" style="display:none">
       <div class="sf-wrap">
         <div class="sf-topbar">
           <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-          <span class="sf-topbar-title">Sales — Product Basket · Supplementals</span>
+          <span class="sf-topbar-title">Sales — Product Catalog · Supplementals</span>
           <span class="sf-topbar-pill">Caging, Ladder Rack, Mesh Basket, Fiber Tray</span>
         </div>
         <div class="sf-form-card">
-          <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
-            <button onclick="switchSuppView('caging')" id="svb-caging" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #0070d2;background:#0070d2;color:#fff;cursor:pointer;font-family:inherit">Caging</button>
-            <button onclick="switchSuppView('ladder')" id="svb-ladder" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Ladder Rack</button>
-            <button onclick="switchSuppView('basket')" id="svb-basket" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Mesh Basket</button>
-            <button onclick="switchSuppView('fiber')" id="svb-fiber" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Fiber Tray</button>
-            <button onclick="switchSuppView('misc')" id="svb-misc" style="padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Misc</button>
+          
+    <!-- SUB-CATEGORY TABS -->
+    <div style="display:flex;gap:0;background:#f8fafc;border-bottom:2px solid #0070d2;padding:0 14px;">
+      <button id="stab-fitout" onclick="switchSupplTab('fitout')"
+        style="padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #0070d2;
+        border-bottom:none;border-radius:6px 6px 0 0;margin-right:3px;background:#0070d2;color:#fff;
+        font-family:inherit;">🔧 Fit-out Items</button>
+      <button id="stab-dcinfra" onclick="switchSupplTab('dcinfra')"
+        style="padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #dddbda;
+        border-bottom:none;border-radius:6px 6px 0 0;margin-right:3px;background:#f8fafc;color:#706e6b;
+        font-family:inherit;">🖥️ DC Infrastructure Accessories</button>
+    </div>
+
+    <!-- FIT-OUT ITEMS -->
+    <div id="suppl-fitout" style="display:block;">
+      <div style="display:flex;gap:4px;padding:8px 14px 0;flex-wrap:wrap;background:#fff;border-bottom:1px solid #e5e7eb;">
+        <button onclick="switchFitout('caging')"      id="fb-caging"      class="fo-btn fo-active">Caging</button>
+        <button onclick="switchFitout('safety')"      id="fb-safety"      class="fo-btn">Safety</button>
+        <button onclick="switchFitout('conveyance')"  id="fb-conveyance"  class="fo-btn">Conveyance</button>
+        <button onclick="switchFitout('containment')" id="fb-containment" class="fo-btn">Containment</button>
+        <button onclick="switchFitout('powerwhips')"  id="fb-powerwhips"  class="fo-btn">Power Whips</button>
+        <button onclick="switchFitout('cabling')"     id="fb-cabling"     class="fo-btn">Cabling</button>
+      </div>
+
+      <div id="fo-caging" class="fo-pane" style="padding:14px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;">
+            <th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th>
+            <th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th>
+            <th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Unit</th>
+            <th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th>
+            <th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Cage Wall — Std 8ft</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">8' Wire Mesh 1.5"x3" · Posts &amp; capping included</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/linear ft</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Cage Wall — 10ft</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Floor-to-ceiling Wire Mesh · Posts &amp; capping included</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/linear ft</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Cage Wall — Std 8ft (1"x1")</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">8' Wire Mesh 1"x1" · Posts &amp; capping included</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/linear ft</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Cage Wall — Under Raised Floor</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">8' Wire Mesh · Channel, post, metal studs included</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/linear ft</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Cage Roof Panel w/ Hatch Door</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">10'x5' roof panel with 24" hatch door</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Cage Door — Slide</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Wire Mesh 4'x8' sliding door</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;">Cage Door — Swing</td><td style="padding:7px 12px;color:#706e6b;">Wire Mesh 4'x8' hinged door</td><td style="padding:7px 12px;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="fo-safety" class="fo-pane" style="display:none;padding:14px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;"><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Unit</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:7px 12px;font-weight:600;">Cabinet Bolt Down &amp; Grounding</td><td style="padding:7px 12px;color:#706e6b;">Unpack, set/level, bolt down &amp; grounding · Install kit + labor</td><td style="padding:7px 12px;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="fo-conveyance" class="fo-pane" style="display:none;padding:14px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;"><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Unit</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Koldloks</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Flush mount raised floor grommet, split (11"x8.25"x1.625")</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Ladder Rack</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">10' sections · Unistrut support, materials &amp; labor</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/10' section</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Ladder Rack Transitions</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Junction &amp; Butt Splices</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Mesh Basket</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">10' section · 12"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/10' section</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Mesh Basket Polymer Inserts</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">10' plastic inlay to protect fibers</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/linear ft</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Mesh Basket Transitions</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Any Turn, Joint, Endcap, Exit — price varies by part</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Fiber Tray</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">6' section · 6"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/6' section</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;">Fiber Tray Transitions</td><td style="padding:7px 12px;color:#706e6b;">Any Turn, Joint, Endcap, Exit — price varies by part</td><td style="padding:7px 12px;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="fo-containment" class="fo-pane" style="display:none;padding:14px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;"><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Unit</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Dual Sliding Containment Door</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Dual sliding magnetic containment door · Mounting hardware included</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">HAC — Hot Aisle Containment</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Per 4' panel · Mounting hardware included</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">CAC — Cold Aisle Containment</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Per 4' panel · Mounting hardware included</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;">Polycarbonate Privacy Panel</td><td style="padding:7px 12px;color:#706e6b;">4'x12' panel · Mounting hardware &amp; channel included</td><td style="padding:7px 12px;color:#706e6b;">$/Unit</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="fo-powerwhips" class="fo-pane" style="display:none;padding:14px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px;">
+          <div>
+            <div class="sf-col-title">Power Whip Specifications</div>
+            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option>208V</option><option>415V</option><option>120V</option></select></div>
+            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option>60A</option><option>100A</option></select></div>
+            <div class="sf-field"><label>Connector Type</label><select><option>NEMA L6-20</option><option>NEMA L6-30</option><option>NEMA L21-20</option><option>NEMA L21-30</option><option>IEC 60309 3P+E 32A</option><option>IEC 60309 3P+E 63A</option></select></div>
           </div>
-          <div id="sv-caging"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1.5"x3" · Posts &amp; capping included</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh · Posts &amp; capping included</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Slide</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' sliding door</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Swing</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' hinged door</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="sv-ladder" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">10' sections · Unistrut support, materials &amp; labor</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack Transitions</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Junction &amp; Butt Splices</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Cabinet Bolt Down &amp; Grounding</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Unpack, set/level, bolt down &amp; grounding</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="sv-basket" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">10' section · 12"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Polymer Inserts</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">10' plastic inlay to protect fibers</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Transitions</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="sv-fiber" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">6' section · 6"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray Transitions</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="sv-misc" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:#f3f3f3"><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:7px 10px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:7px 10px;border:1px solid #e0e0e0;font-weight:600">Koldloks</td><td style="padding:7px 10px;border:1px solid #e0e0e0;color:#706e6b">Flush mount raised floor grommet, split (11"x8.25"x1.625")</td><td style="padding:7px 10px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:7px 10px;border:1px solid #e0e0e0;text-align:center"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px">Add</button></td></tr>
-          </tbody></table></div>
+          <div>
+            <div class="sf-col-title">Configuration</div>
+            <div class="sf-field"><label>Length (ft)</label><input type="number" placeholder="e.g. 10" min="1"></div>
+            <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px;"></div>
+          </div>
+        </div>
+        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+      </div>
+
+      <div id="fo-cabling" class="fo-pane" style="display:none;padding:14px;">
+        <div style="background:#f8fafc;border-radius:6px;padding:14px;color:#706e6b;font-size:12px;line-height:1.6;">
+          Custom cabling scoped per project — submit to vendor portal for pricing and lead time.
+        </div>
+        <div class="sf-btn-row" style="margin-top:12px;">
+          <button class="sf-btn-p" onclick="alert('Vendor portal submission coming soon.')">Submit to Vendor Portal</button>
         </div>
       </div>
     </div>
+
+    <!-- DC INFRASTRUCTURE ACCESSORIES -->
+    <div id="suppl-dcinfra" style="display:none;">
+      <div style="display:flex;gap:4px;padding:8px 14px 0;flex-wrap:wrap;background:#fff;border-bottom:1px solid #e5e7eb;">
+        <button onclick="switchDCInfra('pdu')"      id="db-pdu"      class="fo-btn fo-active">PDU</button>
+        <button onclick="switchDCInfra('cablemgmt')" id="db-cablemgmt" class="fo-btn">Cable Management</button>
+        <button onclick="switchDCInfra('patch')"    id="db-patch"    class="fo-btn">Patch Cables</button>
+        <button onclick="switchDCInfra('airflow')"  id="db-airflow"  class="fo-btn">Air Flow</button>
+        <button onclick="switchDCInfra('storage')"  id="db-storage"  class="fo-btn">Storage</button>
+        <button onclick="switchDCInfra('misc')"     id="db-misc"     class="fo-btn">MISC.</button>
+      </div>
+      <div style="padding:14px;">
+        <div style="background:#e8f4ff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:#1e40af;">
+          <strong>E-catalog items</strong> — no on-site installation required · Fulfilled directly through vendor e-catalog
+        </div>
+        <div id="dc-pdu" class="dc-pane">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;"><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th></tr></thead><tbody>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Rack PDU — Metered</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">1U/0U · Various input/output configs</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Rack PDU — Monitored</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">IP-enabled monitoring</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+            <tr><td style="padding:7px 12px;font-weight:600;">Rack PDU — Switched</td><td style="padding:7px 12px;color:#706e6b;">Per-outlet switching</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          </tbody></table>
+        </div>
+        <div id="dc-cablemgmt" class="dc-pane" style="display:none;"><table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;"><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Vertical Cable Manager</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Single/Dual finger duct</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          <tr><td style="padding:7px 12px;font-weight:600;">Horizontal Cable Manager</td><td style="padding:7px 12px;color:#706e6b;">1U/2U with cover</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+        </tbody></table></div>
+        <div id="dc-patch" class="dc-pane" style="display:none;"><table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;"><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Fiber Patch Cord — SMF</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">LC-LC duplex · Various lengths</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Fiber Patch Cord — MMF</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">OM3/OM4 LC-LC · Various lengths</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          <tr><td style="padding:7px 12px;font-weight:600;">Copper Patch Cable</td><td style="padding:7px 12px;color:#706e6b;">Cat6/Cat6A · RJ45</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+        </tbody></table></div>
+        <div id="dc-airflow" class="dc-pane" style="display:none;"><table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;"><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Product</th><th style="padding:8px 12px;text-align:left;font-size:10px;color:#706e6b;text-transform:uppercase;">Description</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Qty</th><th style="padding:8px 12px;font-size:10px;color:#706e6b;text-transform:uppercase;">Add</th></tr></thead><tbody>
+          <tr><td style="padding:7px 12px;font-weight:600;border-bottom:1px solid #f1f5f9;">Blanking Panel — 1U</td><td style="padding:7px 12px;color:#706e6b;border-bottom:1px solid #f1f5f9;">Tool-less snap-in</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+          <tr><td style="padding:7px 12px;font-weight:600;">Air Dam / Brush Strip</td><td style="padding:7px 12px;color:#706e6b;">Cable entry brush strip for airflow management</td><td style="padding:7px 12px;"><input type="number" min="1" placeholder="qty" style="width:60px;padding:4px 6px;border:1px solid #dddbda;border-radius:3px;font-size:11px;"></td><td style="padding:7px 12px;text-align:center;"><button class="sf-btn-p" style="padding:3px 12px;font-size:11px;">Add</button></td></tr>
+        </tbody></table></div>
+        <div id="dc-storage" class="dc-pane" style="display:none;padding:14px;background:#f8fafc;border-radius:6px;color:#706e6b;font-size:12px;">Storage accessories — pending Chris updated list. <button class="sf-btn-s" style="margin-left:10px;" onclick="alert('E-catalog coming soon')">Browse E-catalog</button></div>
+        <div id="dc-misc"    class="dc-pane" style="display:none;padding:14px;background:#f8fafc;border-radius:6px;color:#706e6b;font-size:12px;">Miscellaneous accessories — pending Chris updated list. <button class="sf-btn-s" style="margin-left:10px;" onclick="alert('E-catalog coming soon')">Browse E-catalog</button></div>
+      </div>
+    </div>
+
+<style>
+.fo-btn{padding:5px 12px;font-size:11px;font-weight:600;border-radius:4px 4px 0 0;border:1px solid #dddbda;border-bottom:none;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.fo-btn:hover{background:#eff6ff;color:#0070d2;}
+.fo-active{background:#fff!important;color:#0070d2!important;border-color:#0070d2!important;}
+</style>
+<script>
+function switchSupplTab(tab){
+  document.getElementById("suppl-fitout").style.display=tab==="fitout"?"block":"none";
+  document.getElementById("suppl-dcinfra").style.display=tab==="dcinfra"?"block":"none";
+  document.getElementById("stab-fitout").style.cssText=tab==="fitout"?"padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #0070d2;border-bottom:none;border-radius:6px 6px 0 0;margin-right:3px;background:#0070d2;color:#fff;font-family:inherit;":"padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #dddbda;border-bottom:none;border-radius:6px 6px 0 0;margin-right:3px;background:#f8fafc;color:#706e6b;font-family:inherit;";
+  document.getElementById("stab-dcinfra").style.cssText=tab==="dcinfra"?"padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #0070d2;border-bottom:none;border-radius:6px 6px 0 0;margin-right:3px;background:#0070d2;color:#fff;font-family:inherit;":"padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #dddbda;border-bottom:none;border-radius:6px 6px 0 0;margin-right:3px;background:#f8fafc;color:#706e6b;font-family:inherit;";
+}
+function switchFitout(cat){
+  ["caging","safety","conveyance","containment","powerwhips","cabling"].forEach(function(c){
+    document.getElementById("fo-"+c).style.display=c===cat?"block":"none";
+    var b=document.getElementById("fb-"+c);if(b){b.classList.toggle("fo-active",c===cat);}
+  });
+}
+function switchDCInfra(cat){
+  ["pdu","cablemgmt","patch","airflow","storage","misc"].forEach(function(c){
+    document.getElementById("dc-"+c).style.display=c===cat?"block":"none";
+    var b=document.getElementById("db-"+c);if(b){b.classList.toggle("fo-active",c===cat);}
+  });
+}
+</script>
+
+    </div>
+
+    <!-- IX VIEW -->
+            
+          <div class="sf-btn-row">
+            <button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF')">Add to basket</button>
+            <button class="sf-btn-s" onclick="backToLanding()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    </div> <!-- end view-supplementals -->
 
     <!-- IX VIEW -->
     <div id="view-ix" style="display:none">
       <div class="sf-wrap">
         <div class="sf-topbar">
           <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-          <span class="sf-topbar-title">Sales — Product Basket · IX</span>
+          <span class="sf-topbar-title">Sales -- Product Catalog · IX</span>
           <span class="sf-topbar-pill">Interconnection</span>
         </div>
-        <div class="sf-form-card" id="pane-ix">
-          <div class="sf-form-title"><span>IX / Interconnection — configure</span><span class="badge b-teal">Standalone product</span></div>
+        <div class="sf-form-card">
+          <div class="sf-form-title"><span>🌐 IX / Interconnection -- configure</span><span class="badge b-teal">Standalone product</span></div>
           <div class="sf-cols">
             <div>
               <div class="sf-col-title">Connection details</div>
-              <div class="sf-field"><label>Connection type <span class="required">*</span></label><select><option>Cross Connect — Fiber SMF</option><option>Cross Connect — Fiber MMF</option><option>Cross Connect — Copper</option><option>Cross Connect — Coax</option><option>Campus Cross Connect</option><option>Any2 Exchange</option><option>Blended IP</option></select></div>
-              <div class="sf-field"><label>Bandwidth / Speed</label><select><option>1 GbE</option><option>10 GbE</option><option>100 GbE</option><option>Custom</option></select></div>
-              <div class="sf-field"><label>Connector type</label><select><option selected>LC Duplex (SMF)</option><option>LC Duplex (MMF)</option><option>SC Duplex</option><option>RJ-45</option><option>BNC</option></select></div>
+              <div class="sf-field"><label>Connection type <span class="required">*</span></label>
+                <select><option>Cross Connect -- Fiber SMF</option><option>Cross Connect -- Fiber MMF</option><option>Cross Connect -- Copper</option><option>Cross Connect -- Coax</option><option>Campus Cross Connect</option><option>Any2 Exchange</option><option>Blended IP</option></select>
+              </div>
+              <div class="sf-field"><label>Bandwidth / Speed</label>
+                <select><option>1 GbE</option><option>10 GbE</option><option>100 GbE</option><option>Custom</option></select>
+              </div>
+              <div class="sf-field"><label>Connector type</label>
+                <select><option selected>LC Duplex (SMF)</option><option>LC Duplex (MMF)</option><option>SC Duplex</option><option>RJ-45</option><option>BNC</option></select>
+              </div>
             </div>
             <div>
               <div class="sf-col-title">Location &amp; routing</div>
               <div class="sf-field"><label>A-side location <span class="required">*</span></label><input type="text" placeholder="e.g. LA1-08-0805-CORE-AC17"></div>
               <div class="sf-field"><label>Z-side location</label><input type="text" placeholder="e.g. Carrier cage or meet-me room"></div>
-              <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option></select></div>
+              <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic -- from Step 1</span></label>
+                <select><option>-- Markets from opportunity --</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option><option>Denver (DE1)</option><option>New York (NY2)</option><option>Santa Clara (SV1)</option></select>
+              </div>
             </div>
           </div>
-          <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF · A-side: LA1-08')">Add to basket</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
-        </div>
-      </div>
-    </div>
 
   </div> <!-- end prod-view -->
   </div> <!-- end left col -->
 
-  </div> <!-- end grid -->
-</div>
+</div> <!-- end fut -->
 
 <!-- IMPACT -->
-<div class="impact">
-  <div class="impact-card"><div class="impact-num" id="i1" style="color:#c23934">50+</div><div class="impact-lbl" id="l1">Product codes</div></div>
-  <div class="impact-card"><div class="impact-num" id="i2" style="color:#c23934">0</div><div class="impact-lbl" id="l2">Guided workflow steps</div></div>
-  <div class="impact-card"><div class="impact-num" id="i3" style="color:#c23934">0</div><div class="impact-lbl" id="l3">Dynamic market filtering</div></div>
-</div>
+
 
 <script>
 var basket = [];
-function addToBasket(type, name, details){
+function addToBasket(type, name, details) {
   var id = Date.now();
   basket.push({id:id, type:type, name:name, details:details});
   renderBasket();
   // Flash confirmation
   var btn = event && event.target;
-  if(btn){ var orig=btn.textContent; btn.textContent='Added!'; btn.style.background='#2e7d32'; setTimeout(function(){ btn.textContent=orig; btn.style.background='#0070d2'; },1000); }
+  if(btn) { var orig=btn.textContent; btn.textContent='Added!'; btn.style.background='#2e7d32'; setTimeout(function() { btn.textContent=orig; btn.style.background='#0070d2'; },1000); }
 }
-function removeFromBasket(id){
-  basket = basket.filter(function(i){ return i.id !== id; });
+function removeFromBasket(id) {
+  basket = basket.filter(function(i) { return i.id !== id; });
   renderBasket();
 }
-function renderBasket(){
+function renderBasket() {
   var count = basket.length;
   document.getElementById('basket-count').textContent = count + ' item'+(count!==1?'s':'');
   document.getElementById('basket-empty').style.display = count===0?'block':'none';
@@ -1017,7 +1581,7 @@ function renderBasket(){
   document.getElementById('basket-footer').style.display = count===0?'none':'block';
   var colors = {Space:'#e8f4ff',Power:'#fff3e0',Supplementals:'#e3f5e3',IX:'#f3f3f3'};
   var tcols = {Space:'#0070d2',Power:'#e65100',Supplementals:'#2e7d32',IX:'#706e6b'};
-  var html = basket.map(function(item){
+  var html = basket.map(function(item) {
     return '<div style="padding:10px 14px;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'+
       '<div style="flex:1;min-width:0">'+
       '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">'+
@@ -1030,104 +1594,116 @@ function renderBasket(){
   }).join('');
   document.getElementById('basket-items').innerHTML = html;
   var types = {};
-  basket.forEach(function(i){ types[i.type]=(types[i.type]||0)+1; });
-  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e){ return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;·&nbsp; ');
+  basket.forEach(function(i) { types[i.type]=(types[i.type]||0)+1; });
+  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e) { return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;&#183;&nbsp; ');
 }
-function clearBasket(){
+function clearBasket() {
   basket=[];
   renderBasket();
 }
-function generateQuote(){
+function generateQuote() {
   if(basket.length===0) return;
-  var lines = basket.map(function(i,idx){ return (idx+1)+'. ['+i.type+'] '+i.name+' — '+i.details; }).join('\n');
+  var lines = basket.map(function(i,idx) { return (idx+1)+'. ['+i.type+'] '+i.name+' - '+i.details; }).join('\n');
   alert('Quote generated!\n\nItems:\n'+lines+'\n\nIn real SFDC this would create a Quote record linked to the Opportunity.');
 }
-function toggleOpp(){
+function toggleOpp() {
   var form = document.getElementById('opp-form');
   var chevron = document.getElementById('opp-chevron');
   var open = form.style.display === 'block';
   form.style.display = open ? 'none' : 'block';
   chevron.style.transform = open ? '' : 'rotate(180deg)';
 }
-function saveOpp(){
+function saveOpp() {
   var name = document.getElementById('opp-name') ? document.getElementById('opp-name').value : '';
   var account = document.getElementById('account-name') ? document.getElementById('account-name').value : '';
   var summary = document.getElementById('opp-summary');
-  if(summary){
-    summary.textContent = (name||'Opportunity') + (account?' · '+account:'') + ' — configured';
+  if(summary) {
+    summary.textContent = (name||'Opportunity') + (account?' &#183; '+account:'') + ' - configured';
   }
   var check = document.getElementById('opp-check');
-  if(check){ check.textContent='✓'; check.style.background='#2e7d32'; }
+  if(check) { check.textContent='&#10003;'; check.style.background='#2e7d32'; }
   document.getElementById('opp-form').style.display='none';
   document.getElementById('opp-chevron').style.transform='';
 }
-function showProduct(type){
+function showProduct(type) {
+  // Reset power sub-views when entering power
+  if(type==='power'){
+    var pl=document.getElementById('power-landing');
+    var pb=document.getElementById('power-branch');
+    var pp=document.getElementById('power-panels');
+    if(pl) pl.style.display='block';
+    if(pb) pb.style.display='none';
+    if(pp) pp.style.display='none';
+  }
   document.getElementById('prod-landing').style.display='none';
   document.getElementById('prod-view').style.display='block';
-  var labels={'space':'Space — Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power — Branch Circuits','supplementals':'Supplementals — Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX — Interconnection'};
-  document.getElementById('prod-breadcrumb').textContent='Product basket → '+labels[type];
-  ['space','power','supplementals','ix'].forEach(function(v){
+  var labels={'space':'Space - Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power - Branch Circuits','supplementals':'Supplementals - Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX - Interconnection'};
+  document.getElementById('prod-breadcrumb').textContent='Product basket -> '+labels[type];
+  ['space','power','supplementals','ix'].forEach(function(v) {
     document.getElementById('view-'+v).style.display=v===type?'block':'none';
   });
 }
-function getCabinetDetails(){
-  return 'CoreSite Cabinet · 48U';
+function getCabinetDetails() {
+  return 'CoreSite Cabinet &#183; 48U';
 }
-function getCageDetails(){
+function getCageDetails() {
   var cageType = document.querySelector('#pane-cage select') ? document.querySelector('#pane-cage select').value : 'Private Cage';
   var sqft = document.querySelector('#pane-cage input[type=number]') ? document.querySelector('#pane-cage input[type=number]').value : '';
   var lc = document.getElementById('lc-sel') ? document.getElementById('lc-sel').value : 'none';
   var lcLabel = lc==='none'?'Air cooled':lc;
-  return (sqft?sqft+' sqft · ':'')+'Cage type: '+cageType+' · Cooling: '+lcLabel;
+  return (sqft?sqft+' sqft &#183; ':'')+'Cage type: '+cageType+' &#183; Cooling: '+lcLabel;
 }
-function backToLanding(){
+function backToLanding() {
   document.getElementById('prod-landing').style.display='block';
   document.getElementById('prod-view').style.display='none';
 }
-function switchSuppView(cat){
-  ['caging','ladder','basket','fiber','misc'].forEach(function(c){
+function switchSuppView(cat) {
+  ['caging','ladder','basket','fiber','misc'].forEach(function(c) {
     document.getElementById('sv-'+c).style.display=c===cat?'block':'none';
     var btn=document.getElementById('svb-'+c);
-    if(btn){btn.style.background=c===cat?'#0070d2':'#f3f3f3';btn.style.color=c===cat?'#fff':'#706e6b';btn.style.borderColor=c===cat?'#0070d2':'#dddbda';}
+    if(btn) {btn.style.background=c===cat?'#0070d2':'#f3f3f3';btn.style.color=c===cat?'#fff':'#706e6b';btn.style.borderColor=c===cat?'#0070d2':'#dddbda';}
   });
 }
-function sw(on){
+function sw(on) {
   document.getElementById('cur').style.display=on?'none':'block';
   document.getElementById('fut').style.display=on?'block':'none';
   document.getElementById('tt').style.background=on?'#2e7d32':'#c23934';
   document.getElementById('tk').style.transform=on?'translateX(20px)':'translateX(0)';
-  if(on){
-    document.getElementById('i1').textContent='3';document.getElementById('i1').style.color='#2e7d32';
-    document.getElementById('l1').textContent='Core product categories';
-    document.getElementById('i2').textContent='3';document.getElementById('i2').style.color='#2e7d32';
-    document.getElementById('l2').textContent='Guided workflow steps';
-    document.getElementById('i3').textContent='✓';document.getElementById('i3').style.color='#2e7d32';
-    document.getElementById('l3').textContent='Dynamic market filtering';
+  var i1=document.getElementById('i1'),i2=document.getElementById('i2'),i3=document.getElementById('i3');
+  var l1=document.getElementById('l1'),l2=document.getElementById('l2'),l3=document.getElementById('l3');
+  if(on) {
+    if(i1){i1.textContent='3';i1.style.color='#2e7d32';}
+    if(l1){l1.textContent='Core product categories';}
+    if(i2){i2.textContent='3';i2.style.color='#2e7d32';}
+    if(l2){l2.textContent='Guided workflow steps';}
+    if(i3){i3.textContent='&#10003;';i3.style.color='#2e7d32';}
+    if(l3){l3.textContent='Dynamic market filtering';}
   } else {
-    document.getElementById('i1').textContent='50+';document.getElementById('i1').style.color='#c23934';
-    document.getElementById('l1').textContent='Product codes';
-    document.getElementById('i2').textContent='0';document.getElementById('i2').style.color='#c23934';
-    document.getElementById('l2').textContent='Guided workflow steps';
-    document.getElementById('i3').textContent='0';document.getElementById('i3').style.color='#c23934';
-    document.getElementById('l3').textContent='Dynamic market filtering';
+    if(i1){i1.textContent='50+';i1.style.color='#c23934';}
+    if(l1){l1.textContent='Product codes';}
+    if(i2){i2.textContent='0';i2.style.color='#c23934';}
+    if(l2){l2.textContent='Guided workflow steps';}
+    if(i3){i3.textContent='0';i3.style.color='#c23934';}
+    if(l3){l3.textContent='Dynamic market filtering';}
   }
 }
-function switchTab(tab){
-  ['cage','cabinet','roof','office','storage','raceway','ix','lcpod'].forEach(function(t){
+// Switch between main nav tabs
+function switchTab(tab) {
+  ['cage','cabinet','roof','office','storage','raceway','ix','lcpod'].forEach(function(t) {
     var el=document.getElementById('tab-'+t);
     var pe=document.getElementById('pane-'+t);
     if(el)el.classList.toggle('active',t===tab);
     if(pe)pe.classList.toggle('active',t===tab);
   });
 }
-function updateVoltage(poles){
+function updateVoltage(poles) {
   var sel=document.getElementById('volt-sel');
   sel.innerHTML='';
-  if(poles==='1'){['-48V DC','120V'].forEach(function(v){var o=document.createElement('option');o.text=v;sel.add(o);});}
-  else if(poles==='2'){['208V','415V','800V DC'].forEach(function(v){var o=document.createElement('option');o.text=v;sel.add(o);});}
-  else{['208V (3-phase)','415V (3-phase)'].forEach(function(v){var o=document.createElement('option');o.text=v;sel.add(o);});}
+  if(poles==='1') {['-48V DC','120V'].forEach(function(v) {var o=document.createElement('option');o.text=v;sel.add(o);});}
+  else if(poles==='2') {['208V','415V','800V DC'].forEach(function(v) {var o=document.createElement('option');o.text=v;sel.add(o);});}
+  else{['208V (3-phase)','415V (3-phase)'].forEach(function(v) {var o=document.createElement('option');o.text=v;sel.add(o);});}
 }
-function updateTermDetail(val){
+function updateTermDetail(val) {
   var detailField=document.getElementById('term-detail-field');
   var detailSel=document.getElementById('term-detail-sel');
   detailSel.innerHTML='';
@@ -1136,57 +1712,59 @@ function updateTermDetail(val){
     twistlock:['NEMA L5-20 (125V 20A)','NEMA L5-30 (125V 30A)','NEMA L6-20 (250V 20A)','NEMA L6-30 (250V 30A)','NEMA L6-50 (250V 50A)','NEMA L21-20 (3ph 120/208V 20A)','NEMA L21-30 (3ph 120/208V 30A)'],
     iec:['IEC C13 (250V 15A)','IEC C19 (250V 20A)'],
     pinsleeve:['IEC 60309 2P+E 16A 230V','IEC 60309 2P+E 32A 230V','IEC 60309 3P+E 16A 400V','IEC 60309 3P+E 32A 400V'],
-    hardwired:['Bare conductors — field terminated']
+    hardwired:['Bare conductors - field terminated']
   };
-  if(val&&configs[val]){configs[val].forEach(function(c){var o=document.createElement('option');o.text=c;detailSel.add(o);});detailField.style.display='block';}
+  if(val&&configs[val]) {configs[val].forEach(function(c) {var o=document.createElement('option');o.text=c;detailSel.add(o);});detailField.style.display='block';}
   else{detailField.style.display='none';}
 }
-function showTopoHint(){
+function showTopoHint() {
   var val=document.getElementById('topo-sel').value;
   var hint=document.getElementById('topo-hint');
   var hints={
     '2n':'Two fully independent UPS systems. If one fails, the other carries 100% of load. Most common in Tier III/IV.',
     '4m3':'Four UPS modules where any three can carry full load. More efficient than 2N. Common in modern hyperscale.',
-    '5m4':'Five UPS modules where any four can carry full load. Confirmed per Andy — recommended for high-density.',
-    'nups':'No UPS — direct utility/generator feed. For non-critical use: laptops, power tools, facility maintenance.'
+    '5m4':'Five UPS modules where any four can carry full load. Confirmed per Andy - recommended for high-density.',
+    'nups':'No UPS - direct utility/generator feed. For non-critical use: laptops, power tools, facility maintenance.'
   };
   var colors={'2n':'#e3f5e3','4m3':'#e8f4ff','5m4':'#e8f4ff','nups':'#fde8e8'};
   var borders={'2n':'#2e7d32','4m3':'#0070d2','5m4':'#0070d2','nups':'#c23934'};
-  if(val&&hints[val]){hint.textContent=hints[val];hint.style.background=colors[val];hint.style.borderLeft='3px solid '+borders[val];hint.style.color='#16325c';hint.style.display='block';}
+  if(val&&hints[val]) {hint.textContent=hints[val];hint.style.background=colors[val];hint.style.borderLeft='3px solid '+borders[val];hint.style.color='#16325c';hint.style.display='block';}
   else{hint.style.display='none';}
 }
-function toggleTopoInfo(){
+function toggleTopoInfo() {
   var hint=document.getElementById('topo-hint');
-  if(hint.style.display==='none'||!hint.textContent){
+  if(hint.style.display==='none'||!hint.textContent) {
     hint.textContent='UPS Topology defines power redundancy. 2N = two full independent systems. 4-to-make-3 = four modules, three needed. 5-to-make-4 = five modules, four needed. Non-UPS = direct feed for non-critical circuits.';
     hint.style.background='#f0f4ff';hint.style.borderLeft='3px solid #0070d2';hint.style.color='#16325c';hint.style.display='block';
-  } else {hint.style.display='none';hint.textContent='';}
+  }
+else {hint.style.display='none';hint.textContent='';}
 }
-function openCXML(vendor){
+function openCXML(vendor) {
   window.open('cxml-auth.html?vendor='+vendor,'_blank','width=600,height=500');
 }
-function switchSupp(cat){
-  ['caging','ladder','basket','fiber','misc'].forEach(function(c){
+function switchSupp(cat) {
+  ['caging','ladder','basket','fiber','misc'].forEach(function(c) {
     document.getElementById('supp-'+c).style.display = c===cat ? 'block' : 'none';
     var btn = document.getElementById('sb-'+c);
-    if(btn){
+    if(btn) {
       btn.style.background = c===cat ? '#0070d2' : '#f3f3f3';
       btn.style.color = c===cat ? '#fff' : '#706e6b';
       btn.style.borderColor = c===cat ? '#0070d2' : '#dddbda';
     }
   });
 }
-function toggleLC(val){
+function toggleLC(val) {
   var show = val !== 'none';
   document.getElementById('lc-cdu').style.display = show ? 'block' : 'none';
   document.getElementById('lc-hose').style.display = show ? 'block' : 'none';
   document.getElementById('lc-note').style.display = show ? 'block' : 'none';
 }
-function checkWeight(){
+function checkWeight() {
   var w=parseFloat(document.getElementById('cab-weight').value)||0;
   document.getElementById('weight-warn').style.display=w>2000?'block':'none';
 }
-function calcDelivery(){
+// Recalculate lead time whenever inputs change
+function calcDelivery() {
   var triggerEl = document.getElementById('lt-trigger');
   var complexityEl = document.getElementById('lt-complexity');
   var marketEl = document.getElementById('lt-market');
@@ -1196,7 +1774,7 @@ function calcDelivery(){
   var complexity = isVendor ? 0 : (parseInt(complexityVal)||0);
   // Enable/disable vendor field
   var vendorEl = document.getElementById('lt-vendor');
-  if(vendorEl){ vendorEl.disabled = !isVendor; vendorEl.style.background = isVendor?'#fff':'#f9f9f9'; vendorEl.style.color = isVendor?'#16325c':'#706e6b'; }
+  if(vendorEl) { vendorEl.disabled = !isVendor; vendorEl.style.background = isVendor?'#fff':'#f9f9f9'; vendorEl.style.color = isVendor?'#16325c':'#706e6b'; }
   var vendorDays = isVendor ? (parseInt(document.getElementById('lt-vendor')&&document.getElementById('lt-vendor').value)||0) : 0;
   if(isVendor) complexity = vendorDays;
   var market = marketEl ? parseInt(marketEl.value)||0 : 1;
@@ -1208,13 +1786,13 @@ function calcDelivery(){
   // Calc date
   var d = new Date('2026-05-01');
   var bd = 0;
-  while(bd < total + 5){d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)bd++;}
+  while(bd < total + 5) {d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)bd++;}
   var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var dateStr = months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
 
   // Update Step 1 result box
   var r = document.getElementById('lt-result');
-  if(r){
+  if(r) {
     var complexityLabel = isVendor ? ('Vendor portal: '+complexity+' BD') : ('Complexity: '+complexity+' BD');
     r.innerHTML = '<span style="font-weight:600;color:#0070d2">&#128337; Calculated Lead Time</span>'+(isVendor?'&nbsp;<span style="background:#fff3e0;color:#e65100;font-size:10px;padding:1px 8px;border-radius:3px;font-weight:600">Vendor portal active</span>':'')+'<br>'+
       'Base: '+base+' BD &nbsp;+&nbsp; Trigger: '+trigger+' BD &nbsp;+&nbsp; '+complexityLabel+' &nbsp;+&nbsp; Market: '+market+' BD = <strong>'+total+' BD total</strong><br>'+
@@ -1229,7 +1807,7 @@ function calcDelivery(){
   }
 
   // Update Step 2-B circuit box dynamically
-  var setEl = function(id, val){ var e=document.getElementById(id); if(e) e.textContent=val; };
+  var setEl = function(id, val) { var e=document.getElementById(id); if(e) e.textContent=val; };
   setEl('lt-c-base', base);
   setEl('lt-c-trigger', '+'+trigger);
   setEl('lt-c-complexity', '+'+complexity);
@@ -1238,27 +1816,27 @@ function calcDelivery(){
   setEl('lt-c-exp', 'Exp: '+total+' BD');
   setEl('lt-c-max', 'Max: '+maxDays+' BD');
   var tLbl = document.getElementById('lt-c-trigger-lbl');
-  if(tLbl){
+  if(tLbl) {
     var isOpReady = trigger > 0;
     tLbl.innerHTML = isOpReady ?
-      '&#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> — not customer signature date' :
-      '&#128274; Trigger: Clock starts at <strong>Customer Signature</strong> — current state (not recommended)';
+      '&#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> - not customer signature date' :
+      '&#128274; Trigger: Clock starts at <strong>Customer Signature</strong> - current state (not recommended)';
     tLbl.style.background = isOpReady ? '#fff3e0' : '#fde8e8';
     tLbl.style.borderLeftColor = isOpReady ? '#e65100' : '#c23934';
     tLbl.style.color = isOpReady ? '#e65100' : '#c23934';
   }
   // Show vendor portal button only when custom scope selected
   var vpBtn = document.getElementById('vendor-portal-btn');
-  if(vpBtn){
+  if(vpBtn) {
     vpBtn.style.display = isVendor ? 'inline-flex' : 'none';
   }
 }
 
-function openVendorPortal(){
-  window.open('vendor-portal-mockup.html','_blank');
+function openVendorPortal() {
+  window.open('vendor-management-portal.html','_blank');
 }
 
-function swLt(on){
+function swLt(on) {
   document.getElementById('lt-cur-state').style.display = on ? 'none' : 'block';
   document.getElementById('lt-fut-state').style.display = on ? 'block' : 'none';
   document.getElementById('lt-tt').style.background = on ? '#2e7d32' : '#c23934';
@@ -1270,7 +1848,215 @@ function swLt(on){
   if(on) calcDelivery();
 }
 
-window.addEventListener('load', function(){ calcDelivery(); });
+window.addEventListener('load', function() { calcDelivery(); });
+</script>
+
+<!-- ══════════════════════════════════════════════
+     NEMA REFERENCE MODAL  (auto-patched)
+══════════════════════════════════════════════ -->
+<div id="nema-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto;padding:20px 16px;">
+  <div style="background:#fff;border-radius:14px;max-width:1000px;margin:0 auto;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.45);">
+    <div style="background:linear-gradient(135deg,#16325c 0%,#0070d2 60%,#0058a8 100%);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="color:#fff;font-size:16px;font-weight:800;letter-spacing:-0.01em;">&#9889; NEMA / Hubbell Connector Reference</div>
+        <div style="color:rgba(255,255,255,0.62);font-size:11px;margin-top:3px;">Straight Blade &middot; Twist-Lock &middot; IEC &middot; Pin &amp; Sleeve (IEC 60309) &mdash; click Select to auto-fill circuit fields</div>
+      </div>
+      <button onclick="closeNEMA()" style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);border-radius:7px;color:#fff;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">&#10005; Close</button>
+    </div>
+    <div style="background:#f8fafc;border-bottom:2px solid #e2e8f0;padding:10px 18px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+      <button onclick="filterNEMA('all')"        id="nf-all"        class="nf-btn nf-active">All</button>
+      <button onclick="filterNEMA('straight')"   id="nf-straight"   class="nf-btn">Straight Blade</button>
+      <button onclick="filterNEMA('twistlock')"  id="nf-twistlock"  class="nf-btn">Twist-Lock</button>
+      <button onclick="filterNEMA('pinsleeve')"  id="nf-pinsleeve"  class="nf-btn">Pin &amp; Sleeve</button>
+      <button onclick="filterNEMA('iec')"        id="nf-iec"        class="nf-btn">IEC (C13/C19)</button>
+      <div style="display:flex;align-items:center;gap:5px;margin-left:10px;">
+        <span style="font-size:10px;font-weight:600;color:#706e6b">Legend:</span>
+        <span style="background:#fefce8;border:1px solid #fde047;border-radius:3px;font-size:9px;color:#713f12;padding:1px 6px;font-weight:700;">&#9733; DC Standard</span>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#706e6b" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="nema-search" type="text" placeholder="Search voltage, amps, config, use case..."
+          oninput="searchNEMA(this.value)"
+          style="padding:6px 11px;border:1px solid #e2e8f0;border-radius:7px;font-size:12px;width:260px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.15s;"
+          onfocus="this.style.borderColor='#0070d2'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+    </div>
+    <div style="overflow-x:auto;max-height:62vh;overflow-y:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead style="position:sticky;top:0;z-index:2;">
+          <tr style="background:#f0f4f8;border-bottom:2px solid #e2e8f0;">
+            <th style="padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;">Type</th>
+            <th style="padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;">Configuration</th>
+            <th style="padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Voltage</th>
+            <th style="padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Amperage</th>
+            <th style="padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Poles / Wires</th>
+            <th style="padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Grounding</th>
+            <th style="padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Typical Use</th>
+            <th style="padding:9px 12px;text-align:center;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;white-space:nowrap;">Select</th>
+          </tr>
+        </thead>
+        <tbody id="nema-tbody"></tbody>
+      </table>
+    </div>
+    <div style="padding:10px 18px;background:#f8fafc;border-top:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:10px;color:#706e6b;">Source: Hubbell Wiring Device-Kellems &middot; WLCNEMA17 &middot; IEC 60309 &middot; &#9733; = data center standard</div>
+      <button onclick="closeNEMA()" style="padding:5px 14px;background:#f0f4f8;color:#706e6b;border:1px solid #e2e8f0;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// NEMA DATA
+var NEMA_DATA=[
+  // STRAIGHT BLADE
+  {type:'straight',config:'NEMA 1-15',voltage:'125V',amps:'15A',poles:'2P / 2W',ground:'No',use:'Non-grounding general purpose',highlight:false},
+  {type:'straight',config:'NEMA 5-15',voltage:'125V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Standard 120V outlet - most common in US',highlight:true},
+  {type:'straight',config:'NEMA 5-20',voltage:'125V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'20A 120V - IT lab, kitchen, office',highlight:true},
+  {type:'straight',config:'NEMA 5-30',voltage:'125V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'30A 120V - high-draw appliances',highlight:false},
+  {type:'straight',config:'NEMA 5-50',voltage:'125V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'50A 120V - large appliances',highlight:false},
+  {type:'straight',config:'NEMA 6-15',voltage:'250V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'15A 240V - A/C units, power tools',highlight:false},
+  {type:'straight',config:'NEMA 6-20',voltage:'250V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'20A 240V - tools, PDU tail feeds',highlight:true},
+  {type:'straight',config:'NEMA 6-30',voltage:'250V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'30A 240V - welders, HVAC, PDUs',highlight:false},
+  {type:'straight',config:'NEMA 6-50',voltage:'250V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'50A 240V - EV chargers, large equipment',highlight:false},
+  {type:'straight',config:'NEMA 6-60',voltage:'250V',amps:'60A',poles:'2P / 3W',ground:'Yes',use:'60A 240V - industrial panel feeds',highlight:false},
+  {type:'straight',config:'NEMA 10-30',voltage:'125/250V',amps:'30A',poles:'3P / 3W',ground:'No',use:'Legacy dryer outlet - no ground (old code)',highlight:false},
+  {type:'straight',config:'NEMA 14-20',voltage:'125/250V',amps:'20A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 20A - PDU branch circuits',highlight:false},
+  {type:'straight',config:'NEMA 14-30',voltage:'125/250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 30A - dryers, PDU feeds',highlight:false},
+  {type:'straight',config:'NEMA 14-50',voltage:'125/250V',amps:'50A',poles:'3P / 4W',ground:'Yes',use:'Split-phase 50A - EV, RV hookups, PDUs',highlight:true},
+  {type:'straight',config:'NEMA 15-20',voltage:'33ph 125/250V',amps:'20A',poles:'3P / 4W',ground:'Yes',use:'3-phase 20A light industrial',highlight:false},
+  {type:'straight',config:'NEMA 15-30',voltage:'33ph 250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'3-phase 30A - motors, HVAC',highlight:false},
+  // TWIST-LOCK
+  {type:'twistlock',config:'NEMA L5-15',voltage:'125V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 15A - IT equipment',highlight:false},
+  {type:'twistlock',config:'NEMA L5-20',voltage:'125V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 20A - PDU branch circuits',highlight:true},
+  {type:'twistlock',config:'NEMA L5-30',voltage:'125V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'Locking 125V 30A',highlight:false},
+  {type:'twistlock',config:'NEMA L6-15',voltage:'250V',amps:'15A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 15A',highlight:false},
+  {type:'twistlock',config:'NEMA L6-20',voltage:'250V',amps:'20A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 20A - data center PDU standard',highlight:true},
+  {type:'twistlock',config:'NEMA L6-30',voltage:'250V',amps:'30A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 30A - UPS output, PDU input',highlight:true},
+  {type:'twistlock',config:'NEMA L6-50',voltage:'250V',amps:'50A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 50A',highlight:false},
+  {type:'twistlock',config:'NEMA L6-60',voltage:'250V',amps:'60A',poles:'2P / 3W',ground:'Yes',use:'Locking 250V 60A',highlight:false},
+  {type:'twistlock',config:'NEMA L14-20',voltage:'125/250V',amps:'20A',poles:'3P / 4W',ground:'Yes',use:'Locking split-phase 20A',highlight:false},
+  {type:'twistlock',config:'NEMA L14-30',voltage:'125/250V',amps:'30A',poles:'3P / 4W',ground:'Yes',use:'Locking split-phase 30A - generator feeds',highlight:false},
+  {type:'twistlock',config:'NEMA L21-20',voltage:'33ph 120/208V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 33ph 208V 20A - most common data center',highlight:true},
+  {type:'twistlock',config:'NEMA L21-30',voltage:'33ph 120/208V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 33ph 208V 30A - standard PDU input',highlight:true},
+  {type:'twistlock',config:'NEMA L22-20',voltage:'33ph 277/480V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 33ph 480V 20A - use for 415V circuits',highlight:true},
+  {type:'twistlock',config:'NEMA L22-30',voltage:'33ph 277/480V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 33ph 480V 30A - 415V PDU standard',highlight:true},
+  {type:'twistlock',config:'NEMA L23-20',voltage:'33ph 347/600V',amps:'20A',poles:'4P / 5W',ground:'Yes',use:'Locking 600V 20A - Canadian facilities',highlight:false},
+  {type:'twistlock',config:'NEMA L23-30',voltage:'33ph 347/600V',amps:'30A',poles:'4P / 5W',ground:'Yes',use:'Locking 600V 30A',highlight:false},
+  // IEC
+  {type:'iec',config:'IEC C13',voltage:'250V',amps:'10A (15A rated)',poles:'2P / 3W',ground:'Yes',use:'Server PSU inlet - universal standard',highlight:true},
+  {type:'iec',config:'IEC C14 (plug)',voltage:'250V',amps:'10A (15A rated)',poles:'2P / 3W',ground:'Yes',use:'PDU outlet plug for C13 inlet',highlight:true},
+  {type:'iec',config:'IEC C15',voltage:'250V',amps:'10A',poles:'2P / 3W',ground:'Yes',use:'High-temp C13 variant - hot equipment',highlight:false},
+  {type:'iec',config:'IEC C19',voltage:'250V',amps:'16A (20A rated)',poles:'2P / 3W',ground:'Yes',use:'High-density server PSU, network switches',highlight:true},
+  {type:'iec',config:'IEC C20 (plug)',voltage:'250V',amps:'16A (20A rated)',poles:'2P / 3W',ground:'Yes',use:'PDU outlet plug for C19 inlet',highlight:true},
+  {type:'iec',config:'IEC C21',voltage:'250V',amps:'16A',poles:'2P / 3W',ground:'Yes',use:'High-temp C19 variant',highlight:false},
+  // PIN & SLEEVE
+  {type:'pinsleeve',config:'IEC 60309 2P+E 16A 110V',voltage:'100-130V',amps:'16A',poles:'2P+E / 3W',ground:'Yes',use:'Construction site 110V (Yellow)',highlight:false},
+  {type:'pinsleeve',config:'IEC 60309 2P+E 16A 230V',voltage:'200-250V',amps:'16A',poles:'2P+E / 3W',ground:'Yes',use:'Single-phase 230V 16A - Blue (EU standard)',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 2P+E 32A 230V',voltage:'200-250V',amps:'32A',poles:'2P+E / 3W',ground:'Yes',use:'Single-phase 230V 32A - Blue',highlight:false},
+  {type:'pinsleeve',config:'IEC 60309 3P+E 16A 400V',voltage:'380-415V',amps:'16A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 400/415V 16A - Red (DC standard)',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 3P+E 32A 400V',voltage:'380-415V',amps:'32A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 415V 32A - Red - PDU input',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 3P+E 63A 400V',voltage:'380-415V',amps:'63A',poles:'3P+E / 4W',ground:'Yes',use:'3-phase 415V 63A - Red - high-density rows',highlight:true},
+  {type:'pinsleeve',config:'IEC 60309 3P+N+E 16A 400V',voltage:'380-415V',amps:'16A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 16A (Red 5-pin)',highlight:false},
+  {type:'pinsleeve',config:'IEC 60309 3P+N+E 32A 400V',voltage:'380-415V',amps:'32A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 32A (Red 5-pin)',highlight:false},
+  {type:'pinsleeve',config:'IEC 60309 3P+N+E 63A 400V',voltage:'380-415V',amps:'63A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 63A (Red 5-pin)',highlight:false},
+  {type:'pinsleeve',config:'IEC 60309 3P+N+E 125A 400V',voltage:'380-415V',amps:'125A',poles:'3P+N+E / 5W',ground:'Yes',use:'3-phase + neutral 415V 125A - main feeds',highlight:false},
+];
+
+var _nFilter='all', _nSearch='';
+var _nMeta={straight:{label:'Straight Blade',cls:'nb-straight'},twistlock:{label:'Twist-Lock',cls:'nb-twistlock'},iec:{label:'IEC',cls:'nb-iec'},pinsleeve:{label:'Pin & Sleeve',cls:'nb-pinsleeve'}};
+
+function renderNEMATable(){
+  var tbody=document.getElementById('nema-tbody');
+  if(!tbody)return;
+  var q=_nSearch.toLowerCase();
+  var rows=NEMA_DATA.filter(function(r){
+    return (_nFilter==='all'||r.type===_nFilter)&&
+           (!q||r.config.toLowerCase().includes(q)||r.voltage.toLowerCase().includes(q)||
+            r.amps.toLowerCase().includes(q)||r.use.toLowerCase().includes(q)||
+            r.poles.toLowerCase().includes(q));
+  });
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="padding:28px;text-align:center;color:#706e6b;">No configurations match.</td></tr>';return;}
+  tbody.innerHTML=rows.map(function(r){
+    var m=_nMeta[r.type]||{label:r.type,cls:'nb-straight'};
+    var star=r.highlight?'<span style="font-size:9px;background:#fef08a;color:#713f12;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px;">DC STD</span>':'';
+    var bg=r.highlight?'#fefce8':'#fff';
+    var cfg=r.config.replace(/'/g,"\'");
+    return '<tr class="nema-row" style="border-bottom:1px solid #f1f5f9;background:'+bg+'" onclick="selectNEMARow(this)">'+
+      '<td style="padding:8px 12px"><span class="nema-badge '+m.cls+'">'+m.label+'</span></td>'+
+      '<td style="padding:8px 12px;font-weight:700;color:#16325c;font-size:12.5px;">'+r.config+'</td>'+
+      '<td style="padding:8px 12px;font-family:monospace;color:#0070d2;font-weight:600;">'+r.voltage+'</td>'+
+      '<td style="padding:8px 12px;font-weight:700;color:#e65100;">'+r.amps+'</td>'+
+      '<td style="padding:8px 12px;color:#706e6b;font-size:11px;">'+r.poles+'</td>'+
+      '<td style="padding:8px 12px"><span style="font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;background:'+(r.ground==='Yes'?'#dcfce7':'#fee2e2')+';color:'+(r.ground==='Yes'?'#15803d':'#dc2626')+'">'+(r.ground==='Yes'?'&#10003; Yes':'x No')+'</span></td>'+
+      '<td style="padding:8px 12px;color:#374151;font-size:11px;max-width:240px;white-space:normal;line-height:1.4;">'+r.use+star+'</td>'+
+      '<td style="padding:8px 12px;text-align:center"><button onclick="event.stopPropagation();applyNEMA("+cfg+")" '+
+        'style="padding:4px 12px;background:#0070d2;color:#fff;border:none;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s;" '+
+        '>Select &#8629;</button></td>'+
+    '</tr>';
+  }).join('');
+}
+
+function filterNEMA(type){
+  _nFilter=type;
+  document.querySelectorAll('.nf-btn').forEach(function(b){b.classList.remove('nf-active');});
+  var el=document.getElementById('nf-'+type);if(el)el.classList.add('nf-active');
+  renderNEMATable();
+}
+
+function searchNEMA(val){_nSearch=val;renderNEMATable();}
+
+function selectNEMARow(row){
+  document.querySelectorAll('.nema-row').forEach(function(r){r.classList.remove('nema-selected');});
+  row.classList.add('nema-selected');
+}
+
+function applyNEMA(config){
+  var row=NEMA_DATA.find(function(r){return r.config===config;});
+  if(!row)return;
+  // Set termination type dropdown if present
+  var tSel=document.getElementById('term-sel');
+  if(tSel){
+    tSel.value=row.type;
+    if(typeof updateTermDetail==='function') updateTermDetail(row.type);
+  }
+  // Try to match detail dropdown
+  var dSel=document.getElementById('term-detail-sel');
+  if(dSel){
+    var short=config.toLowerCase().replace('nema ','').split(' ')[0];
+    for(var i=0;i<dSel.options.length;i++){
+      if(dSel.options[i].text.toLowerCase().includes(short)){dSel.selectedIndex=i;break;}
+    }
+  }
+  // Show applied badge if element exists
+  var applied=document.getElementById('nema-applied');
+  if(applied){applied.style.display='block';applied.innerHTML='&#10003; Applied: <strong>'+config+'</strong> &middot; '+row.voltage+' &middot; '+row.amps;}
+  closeNEMA();
+  // Toast notification
+  var t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:24px;right:24px;background:#2e7d32;color:#fff;padding:11px 20px;border-radius:9px;font-size:12px;font-weight:700;z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,0.25);font-family:"DM Sans",sans-serif;display:flex;align-items:center;gap:8px;';
+  t.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Applied: '+config;
+  document.body.appendChild(t);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},2800);
+}
+
+function openNEMA(){
+  _nFilter='all';_nSearch='';
+  document.querySelectorAll('.nf-btn').forEach(function(b){b.classList.remove('nf-active');});
+  var a=document.getElementById('nf-all');if(a)a.classList.add('nf-active');
+  var s=document.getElementById('nema-search');if(s)s.value='';
+  renderNEMATable();
+  document.getElementById('nema-modal').style.display='block';
+  document.body.style.overflow='hidden';
+}
+function closeNEMA(){
+  document.getElementById('nema-modal').style.display='none';
+  document.body.style.overflow='';
+}
+document.getElementById('nema-modal').addEventListener('click',function(e){if(e.target===this)closeNEMA();});
+</script>
+
+<script>
+
 </script>
 </body>
 </html>
