@@ -815,7 +815,6 @@ function showPowerType(type){
         <div class="ptab" id="tab-office" onclick="switchTab('office')">💼 Office</div>
         <div class="ptab" id="tab-storage" onclick="switchTab('storage')">📦 Storage</div>
         <div class="ptab" id="tab-raceway" onclick="switchTab('raceway')">🔌 Raceway</div>
-        <div class="ptab" id="tab-ix" onclick="switchTab('ix')">🌐 IX</div>
         <div class="ptab" id="tab-lcpod" onclick="switchTab('lcpod')">❄️ LC-Ready Pod</div>
       </div>
 
@@ -860,92 +859,6 @@ function showPowerType(type){
               </select>
             </div>
           </div>
-        </div>
-        <!-- POWER — attached under cage -->
-        <div style="margin-top:14px;padding-top:14px;border-top:2px dashed #e5e7eb">
-          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:10px;display:flex;align-items:center;gap:6px">
-            <span style="background:#0070d2;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
-            ⚡ Branch Circuits — added under this cage
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px">
-            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>20A</option><option>30A</option><option selected>60A</option><option>100A</option></select></div>
-            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select><option selected>208V</option><option>415V</option></select></div>
-            <div class="sf-field"><label>Poles</label><select><option>1-pole</option><option>2-pole</option><option selected>3-pole</option></select></div>
-            <div class="sf-field"><label>Delivery type</label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
-          </div>
-          <div style="font-size:11px;color:#706e6b;background:#f8f8f8;border-radius:4px;padding:6px 10px;margin-bottom:8px">
-            Auto-generates product code: <strong style="color:#0070d2">PW-AC-208-60-3P-PR</strong> · bKW: 21.6 · cKW: 17.3
-          </div>
-        </div>
-
-        <!-- LIQUID COOLING — attribute on cage -->
-        <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
-          <div style="font-size:11px;font-weight:700;color:#059669;margin-bottom:10px;display:flex;align-items:center;gap:6px">
-            <span style="background:#059669;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTRIBUTE</span>
-            ❄️ Liquid Cooling — option on this cage
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-            <div class="sf-field"><label>Liquid cooling</label>
-              <select id="lc-sel" onchange="toggleLC(this.value)">
-                <option value="none" selected>None — air cooled</option>
-                <option value="colocool">ColoCool (in-row liquid assisted)</option>
-                <option value="rdhx">Rear-door heat exchanger</option>
-                <option value="direct">Direct chip liquid cooling</option>
-              </select>
-            </div>
-            <div class="sf-field" id="lc-cdu" style="display:none"><label>CDU size</label><select><option>10 kW</option><option>20 kW</option><option selected>40 kW</option><option>80 kW</option></select></div>
-            <div class="sf-field" id="lc-hose" style="display:none"><label>Hose configuration</label><select><option selected>EDPM hose with mobile header</option><option>Stainless steel hard pipe</option></select></div>
-          </div>
-          <div id="lc-note" style="display:none;font-size:11px;color:#059669;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:4px;padding:6px 10px;margin-top:6px">
-            ✓ Liquid cooling added as attribute · Also exists as standalone LC-Ready Pod product per Alec
-          </div>
-        </div>
-
-        <!-- SUPPLEMENTALS — attached under cage -->
-        <div style="margin-top:10px;padding-top:10px;border-top:2px dashed #e5e7eb">
-          <div style="font-size:11px;font-weight:700;color:#e65100;margin-bottom:10px;display:flex;align-items:center;gap:6px">
-            <span style="background:#e65100;color:#fff;font-size:10px;padding:1px 7px;border-radius:3px">ATTACHED</span>
-            📦 Supplementals — added under this cage
-          </div>
-          <div style="display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap">
-            <button onclick="switchSupp('caging')" id="sb-caging" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #0070d2;background:#0070d2;color:#fff;cursor:pointer;font-family:inherit">Caging</button>
-            <button onclick="switchSupp('ladder')" id="sb-ladder" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Ladder Rack</button>
-            <button onclick="switchSupp('basket')" id="sb-basket" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Mesh Basket</button>
-            <button onclick="switchSupp('fiber')" id="sb-fiber" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Fiber Tray</button>
-            <button onclick="switchSupp('misc')" id="sb-misc" style="padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;border:1px solid #dddbda;background:#f3f3f3;color:#706e6b;cursor:pointer;font-family:inherit">Misc</button>
-          </div>
-          <div id="supp-caging"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1.5"x3" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh 1.5"x3" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — Std 8ft (1"x1")</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">8' Wire Mesh 1"x1" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Wall — 10ft (1"x1")</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Floor-to-ceiling Wire Mesh 1"x1" · Posts &amp; capping incl.</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Slide</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' sliding door</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cage Door — Swing</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Wire Mesh 4'x8' hinged door</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="supp-ladder" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' sections · Unistrut support, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Ladder Rack Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Junction &amp; Butt Splices</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Cabinet Bolt Down &amp; Grounding</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Unpack, set/level, bolt down &amp; grounding · Install kit + labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="supp-basket" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' section · 12"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Polymer Inserts</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">10' plastic inlay to protect fibers</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="ft" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Mesh Basket Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit · Price varies by part</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="supp-fiber" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">6' section · 6"W x 4"D · Unistrut, materials &amp; labor</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="sec" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Fiber Tray Transitions</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Any Turn, Joint, Endcap, Exit · Price varies by exact part</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-          </tbody></table></div>
-          <div id="supp-misc" style="display:none"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f3f3f3"><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Product</th><th style="padding:6px 8px;text-align:left;border:1px solid #e0e0e0;color:#706e6b">Description</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Qty</th><th style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Add</th></tr></thead><tbody>
-            <tr><td style="padding:6px 8px;border:1px solid #e0e0e0;font-weight:600">Koldloks</td><td style="padding:6px 8px;border:1px solid #e0e0e0;color:#706e6b">Flush mount raised floor grommet, split (11"x8.25"x1.625")</td><td style="padding:6px 8px;border:1px solid #e0e0e0"><input type="number" min="1" placeholder="qty" style="width:52px;padding:3px 5px;border:1px solid #dddbda;border-radius:3px;font-size:11px"></td><td style="padding:6px 8px;border:1px solid #e0e0e0;text-align:center"><button style="padding:2px 8px;background:#0070d2;color:#fff;border:none;border-radius:3px;font-size:10px;cursor:pointer">Add</button></td></tr>
-          </tbody></table></div>
-          <div style="margin-top:8px;font-size:11px;color:#706e6b;background:#f9f9f9;border-radius:4px;padding:6px 10px">
-            ✓ Labor included on all items &nbsp;·&nbsp; Custom scope → <span style="color:#e65100;font-weight:600">Submit to Vendor Portal</span> for competitive bidding
-          </div>
-        </div>
-
-        <div style="margin-top:14px;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:6px;padding:10px 14px;font-size:11px;color:#065f46;margin-bottom:10px">
-          📋 <strong>Product basket hierarchy:</strong> Cage (primary) → Branch Circuits (attached) → Liquid Cooling (attribute) → Supplementals (attached)
         </div>
         <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space', 'Cage / Private Suite', getCageDetails())">Add cage + attachments to quote</button><button class="sf-btn-s">Cancel</button></div>
       </div>
@@ -1058,26 +971,6 @@ function showPowerType(type){
         <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Space','Raceway','Raceway')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
-      <!-- IX — Interconnection -->
-      <div class="product-pane sf-form-card" id="pane-ix">
-        <div class="sf-form-title"><span>🌐 IX / Interconnection — configure</span><span class="badge b-teal">Space type</span></div>
-        <div class="sf-cols">
-          <div>
-            <div class="sf-col-title">Connection details</div>
-            <div class="sf-field"><label>Connection type <span class="required">*</span></label><select><option>Cross Connect — Fiber</option><option>Cross Connect — Copper</option><option>Cross Connect — Coax</option><option>Campus Cross Connect</option><option>Any2 Exchange</option><option>Blended IP</option></select></div>
-            <div class="sf-field"><label>Bandwidth / Speed</label><select><option>1 GbE</option><option>10 GbE</option><option>100 GbE</option><option>Custom</option></select></div>
-            <div class="sf-field"><label>Connector type</label><select><option selected>LC Duplex (SMF)</option><option>LC Duplex (MMF)</option><option>SC Duplex</option><option>RJ-45</option><option>BNC</option></select></div>
-          </div>
-          <div>
-            <div class="sf-col-title">Location & routing</div>
-            <div class="sf-field"><label>A-side location <span class="required">*</span></label><input type="text" placeholder="e.g. LA1-08-0805-CORE-AC17"></div>
-            <div class="sf-field"><label>Z-side location</label><input type="text" placeholder="e.g. Carrier cage or meet-me room"></div>
-            <div class="sf-field"><label>Market <span class="required">*</span><span class="market-pill">Dynamic — from Step 1</span></label><select><option>— Markets from opportunity —</option><option>Los Angeles (LA1)</option></select></div>
-          </div>
-        </div>
-        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF')">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
-      </div>
-
       <!-- LC-READY POD -->
       <div class="product-pane sf-form-card" id="pane-lcpod">
         <div class="sf-form-title"><span>❄️ LC-Ready Pod — configure</span><span class="badge b-blue">Space type · Liquid cooling infrastructure</span></div>
@@ -1103,104 +996,7 @@ function showPowerType(type){
     </div>
   </div>
 
-  <!-- STEP 2-B -->
-  <div class="step-wrap">
-    <div class="step-label">
-      <span class="step-num">Step 2-B</span>
-      <span class="step-title">Add Branch Circuits</span>
-      <span class="step-sub">— Power attaches to a space selected in Step 2-A</span>
-    </div>
-    <div class="sf-wrap">
-      <div class="sf-topbar">
-        <div style="width:18px;height:18px;background:rgba(255,255,255,0.9);border-radius:3px"></div>
-        <span class="sf-topbar-title">Sales — Product Catalog</span>
-        <span class="sf-topbar-pill">Step 2-B · Power</span>
-      </div>
-      <div class="sf-meta" style="padding:8px 14px">Branch Circuit — power product that attaches to a space</div>
-      <div class="sf-form-card">
-        <div class="sf-form-title"><span>⚡ Branch Circuit — configure</span> <button onclick="openNEMA()" style="margin-left:8px;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#16325c,#0070d2);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg> NEMA / Connector Reference</button><div style="display:flex;align-items:center;gap:8px;"><span class="badge b-blue">Power product</span></div></div></div>
-        <div class="sf-cols">
-          <div>
-            <div class="sf-col-title">Circuit specifications</div>
-            <div class="sf-field"><label>Amperage <span class="required">*</span></label><select><option>10A</option><option>15A</option><option>20A</option><option selected>30A</option><option>60A</option><option>100A</option><option>125A</option><option>150A</option><option>200A</option><option>250A</option></select></div>
-            <div class="sf-field"><label>Voltage <span class="required">*</span></label><select id="volt-sel"><option>208V</option><option>415V</option><option>800V DC</option></select></div>
-            <div class="sf-field">
-              <label>Termination type</label>
-              <select id="term-sel" onchange="updateTermDetail(this.value)">
-                <option value="">— Select —</option>
-                <option value="straight">Straight Blade (NEMA)</option>
-                <option value="twistlock">Twist-Lock (NEMA L-series)</option>
-                <option value="iec">IEC (C13 / C19)</option>
-                <option value="pinsleeve">Pin & Sleeve (IEC 60309)</option>
-                <option value="hardwired">Hardwired / Bare</option>
-              </select>
-            </div>
-            <div class="sf-field" id="term-detail-field" style="display:none">
-              <label>NEMA Configuration</label>
-              <select id="term-detail-sel"></select>
-            </div>
-            <div class="sf-field">
-              <label>UPS Topology <span class="required">*</span><span class="info-btn" onclick="toggleTopoInfo()">[what is this?]</span></label>
-              <select id="topo-sel" onchange="showTopoHint()">
-                <option value="">— Select topology —</option>
-                <option value="2n">2N — Two independent UPS systems</option>
-                <option value="4m3">4-to-make-3 — Four modules, any three carry load</option>
-                <option value="5m4">5-to-make-4 — Five modules, any four carry load</option>
-                <option value="nups">Non-UPS (utility / generator direct)</option>
-              </select>
-              <div style="font-size:10px;color:#706e6b;margin-top:3px">Only available CoreSite UPS topologies shown — per Andy feedback</div>
-              <div id="topo-hint" class="topo-hint"></div>
-            </div>
-          </div>
-          <div>
-            <div class="sf-col-title">Configuration</div>
-            <div class="sf-field"><label>Poles <span class="required">*</span></label><select id="poles-sel" onchange="updateVoltage(this.value)"><option value="1">1-pole</option><option value="2" selected>2-pole</option><option value="3">3-pole</option></select><div class="hint">Updates available voltage options</div></div>
-            <div class="sf-field"><label>Neutral wire</label><select><option selected>No</option><option>Yes</option></select><div class="hint">Required for some PDU configurations</div></div>
-            <div class="sf-field"><label>Delivery type <span class="required">*</span></label><select><option selected>Primary & Redundant</option><option>Primary only</option></select></div>
-            <div class="sf-field"><label>Attach to space</label><select><option>— Select space from Step 2-A —</option><option>CAB-001 (Cabinet)</option><option>LA1-CAGE-01 (Private Cage)</option></select><div class="hint">Links circuit to space added in Step 2-A</div></div>
-            <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:120px"></div>
-          </div>
-        </div>
-        <div id="lt-circuit-box" style="background:#f8fbff;border:1px solid #d4e6ff;border-radius:6px;padding:10px 14px;margin-bottom:14px">
-          <div style="font-size:11px;font-weight:700;color:#0070d2;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">&#128337; Lead Time — This Circuit</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px">
-            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
-              <div id="lt-c-base" style="font-size:18px;font-weight:700;color:#0070d2">8</div>
-              <div style="font-size:10px;color:#706e6b;margin-top:2px">Base (BD)</div>
-            </div>
-            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
-              <div id="lt-c-trigger" style="font-size:18px;font-weight:700;color:#e65100">+5</div>
-              <div style="font-size:10px;color:#706e6b;margin-top:2px">Trigger offset</div>
-            </div>
-            <div style="text-align:center;background:#fff;border:1px solid #dddbda;border-radius:4px;padding:8px">
-              <div id="lt-c-complexity" style="font-size:18px;font-weight:700;color:#2e7d32">+0</div>
-              <div style="font-size:10px;color:#706e6b;margin-top:2px">Complexity</div>
-            </div>
-            <div style="text-align:center;background:#e8f4ff;border:1px solid #0070d2;border-radius:4px;padding:8px">
-              <div id="lt-c-total" style="font-size:18px;font-weight:700;color:#0070d2">14 BD</div>
-              <div style="font-size:10px;color:#0070d2;margin-top:2px">Expected</div>
-            </div>
-          </div>
-          <div style="margin-top:8px;display:flex;gap:6px;align-items:center;font-size:11px;flex-wrap:wrap">
-            <span style="color:#706e6b">Delivery range:</span>
-            <span id="lt-c-min" style="background:#e3f5e3;color:#2e7d32;padding:1px 8px;border-radius:3px;font-weight:600">Min: 12 BD</span>
-            <span style="color:#706e6b">&#8594;</span>
-            <span id="lt-c-exp" style="background:#e8f4ff;color:#0070d2;padding:1px 8px;border-radius:3px;font-weight:600">Exp: 14 BD</span>
-            <span style="color:#706e6b">&#8594;</span>
-            <span id="lt-c-max" style="background:#fde8e8;color:#c23934;padding:1px 8px;border-radius:3px;font-weight:600">Max: 18 BD</span>
-            <span style="color:#706e6b;margin-left:4px">· Auto-populated from Step 1 settings</span>
-          </div>
-          <div id="lt-c-trigger-lbl" style="margin-top:6px;font-size:11px;padding:5px 8px;background:#fff3e0;border-left:3px solid #e65100;border-radius:3px;color:#e65100">
-            &#128274; Trigger: Clock starts at <strong>Operational Readiness</strong> — not customer signature date
-          </div>
-        </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
-      </div>
-    </div>
-  </div>
-
   
-  </div>
     </div> <!-- end view-space -->
 
     <!-- POWER VIEW -->
@@ -1698,7 +1494,7 @@ function sw(on) {
 }
 // Switch between main nav tabs
 function switchTab(tab) {
-  ['cage','cabinet','roof','office','storage','raceway','ix','lcpod'].forEach(function(t) {
+  ['cage','cabinet','roof','office','storage','raceway','lcpod'].forEach(function(t) {
     var el=document.getElementById('tab-'+t);
     var pe=document.getElementById('pane-'+t);
     if(el)el.classList.toggle('active',t===tab);
