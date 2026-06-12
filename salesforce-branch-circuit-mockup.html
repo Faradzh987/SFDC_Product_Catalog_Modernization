@@ -1503,19 +1503,8 @@ function switchDCInfra(cat){
 }
 </script>
 
-    </div>
-
-    <!-- IX VIEW -->
-            
-          <div class="sf-btn-row">
-            <button class="sf-btn-p" onclick="addToBasket('IX','Cross Connect','Fiber SMF')">Add to basket</button>
-            <button class="sf-btn-s" onclick="backToLanding()">Cancel</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
+        </div> <!-- end sf-form-card (supplementals) -->
+      </div> <!-- end sf-wrap (supplementals) -->
     </div> <!-- end view-supplementals -->
 
     <!-- IX VIEW -->
@@ -1629,22 +1618,32 @@ function saveOpp() {
   document.getElementById('opp-chevron').style.transform='';
 }
 function showProduct(type) {
-  // Reset power sub-views when entering power
-  if(type==='power'){
-    var pl=document.getElementById('power-landing');
-    var pb=document.getElementById('power-branch');
-    var pp=document.getElementById('power-panels');
-    if(pl) pl.style.display='block';
-    if(pb) pb.style.display='none';
-    if(pp) pp.style.display='none';
-  }
-  document.getElementById('prod-landing').style.display='none';
-  document.getElementById('prod-view').style.display='block';
-  var labels={'space':'Space - Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod','power':'Power - Branch Circuits','supplementals':'Supplementals - Caging, Ladder Rack, Mesh Basket, Fiber Tray','ix':'IX - Interconnection'};
-  document.getElementById('prod-breadcrumb').textContent='Product basket -> '+labels[type];
-  ['space','power','supplementals','ix'].forEach(function(v) {
-    document.getElementById('view-'+v).style.display=v===type?'block':'none';
+  var productIds = ['space','power','supplementals','ix'];
+  productIds.forEach(function(v) {
+    var view = document.getElementById('view-' + v);
+    if (view) view.style.display = 'none';
   });
+
+  if (type === 'power' && typeof showPowerType === 'function') {
+    showPowerType(null);
+  }
+
+  var landing = document.getElementById('prod-landing');
+  var prodView = document.getElementById('prod-view');
+  if (landing) landing.style.display = 'none';
+  if (prodView) prodView.style.display = 'block';
+
+  var labels = {
+    space: 'Space - Cage, Cabinet, Roof, Office, Storage, Raceway, IX, LC-Ready Pod',
+    power: 'Power - Branch Circuits / Panels',
+    supplementals: 'Supplementals - Caging, Ladder Rack, Mesh Basket, Fiber Tray',
+    ix: 'IX - Interconnection'
+  };
+  var bc = document.getElementById('prod-breadcrumb');
+  if (bc) bc.textContent = 'Product basket -> ' + (labels[type] || type);
+
+  var target = document.getElementById('view-' + type);
+  if (target) target.style.display = 'block';
 }
 function getCabinetDetails() {
   return 'CoreSite Cabinet &#183; 48U';
@@ -1657,8 +1656,15 @@ function getCageDetails() {
   return (sqft?sqft+' sqft &#183; ':'')+'Cage type: '+cageType+' &#183; Cooling: '+lcLabel;
 }
 function backToLanding() {
-  document.getElementById('prod-landing').style.display='block';
-  document.getElementById('prod-view').style.display='none';
+  ['space','power','supplementals','ix'].forEach(function(v) {
+    var view = document.getElementById('view-' + v);
+    if (view) view.style.display = 'none';
+  });
+  if (typeof showPowerType === 'function') showPowerType(null);
+  var prodView = document.getElementById('prod-view');
+  var landing = document.getElementById('prod-landing');
+  if (prodView) prodView.style.display = 'none';
+  if (landing) landing.style.display = 'block';
 }
 function switchSuppView(cat) {
   ['caging','ladder','basket','fiber','misc'].forEach(function(c) {
