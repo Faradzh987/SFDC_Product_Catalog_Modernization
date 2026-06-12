@@ -1243,7 +1243,7 @@ function showPowerType(type){
             <div class="sf-field"><label>Quantity</label><input type="number" value="1" min="1" style="max-width:100px;"></div>
           </div>
         </div>
-        <div class="sf-btn-row"><button class="sf-btn-p">Add to quote</button><button class="sf-btn-s">Cancel</button></div>
+        <div class="sf-btn-row"><button class="sf-btn-p" onclick="addToBasket('Supplementals', collectVisibleDetails(this).name, collectVisibleDetails(this).details)">Add to quote</button><button class="sf-btn-s" onclick="backToLanding()">Cancel</button></div>
       </div>
 
       <div id="fo-cabling" class="fo-pane" style="display:none;padding:14px;">
@@ -1356,6 +1356,10 @@ function switchDCInfra(cat){
                 <select><option>-- Markets from opportunity --</option><option>Los Angeles (LA1)</option><option>Chicago (CH1)</option><option>Denver (DE1)</option><option>New York (NY2)</option><option>Santa Clara (SV1)</option></select>
               </div>
             </div>
+          </div>
+          <div class="sf-btn-row">
+            <button class="sf-btn-p" onclick="addToBasket('IX', collectVisibleDetails(this).name, collectVisibleDetails(this).details)">Add to basket</button>
+            <button class="sf-btn-s" onclick="backToLanding()">Cancel</button>
           </div>
         </div> <!-- end sf-form-card (ix) -->
       </div> <!-- end sf-wrap (ix) -->
