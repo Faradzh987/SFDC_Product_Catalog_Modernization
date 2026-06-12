@@ -464,7 +464,7 @@ function showPowerType(type){
         </div>
         
         <div style="margin-bottom:16px;">
-          <button onclick="alert('Opens CPQ basket in Salesforce Revenue Cloud')"
+          <button onclick="document.getElementById('product-basket').scrollIntoView({behavior:'smooth',block:'start'})"
             style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;
             background:linear-gradient(135deg,#0058a8,#0070d2);color:#fff;border:none;
             border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
@@ -526,6 +526,28 @@ function showPowerType(type){
         </div>
         <div style="background:#f8f8f8;border-radius:6px;padding:10px 14px;font-size:12px;color:#706e6b;line-height:1.6">
           Space is the primary product — Power and Supplementals attach under it &nbsp;·&nbsp; IX is standalone &nbsp;·&nbsp; Markets auto-filter from the opportunity record
+        </div>
+
+        <!-- PRODUCT BASKET -->
+        <div id="product-basket" style="margin-top:16px;background:#fff;border:1px solid #dddbda;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08)">
+          <div style="background:linear-gradient(135deg,#032D60,#0070d2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="color:#fff;font-size:13px;font-weight:700">Product Basket</div>
+              <div style="color:rgba(255,255,255,0.75);font-size:11px;margin-top:2px">Selected products before quote generation</div>
+            </div>
+            <span id="basket-count" style="background:rgba(255,255,255,0.18);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px">0 items</span>
+          </div>
+          <div id="basket-empty" style="padding:18px 14px;text-align:center;color:#706e6b;font-size:12px;background:#f8fafc">
+            No products added yet.
+          </div>
+          <div id="basket-items" style="display:none;background:#fff"></div>
+          <div id="basket-footer" style="display:none;padding:12px 14px;background:#f8fafc;border-top:1px solid #e5e7eb">
+            <div id="basket-summary" style="font-size:11px;color:#706e6b;margin-bottom:10px"></div>
+            <div style="display:flex;gap:8px;justify-content:flex-end">
+              <button onclick="clearBasket()" class="sf-btn-s">Clear basket</button>
+              <button onclick="generateQuote()" class="sf-btn-p">Generate quote</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1349,51 +1371,132 @@ function switchDCInfra(cat){
 
 <script>
 var basket = [];
-function addToBasket(type, name, details) {
-  var id = Date.now();
-  basket.push({id:id, type:type, name:name, details:details});
-  renderBasket();
-  // Flash confirmation
-  var btn = event && event.target;
-  if(btn) { var orig=btn.textContent; btn.textContent='Added!'; btn.style.background='#2e7d32'; setTimeout(function() { btn.textContent=orig; btn.style.background='#0070d2'; },1000); }
+
+function detectCategoryFromPage() {
+  var active = ['space','power','supplementals','ix'].find(function(v) {
+    var el = document.getElementById('view-' + v);
+    return el && el.style.display !== 'none';
+  });
+  return active ? active.charAt(0).toUpperCase() + active.slice(1) : 'Product';
 }
+
+function collectVisibleDetails(btn) {
+  var card = btn.closest('.sf-form-card') || btn.closest('.sf-wrap') || document;
+  var title = card.querySelector('.sf-form-title span');
+  var name = title ? title.textContent.replace(/— configure|-- configure/g,'').trim() : 'Configured Product';
+
+  var details = [];
+  card.querySelectorAll('.sf-field').forEach(function(f) {
+    if (details.length >= 6) return;
+    var label = f.querySelector('label');
+    var input = f.querySelector('select,input,textarea');
+    if (!label || !input) return;
+    var val = input.value || (input.options && input.options[input.selectedIndex] ? input.options[input.selectedIndex].text : '');
+    if (val && !val.includes('— Select') && !val.includes('-- Select')) {
+      details.push(label.textContent.replace('*','').trim() + ': ' + val);
+    }
+  });
+
+  return {
+    name: name || 'Configured Product',
+    details: details.length ? details.join(' · ') : 'Configured product'
+  };
+}
+
+function addToBasket(type, name, details, qty) {
+  var id = Date.now() + Math.floor(Math.random() * 1000);
+  basket.push({
+    id: id,
+    type: type || detectCategoryFromPage(),
+    name: name || 'Configured Product',
+    details: details || 'Configured product',
+    qty: qty || 1
+  });
+  renderBasket();
+
+  var btn = window.event && window.event.target;
+  if (btn && btn.tagName === 'BUTTON') {
+    var orig = btn.textContent;
+    btn.textContent = 'Added!';
+    btn.style.background = '#2e7d32';
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.style.background = '';
+    }, 900);
+  }
+}
+
 function removeFromBasket(id) {
   basket = basket.filter(function(i) { return i.id !== id; });
   renderBasket();
 }
+
 function renderBasket() {
-  var count = basket.length;
-  document.getElementById('basket-count').textContent = count + ' item'+(count!==1?'s':'');
-  document.getElementById('basket-empty').style.display = count===0?'block':'none';
-  document.getElementById('basket-items').style.display = count===0?'none':'block';
-  document.getElementById('basket-footer').style.display = count===0?'none':'block';
-  var colors = {Space:'#e8f4ff',Power:'#fff3e0',Supplementals:'#e3f5e3',IX:'#f3f3f3'};
-  var tcols = {Space:'#0070d2',Power:'#e65100',Supplementals:'#2e7d32',IX:'#706e6b'};
-  var html = basket.map(function(item) {
-    return '<div style="padding:10px 14px;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'+
-      '<div style="flex:1;min-width:0">'+
-      '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">'+
-      '<span style="font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;background:'+(colors[item.type]||'#f3f3f3')+';color:'+(tcols[item.type]||'#706e6b')+'">'+item.type+'</span></div>'+
-      '<div style="font-size:12px;font-weight:600;color:#16325c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+item.name+'</div>'+
-      '<div style="font-size:11px;color:#706e6b;margin-top:2px;line-height:1.4">'+item.details+'</div>'+
-      '</div>'+
-      '<button onclick="removeFromBasket('+item.id+')" style="color:#c23934;background:none;border:none;cursor:pointer;font-size:16px;padding:0;flex-shrink:0;line-height:1">&times;</button>'+
-      '</div>';
+  var count = basket.reduce(function(sum, i) { return sum + (parseInt(i.qty) || 1); }, 0);
+  var countEl = document.getElementById('basket-count');
+  var emptyEl = document.getElementById('basket-empty');
+  var itemsEl = document.getElementById('basket-items');
+  var footerEl = document.getElementById('basket-footer');
+  var summaryEl = document.getElementById('basket-summary');
+
+  if (!countEl || !emptyEl || !itemsEl || !footerEl || !summaryEl) return;
+
+  countEl.textContent = count + ' item' + (count !== 1 ? 's' : '');
+  emptyEl.style.display = basket.length === 0 ? 'block' : 'none';
+  itemsEl.style.display = basket.length === 0 ? 'none' : 'block';
+  footerEl.style.display = basket.length === 0 ? 'none' : 'block';
+
+  var colors = {Space:'#e8f4ff',Power:'#fff3e0',Supplementals:'#e3f5e3',IX:'#f3f3f3',Product:'#f3f3f3'};
+  var tcols = {Space:'#0070d2',Power:'#e65100',Supplementals:'#2e7d32',IX:'#706e6b',Product:'#706e6b'};
+
+  itemsEl.innerHTML = basket.map(function(item) {
+    return '<div style="padding:10px 14px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;gap:10px">' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">' +
+          '<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:' + (colors[item.type] || colors.Product) + ';color:' + (tcols[item.type] || tcols.Product) + '">' + item.type + '</span>' +
+          '<span style="font-size:10px;color:#706e6b">Qty: ' + (item.qty || 1) + '</span>' +
+        '</div>' +
+        '<div style="font-size:12px;font-weight:700;color:#16325c">' + item.name + '</div>' +
+        '<div style="font-size:11px;color:#706e6b;line-height:1.45;margin-top:2px">' + item.details + '</div>' +
+      '</div>' +
+      '<button onclick="removeFromBasket(' + item.id + ')" style="color:#c23934;background:none;border:none;cursor:pointer;font-size:18px;line-height:1">&times;</button>' +
+    '</div>';
   }).join('');
-  document.getElementById('basket-items').innerHTML = html;
+
   var types = {};
-  basket.forEach(function(i) { types[i.type]=(types[i.type]||0)+1; });
-  document.getElementById('basket-summary').innerHTML = Object.entries(types).map(function(e) { return '<strong>'+e[1]+'</strong> '+e[0]; }).join(' &nbsp;&#183;&nbsp; ');
+  basket.forEach(function(i) { types[i.type] = (types[i.type] || 0) + (parseInt(i.qty) || 1); });
+  summaryEl.innerHTML = Object.entries(types).map(function(e) {
+    return '<strong>' + e[1] + '</strong> ' + e[0];
+  }).join(' &nbsp;·&nbsp; ');
 }
+
 function clearBasket() {
-  basket=[];
+  basket = [];
   renderBasket();
 }
+
 function generateQuote() {
-  if(basket.length===0) return;
-  var lines = basket.map(function(i,idx) { return (idx+1)+'. ['+i.type+'] '+i.name+' - '+i.details; }).join('\n');
-  alert('Quote generated!\n\nItems:\n'+lines+'\n\nIn real SFDC this would create a Quote record linked to the Opportunity.');
+  if (basket.length === 0) return;
+  var lines = basket.map(function(i, idx) {
+    return (idx + 1) + '. [' + i.type + '] ' + i.name + ' x' + (i.qty || 1) + ' - ' + i.details;
+  }).join('\n');
+  alert('Quote generated from Product Basket!\\n\\n' + lines);
 }
+
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('button');
+  if (!btn) return;
+
+  var txt = (btn.textContent || '').toLowerCase();
+  if (!(txt.includes('add to quote') || txt.includes('add to basket'))) return;
+
+  var onclick = btn.getAttribute('onclick') || '';
+  if (onclick.includes('addToBasket')) return;
+
+  var info = collectVisibleDetails(btn);
+  addToBasket(detectCategoryFromPage(), info.name, info.details, 1);
+});
+
 function toggleOpp() {
   var form = document.getElementById('opp-form');
   var chevron = document.getElementById('opp-chevron');
