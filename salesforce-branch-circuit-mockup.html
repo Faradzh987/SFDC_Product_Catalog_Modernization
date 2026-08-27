@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!-- ============================================================
      CoreSite SFDC — Product Catalog Modernization
@@ -224,6 +225,91 @@ tr:hover td{background:#f8fafc}
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: #f1f5f9; }
   ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+  /* Full-screen catalog layout */
+  body { width: 100% !important; max-width: none !important; font-size: 14px !important; }
+  h1 { font-size: 20px !important; }
+  .subtitle { font-size: 12px !important; }
+
+  .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 20px !important;
+  }
+  .product-grid > button { width: 100%; min-width: 0; }
+
+  #power-landing {
+    min-height: calc(100vh - 245px);
+    padding: clamp(22px, 3vh, 40px);
+    background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+    border: 1px solid #dbe4ee;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(22, 50, 92, 0.08);
+  }
+  .power-heading {
+    font-size: clamp(23px, 1.6vw, 30px) !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+  }
+  .power-subheading {
+    font-size: 14px !important;
+    margin-bottom: clamp(22px, 3vh, 36px) !important;
+  }
+  .power-choice-grid {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(18px, 2vw, 30px) !important;
+  }
+  .power-choice-card {
+    position: relative;
+    width: 100% !important;
+    min-height: clamp(280px, 34vh, 390px);
+    padding: clamp(26px, 3vw, 44px) !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 22px rgba(22, 50, 92, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .power-choice-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(230, 81, 0, 0.14);
+  }
+  .power-choice-card::after {
+    content: "Configure →";
+    display: block;
+    margin-top: 22px;
+    color: #e65100;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .power-choice-icon {
+    width: 64px !important;
+    height: 64px !important;
+    border-radius: 12px !important;
+    margin-bottom: 22px !important;
+  }
+  .power-choice-icon svg { width: 30px; height: 30px; }
+  .power-choice-title { font-size: 22px !important; margin-bottom: 10px !important; }
+  .power-choice-description { font-size: 15px !important; line-height: 1.65 !important; max-width: 560px; }
+  .power-choice-badge { font-size: 12px !important; padding: 4px 10px !important; align-self: flex-start; }
+
+  @media (max-width: 1050px) {
+    .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .step1-grid, .update-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 700px) {
+    body { padding: 10px !important; }
+    .product-grid, .power-choice-grid, .vendor-grid, .impact, .supp-grid,
+    .step1-grid, .update-fields, .sf-cols { grid-template-columns: 1fr !important; }
+    #power-landing { min-height: 0; padding: 18px; }
+    .power-choice-card { min-height: 240px; }
+  }
 </style>
 
 <script>
@@ -473,7 +559,7 @@ function showPowerType(type){
           </button>
           <span style="font-size:11px;color:#706e6b;margin-left:12px;">Opens CPQ basket in Salesforce Revenue Cloud</span>
         </div>
-        <div style="display:block;margin-bottom:20px">
+        <div class="product-grid">
 
           <button onclick="showProduct('space')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;transition:all 0.15s" onmouseover="this.style.borderColor='#0070d2';this.style.background='#f8fbff'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
             <div style="width:40px;height:40px;border-radius:6px;background:#e8f4ff;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
@@ -1024,24 +1110,20 @@ function showPowerType(type){
     <!-- POWER VIEW -->
     <div id="view-power" style="display:none">
       <div id="power-landing" style="display:block;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <button onclick="backToLanding()" style="padding:6px 14px;background:#fff;border:1px solid #dddbda;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;color:#0070d2">&#8249; Back to product catalog</button>
-          <span style="font-size:12px;color:#706e6b">Product catalog &rarr; Power</span>
-        </div>
-        <div style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Select a power product type</div>
-        <div style="font-size:12px;color:#706e6b;margin-bottom:20px">Both attach to a space selected in Step 2-A</div>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <button onclick="showPowerType('branch')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
-            <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-            <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Branch Circuits</div>
-            <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Amperage, voltage, UPS topology, NEMA receptacles, rating</div>
-            <span style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
+        <div class="power-heading" style="font-size:16px;font-weight:600;color:#16325c;margin-bottom:4px">Select a power product type</div>
+        <div class="power-subheading" style="font-size:12px;color:#706e6b;margin-bottom:20px">Both products attach to the space selected in Step 2-A</div>
+        <div class="power-choice-grid">
+          <button class="power-choice-card" onclick="showPowerType('branch')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
+            <div class="power-choice-icon" style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div class="power-choice-title" style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Branch Circuits</div>
+            <div class="power-choice-description" style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Amperage, voltage, UPS topology, NEMA receptacles, and circuit rating</div>
+            <span class="power-choice-badge" style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
           </button>
-          <button onclick="showPowerType('panels')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
-            <div style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 9h6M2 15h6"/></svg></div>
-            <div style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Panels</div>
-            <div style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Voltage, amperage, rating (80%/100%)</div>
-            <span style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
+          <button class="power-choice-card" onclick="showPowerType('panels')" style="background:#fff;border:1px solid #dddbda;border-radius:8px;padding:20px;text-align:left;cursor:pointer;font-family:inherit;width:260px;" onmouseover="this.style.borderColor='#e65100';this.style.background='#fff8f5'" onmouseout="this.style.borderColor='#dddbda';this.style.background='#fff'">
+            <div class="power-choice-icon" style="width:40px;height:40px;border-radius:6px;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e65100" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 9h6M2 15h6"/></svg></div>
+            <div class="power-choice-title" style="font-size:15px;font-weight:600;color:#16325c;margin-bottom:6px">Panels</div>
+            <div class="power-choice-description" style="font-size:12px;color:#706e6b;line-height:1.5;margin-bottom:10px">Voltage, amperage, continuous-load rating, and 80% or 100% configuration</div>
+            <span class="power-choice-badge" style="font-size:10px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:3px;font-weight:600">Attaches to space</span>
           </button>
         </div>
       </div>
