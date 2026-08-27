@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!-- ============================================================
      CoreSite SFDC — Product Catalog Modernization
@@ -15,7 +16,7 @@
 <!-- v3 -->
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f3f3;color:#16325c;font-size:13px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#eef2f7;color:#16325c;font-size:14px;min-width:320px}
 .sf-global{background:#0070d2;padding:0 16px;display:flex;align-items:center;gap:12px;height:40px}
 .sf-logo{width:28px;height:28px;background:rgba(255,255,255,0.9);border-radius:4px;display:flex;align-items:center;justify-content:center}
 .sf-global-title{color:#fff;font-size:14px;font-weight:600;flex:1}
@@ -30,18 +31,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mtab{padding:11px 18px;font-size:12px;font-weight:600;cursor:pointer;color:#706e6b;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
 .mtab.active{color:#0070d2;border-bottom-color:#0070d2}
 .mtab:hover:not(.active) {color:#0070d2;background:#f8fbff}
-.content{padding:20px;max-width:1400px}
+.content{width:100%;max-width:none;padding:18px 20px;min-height:calc(100vh - 176px);background:#eef2f7}
 .tab-pane{display:none}
-.tab-pane.active{display:block}
-.card{background:#fff;border:1px solid #dddbda;border-radius:8px;overflow:hidden;margin-bottom:16px}
-.card-header{padding:10px 16px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
+.tab-pane.active{display:block;width:100%}
+.card{width:100%;background:#fff;border:1px solid #dddbda;border-radius:8px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 3px rgba(22,50,92,0.06)}
+.card-header{padding:12px 16px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
 .card-title{font-size:12px;font-weight:700;color:#16325c;text-transform:uppercase;letter-spacing:0.06em;display:flex;align-items:center;gap:6px}
 .card-body{padding:16px}
 .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
-.kpi{background:#fff;border:1px solid #dddbda;border-radius:8px;padding:14px 16px;text-align:center}
-.kpi-num{font-size:26px;font-weight:700;line-height:1}
-.kpi-lbl{font-size:10px;color:#706e6b;margin-top:4px;text-transform:uppercase;letter-spacing:0.04em}
-.kpi-trend{font-size:10px;margin-top:6px;font-weight:600}
+.kpi{min-width:0;min-height:112px;background:#fff;border:1px solid #dddbda;border-radius:8px;padding:18px 16px;text-align:center;box-shadow:0 1px 3px rgba(22,50,92,0.05);display:flex;flex-direction:column;justify-content:center}
+.kpi-num{font-size:30px;font-weight:700;line-height:1}
+.kpi-lbl{font-size:11px;color:#706e6b;margin-top:7px;text-transform:uppercase;letter-spacing:0.04em}
+.kpi-trend{font-size:11px;margin-top:7px;font-weight:600}
 .trend-up{color:#2e7d32}
 .trend-dn{color:#c23934}
 .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:600;white-space:nowrap}
@@ -53,8 +54,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .b-purple{background:#f3e8ff;color:#6b21a8}
 table{width:100%;border-collapse:collapse;font-size:12px}
 thead tr{background:#f3f3f3;border-bottom:1px solid #dddbda}
-th{padding:7px 10px;text-align:left;font-size:11px;font-weight:600;color:#706e6b;white-space:nowrap}
-td{padding:7px 10px;border-bottom:0.5px solid #f0f0f0;vertical-align:middle}
+th{padding:10px 14px;text-align:left;font-size:12px;font-weight:600;color:#706e6b;white-space:nowrap}
+td{padding:12px 14px;border-bottom:0.5px solid #f0f0f0;vertical-align:middle;font-size:13px}
 tr:hover td{background:#f8f8ff}
 .stars{color:#f59e0b;font-size:13px;letter-spacing:1px}
 .stars-empty{color:#dddbda}
@@ -90,6 +91,34 @@ tr:hover td{background:#f8f8ff}
 .vendor-row{cursor:pointer}
 .vendor-row:hover td{background:#f0f8ff!important}
 .access-banner{padding:6px 14px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:8px}
+/* Full-height large-screen directory dashboard. */
+#pane-directory.active{display:flex;flex-direction:column;min-height:calc(100vh - 212px)}
+#pane-directory .kpi-row{flex:0 0 auto}
+#pane-directory>.card{flex:1;min-height:0;margin-bottom:0;display:grid;grid-template-rows:auto 1fr}
+#pane-directory>.card table{height:100%}
+#pane-directory>.card tbody tr{height:16.666%}
+#pane-directory .badge{font-size:11px;padding:3px 9px}
+#pane-directory .stars{font-size:15px}
+#pane-directory .btn-sm{font-size:11px;padding:5px 12px}
+#pane-directory .card-header input,
+#pane-directory .card-header select{font-size:12px!important;padding:7px 11px!important}
+@media (max-width:1100px){
+  .kpi-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid-2{grid-template-columns:1fr}
+  .card{overflow-x:auto}
+}
+@media (max-width:720px){
+  .content{padding:12px;min-height:calc(100vh - 176px)}
+  .page-header{align-items:flex-start;gap:12px;flex-direction:column}
+  .header-btns,.card-header{width:100%;flex-wrap:wrap}
+  .main-tabs{overflow-x:auto;padding:0 8px}
+  .kpi-row{grid-template-columns:1fr}
+  .drawer{width:min(100%,520px)}
+  #pane-directory.active{display:block;min-height:0}
+  #pane-directory>.card{display:block}
+  #pane-directory>.card table{height:auto}
+  #pane-directory>.card tbody tr{height:auto}
+}
 </style>
 </head>
 <body>
@@ -126,7 +155,7 @@ tr:hover td{background:#f8f8ff}
   </div>
   <div class="header-btns">
     <button class="btn-s" onclick="openDrawer('new-vendor')">+ Onboard New Vendor</button>
-    <button class="btn-p" style="background:#16325c" onclick="window.location.href='vendor-portal-mockup.html'">↗ Open Vendor Portal (External)</button>
+    <button class="btn-p" style="background:#16325c" onclick="window.location.href='vendor-portal-external.html'">↗ Open Vendor Portal (External)</button>
   </div>
 </div>
 <div class="main-tabs">
@@ -139,7 +168,7 @@ tr:hover td{background:#f8f8ff}
 </div>
 <div class="content">
 
-<div class="tab-pane active" id="pane-directory" class="tab-pane active">
+<div class="tab-pane active" id="pane-directory">
   <div class="kpi-row">
     <div class="kpi"><div class="kpi-num" style="color:#0070d2">42</div><div class="kpi-lbl">Active Vendors</div><div class="kpi-trend trend-up">↑ 3 this quarter</div></div>
     <div class="kpi"><div class="kpi-num" style="color:#2e7d32">87%</div><div class="kpi-lbl">Avg On-Time Rate</div><div class="kpi-trend trend-up">↑ 4% vs last Q</div></div>
